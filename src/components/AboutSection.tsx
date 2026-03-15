@@ -1,62 +1,48 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { CheckCircle } from "lucide-react";
-
-const highlights = [
-  "Chartered Accountants, Attorneys & Consultants",
-  "Comprehensive auditing & assurance services",
-  "Expert taxation & regulatory advisory",
-  "Tailored solutions for every business size",
-];
 
 const AboutSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-24 bg-card" ref={ref}>
-      <div className="container max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+    <section id="about" className="py-20 md:py-28" ref={ref}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="grid md:grid-cols-[1fr_3fr] gap-10 md:gap-16">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="text-sm font-semibold text-teal uppercase tracking-widest">About Us</span>
-            <h2 className="mt-3 font-display text-3xl md:text-4xl font-bold text-foreground leading-tight">
-              A firm built on expertise and trust
+            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary leading-tight">
+              About Us
             </h2>
-            <p className="mt-5 text-muted-foreground leading-relaxed">
-              Sharp Edge Business Solutions is a firm that provides clients with a wide range of services
-              in auditing assurance, taxation, regulatory matters, and advisory services. The firm's team
-              consists of dedicated and knowledgeable professionals offering a complete set of company services.
-            </p>
-            <ul className="mt-8 space-y-3">
-              {highlights.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-foreground">
-                  <CheckCircle size={18} className="text-teal mt-0.5 shrink-0" />
-                  <span className="text-sm">{item}</span>
-                </li>
-              ))}
-            </ul>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative"
+            transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <div className="aspect-square rounded-2xl bg-secondary flex items-center justify-center overflow-hidden border border-border">
-              <div className="text-center p-12">
-                <span className="font-display text-7xl font-bold text-gradient">10+</span>
-                <p className="mt-4 text-lg font-medium text-foreground">Years of Professional Excellence</p>
-                <p className="mt-2 text-sm text-muted-foreground">Serving businesses across Nepal</p>
-              </div>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+              Sharp Edge Business Solutions is a firm that provides clients with
+              a wide range of services in auditing assurance, taxation,
+              regulatory matters, and advisory services. The firm's team
+              consists of dedicated and knowledgeable professionals, such as
+              Chartered Accountants, Attorneys, and Consultants, offering a
+              complete set of company services.
+            </p>
+            <div className="mt-8">
+              <a
+                href="#services"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-primary/20 px-6 py-3 text-sm font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                Learn More
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
             </div>
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl bg-teal/10 -z-10" />
-            <div className="absolute -top-4 -left-4 w-16 h-16 rounded-lg bg-primary/10 -z-10" />
           </motion.div>
         </div>
       </div>

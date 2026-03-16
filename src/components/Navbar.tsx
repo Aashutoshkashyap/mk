@@ -1,24 +1,42 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Mail } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Team", href: "#team" },
-  { label: "Partners", href: "#partners" },
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Team", href: "/team" },
+  { label: "Partners", href: "/#partners" },
 ];
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const isActive = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    if (href.startsWith("/#")) return location.pathname === "/" && location.hash === href.slice(1);
+    return location.pathname === href;
+  };
+
+  const handleNavClick = (href: string) => {
+    setMobileOpen(false);
+    if (href.startsWith("/#")) {
+      if (location.pathname === "/") {
+        const el = document.querySelector(href.slice(1));
+        el?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <motion.header
@@ -35,38 +53,39 @@ const Navbar = () => {
             scrolled ? "shadow-lg shadow-brand-navy/5" : "shadow-sm"
           }`}
         >
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src="https://sharpedge.com.np/static/img/logo.png"
               alt="Sharp Edge Business Solutions"
               className="h-10 w-auto"
             />
-          </a>
+          </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary rounded-lg hover:bg-secondary transition-all duration-200"
+                to={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  isActive(link.href)
+                    ? "text-primary bg-primary/[0.08]"
+                    : "text-foreground/70 hover:text-primary hover:bg-secondary"
+                }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
-          {/* CTA */}
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="hidden md:inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-brand-navy-dark transition-colors shadow-md shadow-primary/20"
           >
             <Mail size={15} />
             Let's Talk
-          </a>
+          </Link>
 
-          {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-secondary text-foreground transition-colors"
@@ -76,7 +95,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
@@ -87,22 +105,26 @@ const Navbar = () => {
               className="glass-nav mt-2 rounded-2xl border border-border p-5 flex flex-col gap-1 shadow-xl md:hidden"
             >
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary rounded-xl transition-colors"
+                  to={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+                    isActive(link.href)
+                      ? "text-primary bg-primary/[0.08]"
+                      : "text-foreground hover:bg-secondary"
+                  }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="mt-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground text-center"
               >
                 Let's Talk
-              </a>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { FileCheck, Scale, Calculator, Briefcase, GraduationCap, ArrowRight, CheckCircle2, Users, Award, Building2 } from "lucide-react";
 import PartnersSection from "@/components/PartnersSection";
+import PreFooterCTA from "@/components/PreFooterCTA";
 
 const stats = [
   { icon: Users, value: "50+", label: "Clients Served" },
@@ -32,23 +33,25 @@ const Index = () => {
     <>
       <HeroSection />
 
-      {/* Stats Strip */}
-      <section ref={statsRef} className="py-12 bg-primary">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {/* Stats Strip — card style */}
+      <section ref={statsRef} className="relative -mt-10 z-10 pb-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={statsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 * i }}
-                className="text-center"
+                className="rounded-2xl bg-card border border-border p-6 text-center shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300"
               >
-                <stat.icon size={28} className="mx-auto mb-3 text-brand-blue" strokeWidth={1.5} />
-                <div className="font-display text-3xl md:text-4xl font-extrabold text-primary-foreground">
+                <div className="w-12 h-12 mx-auto rounded-xl bg-primary/[0.08] flex items-center justify-center mb-3">
+                  <stat.icon size={22} className="text-primary" strokeWidth={1.5} />
+                </div>
+                <div className="font-display text-3xl md:text-4xl font-extrabold text-primary">
                   {stat.value}
                 </div>
-                <div className="mt-1 text-sm text-primary-foreground/60">{stat.label}</div>
+                <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -150,28 +153,7 @@ const Index = () => {
       <PartnersSection />
 
       {/* CTA */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="relative rounded-3xl bg-primary overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-brand-blue/20 blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-brand-green/10 blur-3xl" />
-            <div className="relative z-10 p-10 md:p-16 text-center">
-              <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary-foreground">
-                Ready to work with us?
-              </h2>
-              <p className="mt-4 text-primary-foreground/75 max-w-lg mx-auto">
-                Get a consultation from our team of Chartered Accountants.
-              </p>
-              <Link
-                to="/contact"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-card px-8 py-3.5 text-sm font-bold text-primary hover:bg-secondary transition-all duration-200 shadow-lg hover:-translate-y-0.5"
-              >
-                Get in Touch <ArrowRight size={16} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PreFooterCTA />
     </>
   );
 };

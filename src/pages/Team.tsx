@@ -1,11 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
 import {
-  ArrowRight, Briefcase, Award, Building2, Factory,
-  Landmark, ShieldCheck, GraduationCap, Wifi, Truck,
-  Droplets, Zap, Monitor, Heart, BadgeCheck
+  Award, Factory, Landmark, ShieldCheck, Wifi, Truck,
+  Zap, Monitor, Heart, BadgeCheck, GraduationCap, Briefcase, Droplets
 } from "lucide-react";
+import PreFooterCTA from "@/components/PreFooterCTA";
 
 const team = [
   {
@@ -13,6 +12,7 @@ const team = [
     role: "Managing Partner",
     image: "https://sharpedge.com.np/static/img/Subratsabkota.png",
     experience: "10+ Years",
+    bio: "Over 10 years of experience in auditing and consulting across diverse sectors.",
     sectors: [
       { icon: Factory, label: "Manufacturing" },
       { icon: Briefcase, label: "Trading" },
@@ -27,6 +27,7 @@ const team = [
     role: "Executive Partner",
     image: "https://sharpedge.com.np/static/img/CADiwashDahal.png",
     experience: "10+ Years",
+    bio: "Extensive experience managing projects across telecom, manufacturing, hydro, and IT sectors.",
     sectors: [
       { icon: Wifi, label: "Telecom" },
       { icon: Truck, label: "Import & Export" },
@@ -41,6 +42,7 @@ const team = [
     role: "Quality Control Reviewer",
     image: "https://sharpedge.com.np/static/img/CANarBahadurBudhayair.png",
     experience: "15+ Years",
+    bio: "Quality control expert overseeing insurance, manufacturing, hydro, and financial services.",
     sectors: [
       { icon: ShieldCheck, label: "Insurance" },
       { icon: Factory, label: "Manufacturing" },
@@ -53,7 +55,6 @@ const team = [
 ];
 
 const Team = () => {
-  const heroRef = useRef(null);
   const teamRef = useRef(null);
   const teamInView = useInView(teamRef, { once: true, margin: "-80px" });
 
@@ -83,88 +84,59 @@ const Team = () => {
         </div>
       </section>
 
-      {/* Team Members */}
+      {/* Team Grid — compact cards */}
       <section ref={teamRef} className="py-20 md:py-28">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16">
-          {team.map((member, i) => {
-            const isEven = i % 2 === 0;
-            return (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-3 gap-6">
+            {team.map((member, i) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 40 }}
                 animate={teamInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.15 * i }}
-                className="grid md:grid-cols-[280px_1fr] gap-8 items-start"
+                className="group rounded-2xl bg-card border border-border overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
               >
-                {/* Photo Card */}
-                <div className={`${!isEven ? "md:order-2" : ""}`}>
-                  <div className="relative rounded-2xl overflow-hidden bg-secondary">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full aspect-[3/4] object-cover object-top"
-                      loading="lazy"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/80 to-transparent p-5">
-                      <div className="font-display text-lg font-bold text-primary-foreground">{member.name}</div>
-                      <div className="text-sm text-primary-foreground/70">{member.role}</div>
-                    </div>
+                {/* Photo */}
+                <div className="relative h-72 overflow-hidden bg-secondary">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent p-5">
+                    <div className="font-display text-lg font-bold text-primary-foreground">{member.name}</div>
+                    <div className="text-sm text-primary-foreground/70">{member.role}</div>
                   </div>
                 </div>
 
                 {/* Info */}
-                <div className={`${!isEven ? "md:order-1" : ""}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="px-3 py-1.5 rounded-full bg-primary/[0.08] text-xs font-bold text-primary flex items-center gap-1.5">
-                      <Award size={14} />
-                      {member.experience}
-                    </div>
-                    <div className="px-3 py-1.5 rounded-full bg-brand-blue/[0.08] text-xs font-bold text-brand-blue">
-                      {member.role}
-                    </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="px-3 py-1 rounded-full bg-primary/[0.08] text-xs font-bold text-primary flex items-center gap-1.5">
+                      <Award size={12} /> {member.experience}
+                    </span>
                   </div>
-
-                  <h2 className="font-display text-2xl md:text-3xl font-extrabold text-primary mb-2">
-                    {member.name}
-                  </h2>
-
-                  <p className="text-sm text-muted-foreground mb-6">
-                    Extensive experience across diverse industry sectors:
-                  </p>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <p className="text-sm text-muted-foreground mb-5">{member.bio}</p>
+                  <div className="grid grid-cols-2 gap-2">
                     {member.sectors.map((sector) => (
                       <div
                         key={sector.label}
-                        className="flex items-center gap-2 rounded-xl bg-secondary/80 px-4 py-3 text-sm"
+                        className="flex items-center gap-2 rounded-lg bg-secondary/80 px-3 py-2 text-xs"
                       >
-                        <sector.icon size={16} className="text-brand-blue shrink-0" strokeWidth={1.5} />
+                        <sector.icon size={14} className="text-brand-blue shrink-0" strokeWidth={1.5} />
                         <span className="font-medium text-foreground">{sector.label}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 md:py-28 bg-secondary/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary">
-            Work with our experts
-          </h2>
-          <p className="mt-4 text-muted-foreground">Let our experienced team help your business succeed.</p>
-          <Link
-            to="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all shadow-lg shadow-primary/25"
-          >
-            Get in Touch <ArrowRight size={14} />
-          </Link>
-        </div>
-      </section>
+      <PreFooterCTA />
     </>
   );
 };

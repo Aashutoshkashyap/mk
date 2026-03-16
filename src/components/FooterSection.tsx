@@ -24,6 +24,7 @@ const FooterSection = () => {
                 { label: "About Us", to: "/about" },
                 { label: "Services", to: "/services" },
                 { label: "Team", to: "/team" },
+                { label: "Blog", to: "/blog" },
                 { label: "Contact", to: "/contact" },
               ].map((link) => (
                 <Link

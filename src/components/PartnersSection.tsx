@@ -29,7 +29,7 @@ const MarqueeRow = ({
       {[...items, ...items].map((item, i) => (
         <div
           key={i}
-          className="flex-shrink-0 w-[130px] h-[65px] mx-3 rounded-xl bg-card border border-border flex items-center justify-center p-3 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          className="flex-shrink-0 w-[208px] h-[104px] mx-4 rounded-xl bg-card border border-border flex items-center justify-center p-4 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
         >
           <img
             src={item.src}

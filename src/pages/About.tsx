@@ -1,10 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
 import {
   Eye, Target, Lightbulb, Handshake, Shield, TrendingUp,
-  ArrowRight, CheckCircle2, Award, Globe, Users
+  Globe, Users, Award
 } from "lucide-react";
+import PreFooterCTA from "@/components/PreFooterCTA";
 
 const values = [
   { icon: Shield, title: "Integrity", desc: "Unwavering ethical standards in all engagements" },
@@ -208,29 +208,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary">
-            Want to know more?
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-lg mx-auto">Meet the team behind Sharp Edge.</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              to="/team"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all shadow-lg shadow-primary/25"
-            >
-              Meet Our Team <ArrowRight size={14} />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-primary/20 px-8 py-3.5 text-sm font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-            >
-              Contact Us <ArrowRight size={14} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <PreFooterCTA />
     </>
   );
 };

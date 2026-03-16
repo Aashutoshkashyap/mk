@@ -3,11 +3,12 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   FileCheck, Scale, Calculator, Briefcase, GraduationCap,
-  ArrowRight, CheckCircle2, ClipboardCheck, ShieldCheck, Search,
+  ArrowRight, ClipboardCheck, ShieldCheck, Search,
   FileText, BarChart3, BookOpen, Landmark, Receipt, Users2,
   Wallet, ScrollText, Gavel, Building, FileKey, BadgeCheck,
   PieChart, HandCoins, Banknote, TrendingUp
 } from "lucide-react";
+import PreFooterCTA from "@/components/PreFooterCTA";
 
 const services = [
   {
@@ -79,8 +80,6 @@ const services = [
 ];
 
 const Services = () => {
-  const heroRef = useRef(null);
-
   return (
     <>
       {/* Hero Banner */}
@@ -116,21 +115,7 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 md:py-28 bg-secondary/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary">
-            Need a specific service?
-          </h2>
-          <p className="mt-4 text-muted-foreground">Reach out and our experts will tailor a solution for you.</p>
-          <Link
-            to="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all shadow-lg shadow-primary/25"
-          >
-            Get in Touch <ArrowRight size={14} />
-          </Link>
-        </div>
-      </section>
+      <PreFooterCTA />
     </>
   );
 };
@@ -147,8 +132,7 @@ const ServiceBlock = ({
   const isEven = index % 2 === 0;
 
   return (
-    <div ref={ref} className={`grid md:grid-cols-2 gap-10 items-center ${!isEven ? "md:direction-rtl" : ""}`}>
-      {/* Visual side */}
+    <div ref={ref} className={`grid md:grid-cols-2 gap-10 items-center`}>
       <motion.div
         initial={{ opacity: 0, x: isEven ? -30 : 30 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -178,7 +162,6 @@ const ServiceBlock = ({
         )}
       </motion.div>
 
-      {/* Content side */}
       <motion.div
         initial={{ opacity: 0, x: isEven ? 30 : -30 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}

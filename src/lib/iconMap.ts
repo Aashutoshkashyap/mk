@@ -1,0 +1,20 @@
+import {
+  Users, Award, Building2, CheckCircle2, FileCheck, Scale, Calculator, Briefcase,
+  GraduationCap, ArrowRight, Shield, Lightbulb, Handshake, TrendingUp, Eye, Target,
+  Globe, ClipboardCheck, ShieldCheck, Search, FileText, BarChart3, BookOpen, Landmark,
+  Receipt, Users2, Wallet, ScrollText, Gavel, Building, FileKey, BadgeCheck, PieChart,
+  HandCoins, Banknote, Factory, Wifi, Truck, Droplets, Zap, Monitor, Heart, Mail,
+  MapPin, Phone, Clock, ExternalLink, type LucideIcon
+} from "lucide-react";
+
+const iconMap: Record<string, LucideIcon> = {
+  Users, Award, Building2, CheckCircle2, FileCheck, Scale, Calculator, Briefcase,
+  GraduationCap, ArrowRight, Shield, Lightbulb, Handshake, TrendingUp, Eye, Target,
+  Globe, ClipboardCheck, ShieldCheck, Search, FileText, BarChart3, BookOpen, Landmark,
+  Receipt, Users2, Wallet, ScrollText, Gavel, Building, FileKey, BadgeCheck, PieChart,
+  HandCoins, Banknote, Factory, Wifi, Truck, Droplets, Zap, Monitor, Heart, Mail,
+  MapPin, Phone, Clock, ExternalLink,
+};
+
+export const getIcon = (name: string): LucideIcon => iconMap[name] || CheckCircle2;
+export default iconMap;

@@ -43,6 +43,10 @@ const Blog = () => {
             <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">Insights</span>
             <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">Blog & Resources</h1>
             <p className="mt-5 text-primary-foreground/70 max-w-2xl mx-auto">Expert insights on taxation, audit, corporate governance, and financial best practices in Nepal.</p>
+                      {/* If no blogs found, show message */}
+                      {posts.length === 0 && (
+                        <div className="mt-8 text-lg text-primary-foreground/70 font-semibold">No blogs Found</div>
+                      )}
           </motion.div>
         </div>
       </section>

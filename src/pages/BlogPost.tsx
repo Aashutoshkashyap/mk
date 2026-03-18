@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -22,6 +23,21 @@ const BlogPost = () => {
     },
     enabled: !!slug,
   });
+
+  useEffect(() => {
+    if (post && slug) {
+      const incrementViews = async () => {
+        const { error } = await supabase
+          .from("blog_posts")
+          .update({ views: (post.views || 0) + 1 })
+          .eq("id", post.id);
+        
+        if (error) console.error("Error incrementing views:", error);
+      };
+      
+      incrementViews();
+    }
+  }, [post?.id, slug]);
 
   if (isLoading) {
     return (

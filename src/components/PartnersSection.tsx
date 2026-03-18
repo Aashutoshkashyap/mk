@@ -29,7 +29,7 @@ const MarqueeRow = ({
       {[...items, ...items].map((item, i) => (
         <div
           key={i}
-          className="flex-shrink-0 w-[208px] h-[104px] mx-4 rounded-xl bg-card border border-border flex items-center justify-center p-4 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          className="flex-shrink-0 w-[374px] h-[188px] mx-5 rounded-2xl bg-card border border-border flex items-center justify-center p-2 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
         >
           <img
             src={item.src}
@@ -56,9 +56,10 @@ const PartnersSection = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary">
+          <span className="text-xs font-bold tracking-widest uppercase text-brand-blue bg-brand-blue/5 px-4 py-1.5 rounded-full border border-brand-blue/10 inline-block mb-4">Trust & Collaboration</span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold text-primary tracking-tight">
             Our Clients and Partners
           </h2>
         </motion.div>

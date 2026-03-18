@@ -6,10 +6,11 @@ import { toast } from "sonner";
 
 const AboutEditor = () => {
   const qc = useQueryClient();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["admin-about"],
     queryFn: async () => {
-      const { data } = await supabase.from("about_section").select("*").single();
+      const { data, error } = await supabase.from("about_section").select("*").maybeSingle();
+      if (error) throw error;
       return data;
     },
   });
@@ -26,18 +27,25 @@ const AboutEditor = () => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("about_section").update(form).eq("id", data!.id);
-      if (error) throw error;
+      if (data?.id) {
+        const { error } = await supabase.from("about_section").update(form).eq("id", data.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("about_section").insert(form);
+        if (error) throw error;
+      }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-about"] }); toast.success("About section updated!"); },
     onError: (e: any) => toast.error(e.message),
   });
 
   if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
+  if (error) return <div className="p-4 text-destructive text-sm rounded-xl bg-destructive/10">Failed to load: {(error as any).message}</div>;
 
   return (
     <div>
       <h2 className="font-display text-2xl font-extrabold text-primary mb-6">About Section</h2>
+      {!data && <p className="text-sm text-amber-500 mb-4">No data yet — fill in the fields and click Save to create the about section.</p>}
       <div className="rounded-2xl bg-card border border-border p-6 space-y-4">
         {[
           { label: "Heading", key: "heading" },

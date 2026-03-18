@@ -1,19 +1,29 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const FooterSection = () => {
+  const { data: settings } = useQuery({
+    queryKey: ["site_settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings").select("*").eq("id", "current").single();
+      return data;
+    },
+  });
+
   return (
     <footer className="py-12 bg-primary text-primary-foreground">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-4 gap-10">
           <div>
             <img
-              src="https://sharpedge.com.np/static/img/logo.png"
-              alt="Sharp Edge Business Solutions"
+              src={settings?.logo_url || "https://sharpedge.com.np/static/img/logo.png"}
+              alt={settings?.company_name || "Sharp Edge Business Solutions"}
               className="h-12 w-auto brightness-0 invert"
             />
             <p className="mt-4 text-sm text-primary-foreground/60 leading-relaxed">
-              Your trusted chartered accountants in Nepal.
+              Sharp Egde Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services.
             </p>
           </div>
           <div>
@@ -69,8 +79,19 @@ const FooterSection = () => {
             </div>
           </div>
         </div>
-        <div className="mt-10 pt-6 border-t border-primary-foreground/10 text-center text-xs text-primary-foreground/40">
-          © {new Date().getFullYear()} Sharp Edge Business Solutions. All rights reserved.
+        <div className="mt-10 pt-6 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-primary-foreground/40">
+          <p>© {new Date().getFullYear()} Sharp Edge Business Solutions. All rights reserved.</p>
+          <p>
+            Supported by{" "}
+            <a 
+              href="https://thebytejar.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-brand-blue hover:text-white transition-colors font-semibold"
+            >
+              Byte Jar Pvt Ltd
+            </a>
+          </p>
         </div>
       </div>
     </footer>

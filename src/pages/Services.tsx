@@ -29,7 +29,7 @@ const Services = () => {
             <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">What We Offer</span>
             <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">Our Services</h1>
             <p className="mt-5 text-primary-foreground/70 max-w-2xl mx-auto">
-              Valuable, trustworthy, and efficient services rooted in expertise across audit, taxation, regulatory compliance, and advisory.
+              We commitment to deliver valuable, trustworthy, and efficient services rooted in their expertise and experience in audit, taxation, regulatory compliance, and related business services.
             </p>
           </motion.div>
         </div>

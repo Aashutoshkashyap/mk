@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { PrimaryButton } from "./ui/PrimaryButton";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -14,13 +18,43 @@ const navLinks = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
 
+  const { data: settings } = useQuery({
+    queryKey: ["site_settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings").select("*").eq("id", "current").single();
+      return data;
+    },
+  });
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Update scrolled state for background/shadow
+      setScrolled(currentScrollY > 20);
+      
+      // Logic for show/hide header parts
+      if (currentScrollY < 100) {
+        // Near top: Show everything
+        setVisible(true);
+      } else if (currentScrollY > lastScrollY && !mobileOpen) {
+        // Scrolling down: Hide everything
+        setVisible(false);
+      } else {
+        // Scrolling up: Show only nav capsule (logo/button handled via visibility logic below)
+        setVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY, mobileOpen]);
 
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";
@@ -38,60 +72,91 @@ const Navbar = () => {
     }
   };
 
+  const showFullHeader = lastScrollY < 100;
+
   return (
     <motion.header
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ 
+        y: visible ? 0 : -100,
+        opacity: visible ? 1 : 0 
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-2" : "py-4"
+        scrolled ? "py-2" : "py-6"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div
-          className={`glass-nav rounded-2xl border border-border px-5 py-3 flex items-center justify-between transition-shadow duration-300 ${
-            scrolled ? "shadow-lg shadow-brand-navy/5" : "shadow-sm"
-          }`}
-        >
-          <Link to="/" className="flex items-center gap-2">
-            <img
-              src="https://sharpedge.com.np/static/img/logo.png"
-              alt="Sharp Edge Business Solutions"
-              className="h-10 w-auto"
-            />
-          </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between gap-8 h-20">
+          {/* Logo on the left */}
+          <motion.div
+            animate={{ 
+              opacity: showFullHeader ? 1 : 0,
+              x: showFullHeader ? 0 : -20,
+              scale: showFullHeader ? 1 : 0.95
+            }}
+            transition={{ duration: 0.3 }}
+            className={cn("flex-shrink-0", !showFullHeader && "pointer-events-none")}
+          >
+            <Link to="/" className="transition-transform hover:scale-105 block">
+              <img
+                src={settings?.logo_url || "https://sharpedge.com.np/static/img/logo.png"}
+                alt={settings?.company_name || "Sharp Edge Business Solutions"}
+                className="h-12 md:h-24 w-auto object-contain"
+              />
+            </Link>
+          </motion.div>
 
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-                  isActive(link.href)
-                    ? "text-primary bg-primary/[0.08]"
-                    : "text-foreground/70 hover:text-primary hover:bg-secondary"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          {/* Centered Navigation Capsule (Desktop) - Stays visible on scroll up */}
+          <nav className="flex-1 flex justify-center">
+            <div className="hidden md:flex items-center glass-nav rounded-full px-2 py-1.5 border border-white/20 shadow-lg shadow-brand-navy/5">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
+                    isActive(link.href)
+                      ? "text-primary bg-primary/[0.08]"
+                      : "text-foreground/70 hover:text-primary hover:bg-secondary/50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </nav>
 
-          <Link
-            to="/contact"
-            className="hidden md:inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-brand-navy-dark transition-colors shadow-md shadow-primary/20"
+          {/* Action Button on the right (Desktop) */}
+          <motion.div 
+            animate={{ 
+              opacity: showFullHeader ? 1 : 0,
+              x: showFullHeader ? 0 : 20,
+              scale: showFullHeader ? 1 : 0.95
+            }}
+            transition={{ duration: 0.3 }}
+            className={cn("hidden md:flex items-center", !showFullHeader && "pointer-events-none")}
           >
-            <Mail size={15} />
-            Let's Talk
-          </Link>
+            <PrimaryButton
+              as={Link}
+              to="/contact"
+              containerClassName="h-11 min-w-[140px]"
+              className="px-6 py-2.5 rounded-xl text-sm"
+            >
+              <span className="flex items-center gap-2">
+                <Mail size={15} />
+                Let's Talk
+              </span>
+            </PrimaryButton>
+          </motion.div>
 
+          {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-secondary text-foreground transition-colors"
+            className="md:hidden p-3 rounded-2xl bg-white/80 border border-border backdrop-blur-md text-foreground transition-all hover:bg-secondary"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 

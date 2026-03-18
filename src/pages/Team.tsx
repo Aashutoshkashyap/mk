@@ -31,7 +31,7 @@ const Team = () => {
             <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">Leadership</span>
             <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">Our Core Team</h1>
             <p className="mt-5 text-primary-foreground/70 max-w-2xl mx-auto">
-              Dedicated leaders driving growth with expertise and commitment—the foundation of our practice.
+              Our Core Team is dedicated to advancing our Firm's growth and success. They lead with expertise and commitment, serving as the foundation of our practice and nurturing a collaborative environment that continually enhances our standards and services.
             </p>
           </motion.div>
         </div>

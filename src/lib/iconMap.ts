@@ -17,4 +17,5 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export const getIcon = (name: string): LucideIcon => iconMap[name] || CheckCircle2;
+export const iconNames = Object.keys(iconMap);
 export default iconMap;

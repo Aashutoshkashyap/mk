@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import FooterSection from "@/components/FooterSection";
+import FloatingActions from "@/components/ui/FloatingActions";
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -18,6 +19,7 @@ const Layout = () => {
       <ScrollToTop />
       <Navbar />
       <Outlet />
+      <FloatingActions />
       <FooterSection />
     </div>
   );

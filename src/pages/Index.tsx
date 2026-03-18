@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import BentoServicesSection from "@/components/BentoServicesSection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
@@ -7,14 +8,14 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import PartnersSection from "@/components/PartnersSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import FAQSection from "@/components/FAQSection";
 import PreFooterCTA from "@/components/PreFooterCTA";
 
 const Index = () => {
   const aboutRef = useRef(null);
-  const servicesRef = useRef(null);
   const statsRef = useRef(null);
   const aboutInView = useInView(aboutRef, { once: true, margin: "-100px" });
-  const servicesInView = useInView(servicesRef, { once: true, margin: "-80px" });
   const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
 
   const { data: stats = [] } = useQuery({
@@ -68,8 +69,14 @@ const Index = () => {
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} animate={aboutInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
-              <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">{about?.subheading || "About Us"}</span>
-              <h2 className="mt-3 font-display text-3xl md:text-4xl font-extrabold text-primary leading-tight">{about?.heading || "Trusted Expertise Since Day One"}</h2>
+              <div className="flex flex-wrap gap-3 mb-6">
+                {["Precision", "Integrity", "Excellence"].map((value, i) => (
+                  <span key={value} className="text-[10px] font-black tracking-widest uppercase text-brand-blue bg-brand-blue/5 px-4 py-1.5 rounded-full border border-brand-blue/10 inline-block">
+                    {value}
+                  </span>
+                ))}
+              </div>
+              <h2 className="mt-3 font-display text-3xl md:text-5xl font-extrabold text-primary leading-tight tracking-tight">{about?.heading || "Trusted Expertise Since Day One"}</h2>
               <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || ""}</p>
               <div className="mt-6 grid grid-cols-2 gap-3">
                 {["Chartered Accountants", "Legal Experts", "Tax Advisors", "Business Consultants"].map((item) => (
@@ -84,34 +91,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Preview */}
-      <section ref={servicesRef} className="py-20 md:py-28 bg-secondary/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={servicesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">What We Do</span>
-            <h2 className="mt-3 font-display text-3xl md:text-4xl font-extrabold text-primary">Our Services</h2>
-          </motion.div>
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {services.map((service: any, i: number) => {
-              const Icon = getIcon(service.icon_name);
-              return (
-                <motion.div key={service.id} initial={{ opacity: 0, y: 30 }} animate={servicesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.08 * i }}>
-                  <Link to="/services" className="group block h-full rounded-2xl bg-card p-7 border border-border hover:border-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
-                    <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4 group-hover:bg-primary/[0.15] transition-colors">
-                      <Icon size={22} className="text-primary" />
-                    </div>
-                    <h3 className="font-display text-lg font-bold text-primary mb-2">{service.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
-                    <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-brand-blue group-hover:gap-2 transition-all">Learn more <ArrowRight size={12} /></div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <BentoServicesSection />
 
       <PartnersSection />
+      <TestimonialsSection />
+      <FAQSection />
       <PreFooterCTA />
     </>
   );

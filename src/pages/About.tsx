@@ -65,7 +65,7 @@ const About = () => {
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
               <h2 className="font-display text-3xl font-extrabold text-primary leading-tight">{about?.heading || ""}</h2>
-              <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || ""}</p>
+              <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || "Sharp Edge Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services. The firm's team consists of dedicated and knowledgeable professionals, such as Chartered Accountants, Attorneys, and Consultants, offering a complete set of company services."}</p>
               <div className="mt-8 grid grid-cols-3 gap-4">
                 {[{ icon: Globe, label: "Global\nStandards" }, { icon: Users, label: "Expert\nTeam" }, { icon: Award, label: "Proven\nTrack Record" }].map((item, i) => (
                   <div key={i} className="text-center p-4 rounded-xl bg-secondary/80">

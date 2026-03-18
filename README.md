@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# 💎 Sharp Edge Business Solutions
 
-## Project info
+A premium, high-fidelity SaaS platform for Chartered Accountants in Nepal, offering modern Auditing, Taxation, and Advisory services.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![Banner](https://sharpedge.com.np/static/img/logo.png)
 
-## How can I edit this code?
+## ✨ key Features
 
-There are several ways of editing your application.
+-   **Intelligent "Ghost Mode" Navbar**: Context-aware navigation that hides on scroll down and selectively reappears on scroll up for a focused reading experience.
+-   **Ultra-Premium UI Components**: Built with Aceternity UI and Framer Motion for smooth, high-fidelity interactions.
+-   **Bento-Grid Services**: Modern 3x3 layout for service presentation with interactive data visualizations.
+-   **Stack-Scroll Testimonials**: Stunning vertical depth effect for client proof.
+-   **Supabase-Backed Admin Panel**: Complete content management system for blogs, services, team members, and site settings.
+-   **Responsive & Optimized**: Blazing fast performance with Vite and semantic SEO structure.
 
-**Use Lovable**
+## 🛠️ Technical Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+-   **Frontend**: React + TypeScript + Vite
+-   **Styling**: Tailwind CSS + shadcn/ui
+-   **Animations**: Framer Motion + Aceternity UI
+-   **Backend**: Supabase (Database, Auth, Storage)
+-   **Data Fetching**: TanStack Query (React Query)
+-   **Forms**: React Hook Form + Zod
 
-Changes made via Lovable will be committed automatically to this repo.
+## ⚙️ Local Setup
 
-**Use your preferred IDE**
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/Aashutoshkashyap/test-sharp.git
+    ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2.  **Environment Configuration**
+    Create a `.env` file in the root with your Supabase credentials:
+    ```env
+    VITE_SUPABASE_URL=your-project-url
+    VITE_SUPABASE_ANON_KEY=your-anon-key
+    ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3.  **Install & Run**
+    ```bash
+    npm install
+    npm run dev
+    ```
 
-Follow these steps:
+## 🏗️ Deployment
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+The project is optimized for **Vercel** with a root-level structure and automated build pipeline.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+*Developed by Byte Jar Pvt Ltd for Sharp Edge Business Solutions.*

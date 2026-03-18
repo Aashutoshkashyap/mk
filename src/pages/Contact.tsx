@@ -4,6 +4,8 @@ import { Send, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
+import { toast } from "sonner";
+import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import PreFooterCTA from "@/components/PreFooterCTA";
 
 const Contact = () => {
@@ -17,12 +19,21 @@ const Contact = () => {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:cadiwashdahal@gmail.com?subject=Inquiry from ${form.name}&body=${encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\n${form.message}`
-    )}`;
-    window.location.href = mailtoLink;
+    try {
+      const { error } = await supabase.from("contact_submissions").insert([
+        { name: form.name, email: form.email, phone: form.phone, message: form.message },
+      ]);
+      
+      if (error) throw error;
+      
+      toast.success("Message sent successfully!");
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to send message. Please try again or use the email provided below.");
+    }
   };
 
   return (
@@ -38,6 +49,7 @@ const Contact = () => {
             <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">Reach Out</span>
             <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">Get in Touch</h1>
             <p className="mt-5 text-primary-foreground/70 max-w-xl mx-auto">Dedicated to delivering world-class service rooted in integrity, innovation, and excellence.</p>
+                      <p className="mt-5 text-primary-foreground/70 max-w-xl mx-auto">Sharp Egde Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services.</p>
           </motion.div>
         </div>
       </section>
@@ -94,9 +106,15 @@ const Contact = () => {
             <div><label className="block text-sm font-semibold text-foreground mb-2">Message</label>
               <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
                 className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" placeholder="How can we help you?" /></div>
-            <button type="submit" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all shadow-lg shadow-primary/20">
-              <Send size={16} /> Send Message
-            </button>
+            <PrimaryButton 
+              type="submit" 
+              className="w-full sm:w-auto"
+              containerClassName="h-12 w-full sm:w-[200px]"
+            >
+              <span className="flex items-center gap-2">
+                <Send size={16} /> Send Message
+              </span>
+            </PrimaryButton>
           </motion.form>
         </div>
       </section>

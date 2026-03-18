@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { PrimaryButton } from "./ui/PrimaryButton";
 
 const PreFooterCTA = () => {
   const { data } = useQuery({
@@ -25,12 +26,17 @@ const PreFooterCTA = () => {
             <p className="mt-4 text-primary-foreground/75 max-w-lg mx-auto">
               {data?.description || "Get a consultation from our team of Chartered Accountants."}
             </p>
-            <Link
+            <PrimaryButton
+              as={Link}
               to={data?.cta_link || "/contact"}
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-card px-8 py-3.5 text-sm font-bold text-primary hover:bg-secondary transition-all duration-200 shadow-lg hover:-translate-y-0.5"
+              className="mt-8 bg-white text-primary hover:bg-white/90"
+              borderRadius="100px"
+              containerClassName="h-14 min-w-[200px]"
             >
-              {data?.cta_text || "Get in Touch"} <ArrowRight size={16} />
-            </Link>
+              <span className="flex items-center gap-2">
+                {data?.cta_text || "Get in Touch"} <ArrowRight size={16} />
+              </span>
+            </PrimaryButton>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Save, Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import iconMap from "@/lib/iconMap";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 const ServicesEditor = () => {
   const qc = useQueryClient();
@@ -97,29 +98,12 @@ const ServiceCard = ({ service }: { service: any }) => {
             <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
           </div>
           <div className="space-y-3">
-            <label className="block text-xs font-semibold mb-1 flex items-center gap-2">
-              Service Image URL
-            </label>
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 space-y-2">
-                <input 
-                  value={form.image_url} 
-                  onChange={(e) => setForm({ ...form, image_url: e.target.value })} 
-                  className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20 outline-none" 
-                  placeholder="https://example.com/service-image.jpg"
-                />
-                <div className="rounded-lg bg-brand-blue/5 border border-brand-blue/10 p-3">
-                  <p className="text-[10px] text-muted-foreground leading-relaxed">
-                    <strong>Custom Images:</strong> You can upload your own photos to <a href="https://postimages.org/" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline font-bold">Postimages</a> or <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline font-bold">ImgBB</a> and paste the <strong>Direct Link</strong> here.
-                  </p>
-                </div>
-              </div>
-              {form.image_url && (
-                <div className="w-full md:w-32 h-20 rounded-lg border border-border bg-secondary/30 flex items-center justify-center overflow-hidden shrink-0">
-                  <img src={form.image_url} alt="Preview" className="w-full h-full object-cover" />
-                </div>
-              )}
-            </div>
+            <ImageUpload 
+              label="Service Image" 
+              value={form.image_url} 
+              onChange={(url) => setForm({ ...form, image_url: url })} 
+              folder="services"
+            />
           </div>
           <button onClick={() => updateMutation.mutate()} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-xs font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all">
             <Save size={14} /> Save Service Changes

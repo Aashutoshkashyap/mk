@@ -77,7 +77,7 @@ const Index = () => {
                 ))}
               </div>
               <h2 className="mt-3 font-display text-3xl md:text-5xl font-extrabold text-primary leading-tight tracking-tight">{about?.heading || "Trusted Expertise Since Day One"}</h2>
-              <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || ""}</p>
+              <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || "Sharp Egde Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services."}</p>
               <div className="mt-6 grid grid-cols-2 gap-3">
                 {["Chartered Accountants", "Legal Experts", "Tax Advisors", "Business Consultants"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm text-foreground"><CheckCircle2 size={16} className="text-brand-green shrink-0" />{item}</div>

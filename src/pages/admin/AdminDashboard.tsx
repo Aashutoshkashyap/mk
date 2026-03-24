@@ -19,6 +19,7 @@ import CoreValuesEditor from "./editors/CoreValuesEditor";
 import SettingsEditor from "./editors/SettingsEditor";
 import FAQEditor from "./editors/FAQEditor";
 import TestimonialsEditor from "./editors/TestimonialsEditor";
+import PartnersEditor from "./editors/PartnersEditor";
 
 const tabs = [
   { id: "hero", label: "Hero Section", icon: Home },
@@ -33,6 +34,7 @@ const tabs = [
   { id: "core_values", label: "Core Values", icon: Star },
   { id: "faqs", label: "FAQs", icon: HelpCircle },
   { id: "testimonials", label: "Testimonials", icon: Quote },
+  { id: "partners", label: "Partners", icon: LayoutDashboard },
   { id: "settings", label: "Site Settings", icon: Settings },
   { id: "cta", label: "Pre-Footer CTA", icon: LayoutDashboard },
 ];
@@ -95,6 +97,7 @@ const AdminDashboard = () => {
           <div style={{ display: activeTab === "core_values" ? "block" : "none" }}><CoreValuesEditor /></div>
           <div style={{ display: activeTab === "faqs" ? "block" : "none" }}><FAQEditor /></div>
           <div style={{ display: activeTab === "testimonials" ? "block" : "none" }}><TestimonialsEditor /></div>
+          <div style={{ display: activeTab === "partners" ? "block" : "none" }}><PartnersEditor /></div>
           <div style={{ display: activeTab === "settings" ? "block" : "none" }}><SettingsEditor /></div>
         </div>
       </main>

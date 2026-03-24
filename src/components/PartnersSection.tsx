@@ -1,39 +1,25 @@
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const row1 = Array.from({ length: 10 }, (_, i) => ({
-  src: `https://sharpedge.com.np/static/img/partners/${i + 1}.png`,
-  alt: `Partner ${i + 1}`,
-}));
-
-const row2 = Array.from({ length: 10 }, (_, i) => ({
-  src: `https://sharpedge.com.np/static/img/partners/${i + 11}.png`,
-  alt: `Partner ${i + 11}`,
-}));
-
-const row3Indexes = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
-const row3 = row3Indexes.map((n) => ({
-  src: `https://sharpedge.com.np/static/img/partners/${n}.${n === 21 ? "jpg" : "png"}`,
-  alt: `Partner ${n}`,
-}));
 
 const MarqueeRow = ({
   items,
   className,
 }: {
-  items: { src: string; alt: string }[];
+  items: any[];
   className: string;
 }) => (
   <div className="relative mb-4 overflow-hidden">
     <div className={className} style={{ display: "flex", width: "fit-content" }}>
-      {[...items, ...items].map((item, i) => (
+      {(items.length > 0 ? [...items, ...items, ...items] : []).map((item, i) => (
         <div
-          key={i}
-          className="flex-shrink-0 w-[374px] h-[188px] mx-5 rounded-2xl bg-card border border-border flex items-center justify-center p-2 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          key={`${item.id}-${i}`}
+          className="flex-shrink-0 w-[240px] h-[120px] md:w-[320px] md:h-[160px] mx-4 rounded-2xl bg-card border border-border flex items-center justify-center p-6 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
         >
           <img
-            src={item.src}
-            alt={item.alt}
+            src={item.logo_url}
+            alt={item.name}
             className="max-w-full max-h-full object-contain"
             loading="lazy"
           />
@@ -48,6 +34,21 @@ const MarqueeRow = ({
 const PartnersSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const { data: partners = [], isLoading } = useQuery({
+    queryKey: ["partners"],
+    queryFn: async () => {
+      const { data } = await supabase.from("partners").select("*").order("sort_order");
+      return data || [];
+    },
+  });
+
+  if (isLoading || partners.length === 0) return null;
+
+  // Distribute partners into 3 rows
+  const row1 = partners.filter((_, i) => i % 3 === 0);
+  const row2 = partners.filter((_, i) => i % 3 === 1);
+  const row3 = partners.filter((_, i) => i % 3 === 2);
 
   return (
     <section id="partners" className="py-20 md:py-28 bg-secondary/50 overflow-hidden" ref={ref}>
@@ -65,9 +66,11 @@ const PartnersSection = () => {
         </motion.div>
       </div>
 
-      <MarqueeRow items={row1} className="marquee" />
-      <MarqueeRow items={row2} className="marquee-reverse" />
-      <MarqueeRow items={row3} className="marquee-slow" />
+      <div className="space-y-4">
+        {row1.length > 0 && <MarqueeRow items={row1} className="marquee" />}
+        {row2.length > 0 && <MarqueeRow items={row2} className="marquee-reverse" />}
+        {row3.length > 0 && <MarqueeRow items={row3} className="marquee-slow" />}
+      </div>
     </section>
   );
 };

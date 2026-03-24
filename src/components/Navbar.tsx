@@ -127,37 +127,40 @@ const Navbar = () => {
             </div>
           </nav>
 
-          {/* Action Button on the right (Desktop) */}
-          <motion.div 
-            animate={{ 
-              opacity: showFullHeader ? 1 : 0,
-              x: showFullHeader ? 0 : 20,
-              scale: showFullHeader ? 1 : 0.95
-            }}
-            transition={{ duration: 0.3 }}
-            className={cn("hidden md:flex items-center", !showFullHeader && "pointer-events-none")}
-          >
-            <PrimaryButton
-              as={Link}
-              to="/contact"
-              containerClassName="h-11 min-w-[140px]"
-              className="px-6 py-2.5 rounded-xl text-sm"
+          {/* Action Button & Mobile Toggle Container */}
+          <div className="flex items-center gap-3">
+            <motion.div 
+              animate={{ 
+                opacity: showFullHeader ? 1 : 0,
+                x: showFullHeader ? 0 : 20,
+                scale: showFullHeader ? 1 : 0.95
+              }}
+              transition={{ duration: 0.3 }}
+              className={cn("flex items-center", !showFullHeader && "pointer-events-none")}
             >
-              <span className="flex items-center gap-2">
-                <Mail size={15} />
-                Let's Talk
-              </span>
-            </PrimaryButton>
-          </motion.div>
+              <PrimaryButton
+                as={Link}
+                to="/contact"
+                containerClassName="h-9 md:h-11 min-w-0 md:min-w-[140px]"
+                className="px-4 md:px-6 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm"
+              >
+                <span className="flex items-center gap-1.5 md:gap-2">
+                  <Mail size={14} className="md:w-[15px] md:h-[15px]" />
+                  <span className="hidden sm:inline">Let's Talk</span>
+                  <span className="sm:hidden font-bold tracking-wide">Connect</span>
+                </span>
+              </PrimaryButton>
+            </motion.div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-3 rounded-2xl bg-white/80 border border-border backdrop-blur-md text-foreground transition-all hover:bg-secondary"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            {/* Mobile Toggle */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden p-2 rounded-xl bg-white/80 border border-border backdrop-blur-md text-foreground transition-all hover:bg-secondary flex items-center justify-center shrink-0"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         <AnimatePresence>

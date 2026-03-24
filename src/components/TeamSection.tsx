@@ -1,27 +1,22 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const team = [
-  {
-    name: "CA Subrat Sapkota",
-    image: "https://sharpedge.com.np/static/img/Subratsabkota.png",
-    bio: "CA Subrat Sapkota serves as the managing partner of the Firm, boasting over 10 years of experience in auditing and consulting assignments across various sectors such as Manufacturing, Trading, Telecommunications, Insurance, Banking, Hospitality, Investment & Non-profit organizations.",
-  },
-  {
-    name: "CA Diwash Dahal",
-    image: "https://sharpedge.com.np/static/img/CADiwashDahal.png",
-    bio: "CA Diwash Dahal holds the position of executive partner in the Firm. Mr. Dahal boasts extensive experience in managing projects across various sectors such as Telecom, Trading, Import & Export, Tobacco Industry, Oil and Gas, Manufacturing, Hydro Power, Distribution, IT, and Service organizations.",
-  },
-  {
-    name: "CA Nar Bahadur Budhayair",
-    image: "https://sharpedge.com.np/static/img/CANarBahadurBudhayair.png",
-    bio: "CA Nar Bahadur Budhayair serves as the quality control reviewer at the Firm. With extensive experience in overseeing assignments for Insurance, Manufacturing, Hydro, and Financial Service sector organizations, Mr. Budhayair, the QCM of the firm, also holds a position as an Audit faculty in an Institute in Nepal.",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const TeamSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const { data: team = [], isLoading } = useQuery({
+    queryKey: ["team"],
+    queryFn: async () => {
+      const { data } = await supabase.from("team_members").select("*").order("sort_order");
+      return data || [];
+    },
+  });
+
+  if (isLoading) return null;
+  if (team.length === 0) return null;
 
   return (
     <section id="team" className="py-20 md:py-28" ref={ref}>
@@ -54,7 +49,7 @@ const TeamSection = () => {
             >
               <div className="mx-auto w-32 h-32 rounded-2xl overflow-hidden bg-secondary mb-5">
                 <img
-                  src={member.image}
+                  src={member.image_url || ""}
                   alt={member.name}
                   className="w-full h-full object-cover object-top"
                   loading="lazy"

@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { Save, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 const GalleryEditor = () => {
   const qc = useQueryClient();
@@ -61,13 +62,28 @@ const ImageCard = ({ image }: { image: any }) => {
 
   return (
     <div className="rounded-2xl bg-card border border-border overflow-hidden">
-      <img src={image.image_url} alt={image.alt_text} className="w-full h-40 object-cover" />
-      <div className="p-4 space-y-3">
-        <div><label className="block text-xs font-semibold mb-1">Image URL</label><input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-xs" /></div>
-        <div><label className="block text-xs font-semibold mb-1">Alt Text</label><input value={form.alt_text} onChange={(e) => setForm({ ...form, alt_text: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-xs" /></div>
+      <div className="p-4 space-y-4">
+        <ImageUpload 
+          label="Gallery Image" 
+          value={form.image_url} 
+          onChange={(url) => setForm({ ...form, image_url: url })} 
+          folder="gallery"
+        />
+        <div>
+          <label className="block text-xs font-semibold mb-1">Alt Text</label>
+          <input 
+            value={form.alt_text} 
+            onChange={(e) => setForm({ ...form, alt_text: e.target.value })} 
+            className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-xs" 
+          />
+        </div>
         <div className="flex gap-2">
-          <button onClick={() => updateMutation.mutate()} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground"><Save size={12} /></button>
-          <button onClick={() => deleteMutation.mutate()} className="rounded-lg bg-destructive/10 px-3 py-1.5 text-xs text-destructive"><Trash2 size={12} /></button>
+          <button onClick={() => updateMutation.mutate()} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground">
+            <Save size={12} />
+          </button>
+          <button onClick={() => deleteMutation.mutate()} className="rounded-lg bg-destructive/10 px-3 py-1.5 text-xs text-destructive">
+            <Trash2 size={12} />
+          </button>
         </div>
       </div>
     </div>

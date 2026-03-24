@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Save } from "lucide-react";
 import { toast } from "sonner";
 
+import { ImageUpload } from "@/components/admin/ImageUpload";
+
 const HeroEditor = () => {
   const qc = useQueryClient();
   const { data, isLoading, error } = useQuery({
@@ -15,13 +17,27 @@ const HeroEditor = () => {
     },
   });
 
-  const [form, setForm] = useState({ title: "", subtitle: "", description: "", cta_text: "", cta_link: "", secondary_cta_text: "", secondary_cta_link: "" });
+  const [form, setForm] = useState({ 
+    title: "", 
+    subtitle: "", 
+    description: "", 
+    cta_text: "", 
+    cta_link: "", 
+    secondary_cta_text: "", 
+    secondary_cta_link: "",
+    image_url: ""
+  });
 
   useEffect(() => {
     if (data) setForm({
-      title: data.title || "", subtitle: data.subtitle || "", description: data.description || "",
-      cta_text: data.cta_text || "", cta_link: data.cta_link || "",
-      secondary_cta_text: data.secondary_cta_text || "", secondary_cta_link: data.secondary_cta_link || "",
+      title: data.title || "", 
+      subtitle: data.subtitle || "", 
+      description: data.description || "",
+      cta_text: data.cta_text || "", 
+      cta_link: data.cta_link || "",
+      secondary_cta_text: data.secondary_cta_text || "", 
+      secondary_cta_link: data.secondary_cta_link || "",
+      image_url: (data as any).image_url || ""
     });
   }, [data]);
 
@@ -46,10 +62,22 @@ const HeroEditor = () => {
     <div>
       <h2 className="font-display text-2xl font-extrabold text-primary mb-6">Hero Section</h2>
       {!data && <p className="text-sm text-amber-500 mb-4">No data yet — fill in the fields and click Save to create the hero section.</p>}
-      <div className="rounded-2xl bg-card border border-border p-6 space-y-4">
-        <Field label="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
-        <Field label="Subtitle" value={form.subtitle} onChange={(v) => setForm({ ...form, subtitle: v })} />
-        <Field label="Description" value={form.description} onChange={(v) => setForm({ ...form, description: v })} textarea />
+      <div className="rounded-2xl bg-card border border-border p-6 space-y-6">
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div className="space-y-4">
+            <Field label="Subtitle" value={form.subtitle} onChange={(v) => setForm({ ...form, subtitle: v })} />
+            <Field label="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
+            <Field label="Description" value={form.description} onChange={(v) => setForm({ ...form, description: v })} textarea />
+          </div>
+          <div className="space-y-4">
+            <ImageUpload 
+              label="Hero Image (Optional)" 
+              value={form.image_url} 
+              onChange={(url) => setForm({ ...form, image_url: url })} 
+              folder="hero"
+            />
+          </div>
+        </div>
         <div className="grid grid-cols-2 gap-4">
           <Field label="CTA Text" value={form.cta_text} onChange={(v) => setForm({ ...form, cta_text: v })} />
           <Field label="CTA Link" value={form.cta_link} onChange={(v) => setForm({ ...form, cta_link: v })} />

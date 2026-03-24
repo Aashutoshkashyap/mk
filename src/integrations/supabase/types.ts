@@ -250,6 +250,7 @@ export type Database = {
           subtitle: string
           title: string
           updated_at: string
+          image_url: string | null
         }
         Insert: {
           cta_link?: string | null
@@ -261,6 +262,7 @@ export type Database = {
           subtitle?: string
           title?: string
           updated_at?: string
+          image_url?: string | null
         }
         Update: {
           cta_link?: string | null
@@ -272,6 +274,7 @@ export type Database = {
           subtitle?: string
           title?: string
           updated_at?: string
+          image_url?: string | null
         }
         Relationships: []
       }

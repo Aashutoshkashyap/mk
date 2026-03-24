@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Save, Globe, Image as ImageIcon, Link as LinkIcon, Info } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 const SettingsEditor = () => {
   const queryClient = useQueryClient();
@@ -98,52 +99,19 @@ const SettingsEditor = () => {
             />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 pt-2">
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <ImageIcon className="h-4 w-4 text-muted-foreground" />
-                Logo URL
-              </label>
-              <div className="space-y-2">
-                <input
-                  value={form.logo_url}
-                  onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                  className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  placeholder="https://example.com/logo.png"
-                />
-                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                  <Info size={10} /> Recommended height: 40px-60px. Supports PNG, SVG, WebP.
-                </p>
-              </div>
-              {form.logo_url && (
-                <div className="mt-4 p-4 rounded-xl border border-dashed border-border bg-secondary/30 flex items-center justify-center">
-                  <img src={form.logo_url} alt="Logo Preview" className="h-12 w-auto object-contain" />
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <LinkIcon className="h-4 w-4 text-muted-foreground" />
-                Favicon URL
-              </label>
-              <div className="space-y-2">
-                <input
-                  value={form.favicon_url}
-                  onChange={(e) => setForm({ ...form, favicon_url: e.target.value })}
-                  className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  placeholder="https://example.com/favicon.ico"
-                />
-                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                  <Info size={10} /> Standard size: 32x32. Recommended format: ICO or PNG.
-                </p>
-              </div>
-              {form.favicon_url && (
-                <div className="mt-4 p-4 rounded-xl border border-dashed border-border bg-secondary/30 flex items-center justify-center">
-                  <img src={form.favicon_url} alt="Favicon Preview" className="h-8 w-8 object-contain" />
-                </div>
-              )}
-            </div>
+          <div className="grid md:grid-cols-2 gap-8 pt-2">
+            <ImageUpload 
+              label="Company Logo" 
+              value={form.logo_url} 
+              onChange={(url) => setForm({ ...form, logo_url: url })} 
+              folder="settings"
+            />
+            <ImageUpload 
+              label="Favicon" 
+              value={form.favicon_url} 
+              onChange={(url) => setForm({ ...form, favicon_url: url })} 
+              folder="settings"
+            />
           </div>
         </div>
 

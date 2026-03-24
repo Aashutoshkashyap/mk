@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Save, Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import iconMap from "@/lib/iconMap";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 const TeamEditor = () => {
   const qc = useQueryClient();
@@ -91,7 +92,12 @@ const MemberCard = ({ member }: { member: any }) => {
             <div><label className="block text-xs font-semibold mb-1">Role</label><input value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div><label className="block text-xs font-semibold mb-1">Image URL</label><input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
+            <ImageUpload 
+              label="Member Photo" 
+              value={form.image_url} 
+              onChange={(url) => setForm({ ...form, image_url: url })} 
+              folder="team"
+            />
             <div><label className="block text-xs font-semibold mb-1">Experience</label><input value={form.experience} onChange={(e) => setForm({ ...form, experience: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
           </div>
           <div><label className="block text-xs font-semibold mb-1">Bio</label><textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} rows={2} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>

@@ -96,13 +96,13 @@ const Navbar = () => {
               scale: showFullHeader ? 1 : 0.95
             }}
             transition={{ duration: 0.3 }}
-            className={cn("flex-shrink-0", !showFullHeader && "pointer-events-none")}
+            className={cn("flex-shrink-0 min-w-[120px] md:min-w-[180px] flex items-center", !showFullHeader && "pointer-events-none")}
           >
-            <Link to="/" className="transition-transform hover:scale-105 block">
+            <Link to="/" className="transition-transform hover:scale-105 block w-full h-12 md:h-24 flex items-center">
               <img
                 src={settings?.logo_url || "https://sharpedge.com.np/static/img/logo.png"}
                 alt={settings?.company_name || "Sharp Edge Business Solutions"}
-                className="h-12 md:h-24 w-auto object-contain"
+                className="max-h-full max-w-full object-contain"
               />
             </Link>
           </motion.div>

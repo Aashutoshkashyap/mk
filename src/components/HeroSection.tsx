@@ -52,7 +52,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.7 }}
-              className="font-display text-5xl sm:text-6xl lg:text-[5rem] font-bold leading-[1.1] text-primary tracking-tight"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] text-primary tracking-tight"
             >
               {data?.title ? (
                 <>
@@ -71,7 +71,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-8 text-xl text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0"
+              className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
               {data?.description || "Expert consultation and strategic planning to help your business reach its full potential in a dynamic market."}
             </motion.p>

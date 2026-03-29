@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Save, Plus, Trash2, LayoutGrid, List } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { BulkImageUpload } from "@/components/admin/BulkImageUpload";
 
 const PartnersEditor = () => {
   const qc = useQueryClient();
@@ -18,10 +19,10 @@ const PartnersEditor = () => {
   });
 
   const addPartner = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (partnerData?: { name: string, logo_url: string }) => {
       const { error } = await supabase.from("partners").insert({ 
-        name: "New Partner", 
-        logo_url: "https://via.placeholder.com/150", 
+        name: partnerData?.name || "New Partner", 
+        logo_url: partnerData?.logo_url || "https://via.placeholder.com/150", 
         sort_order: partners.length 
       });
       if (error) throw error;
@@ -32,37 +33,65 @@ const PartnersEditor = () => {
     },
   });
 
+  const handleBulkUpload = async (urls: string[]) => {
+    try {
+      const newPartners = urls.map((url, index) => ({
+        name: `New Partner ${new Date().toLocaleDateString()}`,
+        logo_url: url,
+        sort_order: partners.length + index
+      }));
+
+      const { error } = await supabase.from("partners").insert(newPartners);
+      if (error) throw error;
+      
+      qc.invalidateQueries({ queryKey: ["partners"] });
+      toast.success(`Successfully added ${urls.length} new partners!`);
+    } catch (error: any) {
+      console.error("Failed to save bulk partners", error);
+      toast.error(error.message || "Failed to save partners to database");
+    }
+  };
+
   if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="font-display text-2xl font-extrabold text-primary">Clients & Partners</h2>
-          <p className="text-sm text-muted-foreground mt-1">Manage the logos displayed in the marquee section.</p>
+          <h2 className="font-display text-2xl font-extrabold text-primary tracking-tight">Clients & Partners</h2>
+          <p className="text-sm text-muted-foreground mt-1.5 flex items-center gap-2">
+            Manage the logos displayed in the marquee section.
+          </p>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex bg-secondary/50 p-1 rounded-lg border border-border mr-2">
+        <div className="flex items-center gap-3">
+          <div className="flex bg-secondary/50 p-1.5 rounded-xl border border-border">
             <button 
               onClick={() => setView("grid")} 
-              className={`p-1.5 rounded-md transition-all ${view === "grid" ? "bg-white shadow-sm text-primary" : "text-muted-foreground"}`}
+              className={`p-1.5 rounded-lg transition-all ${view === "grid" ? "bg-white shadow-sm text-primary" : "text-muted-foreground hover:text-primary"}`}
+              title="Grid View"
             >
-              <LayoutGrid size={16} />
+              <LayoutGrid size={18} />
             </button>
             <button 
               onClick={() => setView("list")} 
-              className={`p-1.5 rounded-md transition-all ${view === "list" ? "bg-white shadow-sm text-primary" : "text-muted-foreground"}`}
+              className={`p-1.5 rounded-lg transition-all ${view === "list" ? "bg-white shadow-sm text-primary" : "text-muted-foreground hover:text-primary"}`}
+              title="List View"
             >
-              <List size={16} />
+              <List size={18} />
             </button>
           </div>
           <button 
-            onClick={() => addPartner.mutate()} 
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+            onClick={() => addPartner.mutate(undefined)} 
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all shadow-lg shadow-primary/10"
           >
-            <Plus size={18} /> Add Partner
+            <Plus size={20} /> Add One
           </button>
         </div>
+      </div>
+
+      {/* Bulk Upload Area */}
+      <div className="bg-card rounded-2xl border border-border p-6 shadow-sm">
+        <BulkImageUpload onUploadComplete={handleBulkUpload} folder="partners" />
       </div>
 
       <div className={view === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>

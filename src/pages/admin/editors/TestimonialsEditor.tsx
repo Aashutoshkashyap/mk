@@ -39,6 +39,13 @@ const TestimonialsEditor = () => {
     }
   }, [fetchedSectionMeta]);
 
+  const formatError = (e: any) => {
+    if (e.message?.includes("new row violates row level security policy") || e.code === "42501") {
+      return "Permission Denied: You must be an 'admin' to perform this action. Please follow the SQL instructions to grant yourself access.";
+    }
+    return e.message || "An unexpected error occurred.";
+  };
+
   const updateSectionMutation = useMutation({
     mutationFn: async (updated: any) => {
       const { error } = await supabase.from("testimonials_section" as any).update(updated).eq("id", "current");
@@ -48,7 +55,7 @@ const TestimonialsEditor = () => {
       queryClient.invalidateQueries({ queryKey: ["testimonials-section-meta"] });
       toast.success("Section settings updated");
     },
-    onError: () => toast.error("Failed to update section settings")
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   const addMutation = useMutation({
@@ -65,7 +72,7 @@ const TestimonialsEditor = () => {
       setEditingId(data.id);
       toast.success("Testimonial added");
     },
-    onError: () => toast.error("Failed to add testimonial")
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   const updateMutation = useMutation({
@@ -79,7 +86,7 @@ const TestimonialsEditor = () => {
       setEditingId(null);
       toast.success("Testimonial updated successfully");
     },
-    onError: () => toast.error("Failed to update testimonial")
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   const deleteMutation = useMutation({
@@ -91,7 +98,7 @@ const TestimonialsEditor = () => {
       queryClient.invalidateQueries({ queryKey: ["testimonials"] });
       toast.success("Testimonial deleted");
     },
-    onError: () => toast.error("Failed to delete testimonial")
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   useEffect(() => {
@@ -232,7 +239,17 @@ const TestimonialsEditor = () => {
                     <ImageUpload 
                       label="Avatar Image (Optional)" 
                       value={editForm.image_url} 
-                      onChange={(url) => setEditForm({ ...editForm, image_url: url })} 
+                      onChange={(url) => {
+                        setEditForm({ ...editForm, image_url: url });
+                        // Auto-save image URL to database for better UX
+                        supabase.from("testimonials").update({ image_url: url }).eq("id", t.id).then(({ error }) => {
+                          if (!error) {
+                            queryClient.invalidateQueries({ queryKey: ["testimonials"] });
+                          } else {
+                            toast.error(formatError(error));
+                          }
+                        });
+                      }} 
                       folder="testimonials"
                     />
                   </div>

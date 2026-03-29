@@ -21,6 +21,7 @@ const ContactEditor = () => {
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-contact"] }); toast.success("Added!"); },
+    onError: (e: any) => toast.error(e.message),
   });
 
   if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
@@ -58,6 +59,7 @@ const ContactCard = ({ item }: { item: any }) => {
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-contact"] }); toast.success("Updated!"); },
+    onError: (e: any) => toast.error(e.message),
   });
 
   const deleteMutation = useMutation({
@@ -66,6 +68,7 @@ const ContactCard = ({ item }: { item: any }) => {
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-contact"] }); toast.success("Deleted!"); },
+    onError: (e: any) => toast.error(e.message),
   });
 
   return (

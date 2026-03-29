@@ -24,16 +24,7 @@ const HeroSection = () => {
   // Default professional illustration if no image is uploaded
   const defaultHandshakeImg = "/images/hero-handshake.png";
 
-  if (isLoading) {
-    return (
-      <div className="min-h-[90vh] flex items-center justify-center bg-white">
-        <div className="animate-pulse flex flex-col items-center gap-4 text-center">
-          <div className="h-16 w-96 bg-secondary rounded-2xl" />
-          <div className="h-6 w-64 bg-secondary rounded-lg" />
-        </div>
-      </div>
-    );
-  }
+  // Removed blocking isLoading return to allow immediate rendering with defaults
 
   return (
     <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">

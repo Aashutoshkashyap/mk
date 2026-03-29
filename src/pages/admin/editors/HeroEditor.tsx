@@ -99,10 +99,10 @@ const Field = ({ label, value, onChange, textarea }: { label: string; value: str
   <div>
     <label className="block text-sm font-semibold text-foreground mb-1.5">{label}</label>
     {textarea ? (
-      <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={3}
+      <textarea value={value || ""} onChange={(e) => onChange(e.target.value)} rows={3}
         className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
     ) : (
-      <input value={value} onChange={(e) => onChange(e.target.value)}
+      <input value={value || ""} onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
     )}
   </div>

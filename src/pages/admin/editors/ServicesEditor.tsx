@@ -16,12 +16,20 @@ const ServicesEditor = () => {
     },
   });
 
+  const formatError = (e: any) => {
+    if (e.message?.includes("new row violates row level security policy") || e.code === "42501") {
+      return "Permission Denied: You must be an 'admin' to perform this action.";
+    }
+    return e.message || "An unexpected error occurred.";
+  };
+
   const addMutation = useMutation({
     mutationFn: async () => {
       const { error } = await supabase.from("services").insert({ icon_name: "Briefcase", title: "New Service", description: "Description", sort_order: services.length });
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); toast.success("Service added!"); },
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
@@ -30,18 +38,18 @@ const ServicesEditor = () => {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl font-extrabold text-primary">Services</h2>
-        <button onClick={() => addMutation.mutate()} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
+        <button onClick={() => addMutation.mutate()} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all">
           <Plus size={16} /> Add Service
         </button>
       </div>
       <div className="space-y-4">
-        {services.map((service: any) => <ServiceCard key={service.id} service={service} />)}
+        {services.map((service: any) => <ServiceCard key={service.id} service={service} formatError={formatError} />)}
       </div>
     </div>
   );
 };
 
-const ServiceCard = ({ service }: { service: any }) => {
+const ServiceCard = ({ service, formatError }: { service: any, formatError: (e: any) => string }) => {
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: service.title, description: service.description, icon_name: service.icon_name, image_url: service.image_url || "" });
@@ -52,14 +60,17 @@ const ServiceCard = ({ service }: { service: any }) => {
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); toast.success("Service updated!"); },
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
+      if (!window.confirm("Are you sure you want to delete this service? All sub-services will also be removed.")) return;
       const { error } = await supabase.from("services").delete().eq("id", service.id);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); toast.success("Service deleted!"); },
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   const addSubMutation = useMutation({
@@ -68,6 +79,7 @@ const ServiceCard = ({ service }: { service: any }) => {
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); toast.success("Sub-service added!"); },
+    onError: (e: any) => toast.error(formatError(e))
   });
 
   return (
@@ -101,7 +113,17 @@ const ServiceCard = ({ service }: { service: any }) => {
             <ImageUpload 
               label="Service Image" 
               value={form.image_url} 
-              onChange={(url) => setForm({ ...form, image_url: url })} 
+              onChange={(url) => {
+                setForm({ ...form, image_url: url });
+                // Auto-save image URL to database for better UX
+                supabase.from("services").update({ image_url: url }).eq("id", service.id).then(({ error }) => {
+                  if (!error) {
+                    qc.invalidateQueries({ queryKey: ["admin-services"] });
+                  } else {
+                    toast.error(formatError(error));
+                  }
+                });
+              }} 
               folder="services"
             />
           </div>
@@ -137,14 +159,17 @@ const SubServiceRow = ({ sub }: { sub: any }) => {
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); toast.success("Updated!"); },
+    onError: (e: any) => toast.error(e.message || "Failed to update sub-service")
   });
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
+      if (!window.confirm("Delete sub-service?")) return;
       const { error } = await supabase.from("sub_services").delete().eq("id", sub.id);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); },
+    onError: (e: any) => toast.error(e.message || "Failed to delete sub-service")
   });
 
   return (

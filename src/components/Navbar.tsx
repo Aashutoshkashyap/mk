@@ -79,12 +79,12 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ 
         y: visible ? 0 : -100,
-        opacity: visible ? 1 : 0 
+        opacity: visible ? 1 : 0,
+        paddingTop: scrolled ? "8px" : "24px",
+        paddingBottom: scrolled ? "8px" : "24px",
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-2" : "py-6"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between gap-8 h-20">
@@ -96,9 +96,9 @@ const Navbar = () => {
               scale: showFullHeader ? 1 : 0.95
             }}
             transition={{ duration: 0.3 }}
-            className={cn("flex-shrink-0 min-w-[120px] md:min-w-[180px] flex items-center", !showFullHeader && "pointer-events-none")}
+            className={cn("flex-shrink-0 w-[120px] md:w-[200px] h-12 md:h-16 flex items-center", !showFullHeader && "pointer-events-none")}
           >
-            <Link to="/" className="transition-transform hover:scale-105 block w-full h-12 md:h-24 flex items-center">
+            <Link to="/" className="transition-transform hover:scale-105 block w-full h-full flex items-center">
               <img
                 src={settings?.logo_url || "https://sharpedge.com.np/static/img/logo.png"}
                 alt={settings?.company_name || "Sharp Edge Business Solutions"}

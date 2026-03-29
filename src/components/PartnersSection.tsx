@@ -22,6 +22,10 @@ const MarqueeRow = ({
             alt={item.name}
             className="max-w-full max-h-full object-contain"
             loading="lazy"
+            onError={(e) => {
+              e.currentTarget.src = "https://sharpedge.com.np/static/img/logo.png";
+              e.currentTarget.style.filter = "grayscale(1) opacity(0.2)";
+            }}
           />
         </div>
       ))}
@@ -35,20 +39,40 @@ const PartnersSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const { data: partners = [], isLoading } = useQuery({
+  const defaultPartners = [
+    { id: 'p1', name: 'ICAI Nepal', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+    { id: 'p2', name: 'Revenue Board', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+    { id: 'p3', name: 'Standard Chartered', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+    { id: 'p4', name: 'Nabil Bank', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+    { id: 'p5', name: 'Investment Bank', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+    { id: 'p6', name: 'Global IME', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+  ];
+
+  const { data: partners = [], isLoading, error } = useQuery({
     queryKey: ["partners"],
     queryFn: async () => {
-      const { data } = await supabase.from("partners").select("*").order("sort_order");
+      const { data, error } = await supabase.from("partners").select("*").order("sort_order");
+      if (error) throw error;
       return data || [];
     },
   });
 
-  if (isLoading || partners.length === 0) return null;
+  // Optimize space: if explicitly empty in DB and no error, hide section.
+  // If there's an error, show professional fallbacks.
+  if (isLoading) return <div className="h-60 bg-secondary/20 animate-pulse rounded-3xl mx-4 my-20" />;
+  if (partners.length === 0 && !error) return null;
+
+  const partnersToDisplay = partners.length > 0 ? partners : defaultPartners;
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = "/placeholder.svg"; // Fallback to a local SVG or original logo
+    e.currentTarget.className = "max-w-[120px] opacity-20 grayscale";
+  };
 
   // Distribute partners into 3 rows
-  const row1 = partners.filter((_, i) => i % 3 === 0);
-  const row2 = partners.filter((_, i) => i % 3 === 1);
-  const row3 = partners.filter((_, i) => i % 3 === 2);
+  const row1 = partnersToDisplay.filter((_, i) => i % 3 === 0);
+  const row2 = partnersToDisplay.filter((_, i) => i % 3 === 1);
+  const row3 = partnersToDisplay.filter((_, i) => i % 3 === 2);
 
   return (
     <section id="partners" className="py-20 md:py-28 bg-secondary/50 overflow-hidden" ref={ref}>

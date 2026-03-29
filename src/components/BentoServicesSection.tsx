@@ -7,18 +7,27 @@ import { getIcon } from "@/lib/iconMap";
 import { PrimaryButton } from "./ui/PrimaryButton";
 
 const BentoServicesSection = () => {
-  const { data: services = [] } = useQuery({
+  const { data: services = [], isLoading, error } = useQuery({
     queryKey: ["services-home"],
     queryFn: async () => {
-      const { data } = await supabase.from("services").select("*").order("sort_order");
+      const { data, error } = await supabase.from("services").select("*").order("sort_order");
+      if (error) throw error;
       return data || [];
     },
   });
 
-  if (services.length === 0) return null;
+  // Use the fetched services or professional defaults if still loading or if error occurs
+  const defaultServices = [
+    { id: '1', title: 'Audit and Assurance', description: 'Comprehensive and credible auditing services ensuring financial integrity.', icon_name: 'ShieldCheck', image_url: null },
+    { id: '2', title: 'Taxation Strategy', description: 'Expert guidance on complex tax laws and planning for compliance.', icon_name: 'PieChart', image_url: null },
+    { id: '3', title: 'Legal Advisory', description: 'Strategic legal counsel for businesses in dynamic regulatory environments.', icon_name: 'Gavel', image_url: null },
+    { id: '4', title: 'Business Consulting', description: 'Unlocking potential through expert management and operational strategies.', icon_name: 'Trophy', image_url: null },
+    { id: '5', title: 'Market Research', description: 'Data-driven insights to help navigate the competitive landscape of Nepal.', icon_name: 'BarChart', image_url: null },
+  ];
 
-  // We'll use the first 4 or 5 services for the bento layout to keep it clean
-  const displayServices = services.slice(0, 5);
+  if (isLoading) return <div className="h-[800px] bg-secondary/20 animate-pulse rounded-[3rem] mx-6 my-24 flex items-center justify-center text-muted-foreground">Loading expert services...</div>;
+
+  const displayServices = services.length > 0 ? services.slice(0, 5) : defaultServices;
 
   const getCardStyles = (index: number) => {
     switch (index) {
@@ -74,90 +83,31 @@ const BentoServicesSection = () => {
                 {/* Visual Decoration Wrapper */}
                 <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-primary/[0.02] to-primary/[0.08] flex items-center justify-center p-8">
                    {service.image_url ? (
-                     <img 
-                       src={service.image_url} 
-                       alt={service.title} 
-                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                     />
-                   ) : (
-                     <>
-                        {index === 0 && (
-                          <div className="w-full max-w-[280px] bg-white rounded-xl shadow-xl p-4 scale-95 origin-center -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                             <div className="flex items-center justify-between mb-3">
-                               <div className="text-[10px] font-bold text-muted-foreground uppercase">Transaction History</div>
-                               {[1, 2, 3, 4].map(i => <div key={i} className={`w-1.5 h-${i === 4 ? 4 : i + 2} rounded-full bg-brand-blue/${i * 20} ${i === 4 ? 'animate-pulse' : ''}`} />)}
-                             </div>
-                             {[1, 2, 3].map(i => (
-                               <div key={i} className="flex items-center gap-3 py-2 border-b border-secondary last:border-0">
-                                 <div className={`w-8 h-8 rounded-lg ${i === 2 ? 'bg-orange-100' : 'bg-blue-100'} flex items-center justify-center`}>
-                                   <div className={`w-4 h-4 rounded-sm ${i === 2 ? 'bg-orange-400' : 'bg-blue-400'}`} />
-                                 </div>
-                                 <div className="flex-1">
-                                   <div className="h-2 w-16 bg-secondary rounded mb-1" />
-                                   <div className="h-1.5 w-10 bg-secondary/60 rounded" />
-                                 </div>
-                                 <div className="text-xs font-bold text-primary">Rs. {(i * 4500).toLocaleString()}</div>
-                               </div>
-                             ))}
-                          </div>
-                        )}
-                        {index === 1 && (
-                          <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 shadow-lg w-32 h-32 flex flex-col items-center justify-center border border-white rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                             <div className="text-2xl font-black text-brand-blue">84%</div>
-                             <div className="text-[10px] font-bold text-muted-foreground uppercase mt-1">Efficiency</div>
-                             <div className="w-full bg-secondary h-1.5 rounded-full mt-3 overflow-hidden">
-                               <div className="bg-brand-blue h-full w-[84%]" />
-                             </div>
-                          </div>
-                        )}
-                        {index === 2 && (
-                          <div className="flex flex-col gap-3 w-full max-w-[240px] -rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                             <div className="bg-primary/5 rounded-xl p-3 border border-primary/10 mb-1">
-                                <div className="text-[10px] font-bold text-primary uppercase mb-0.5">Total Tax Liability</div>
-                                <div className="text-lg font-black text-primary">Rs. 1,42,500.00</div>
-                             </div>
-                             {[1, 2, 3].map(i => (
-                               <div key={i} className="bg-white rounded-lg p-2 shadow-md flex items-center gap-3 border border-white/50">
-                                 <div className={`w-2 h-2 rounded-full ${i <= 1 ? 'bg-brand-green' : 'bg-orange-400'}`} />
-                                 <div className="flex-1">
-                                   <div className={`h-2 ${i % 2 === 0 ? 'w-24' : 'w-16'} bg-secondary rounded`} />
-                                 </div>
-                                 <div className="text-[8px] font-black text-muted-foreground">{i <= 1 ? 'PAID' : 'PENDING'}</div>
-                               </div>
-                             ))}
-                          </div>
-                        )}
-                        {index === 3 && (
-                           <div className="w-full h-full flex items-center justify-center">
-                             <svg width="240" height="120" viewBox="0 0 240 120" className="drop-shadow-2xl">
-                               <path d="M0 100 Q 60 80, 120 40 T 240 10" fill="none" stroke="url(#gradient)" strokeWidth="6" strokeLinecap="round" />
-                               <defs>
-                                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                   <stop offset="0%" stopColor="#0ea5e9" />
-                                   <stop offset="100%" stopColor="#2563eb" />
-                                 </linearGradient>
-                               </defs>
-                               {[40, 120, 200].map(x => (
-                                 <circle key={x} cx={x} cy={x === 40 ? 85 : (x === 120 ? 40 : 15)} r="5" fill="white" stroke="#2563eb" strokeWidth="3" />
-                               ))}
-                             </svg>
-                           </div>
-                        )}
-                        {index > 3 && (
-                          <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center rotate-45">
-                             <Icon size={32} className="text-primary -rotate-45" />
-                          </div>
-                        )}
-                     </>
-                   )}
+                    <img 
+                      src={service.image_url} 
+                      alt={service.title} 
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'; // Hide broken image
+                        // The relative icon/gradient below will then be visible
+                      }}
+                    />
+                  ) : null}
+                  
+                  {/* Clean Icon-based Placeholder (Visible if no image or image fails) */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/[0.05] to-brand-blue/[0.05]">
+                    <Icon size={64} className="text-primary/20 transition-all duration-700 group-hover:scale-125 group-hover:text-primary/30" />
+                  </div>
+                </div>
+
+                {/* Floating Icon Box (Top Left Corner) */}
+                <div className="absolute top-6 left-6 z-20 w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-md shadow-lg border border-white/50 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                  <Icon size={24} className="text-brand-blue" />
                 </div>
 
                 <div className="relative p-8 md:p-10 flex flex-col flex-1 bg-white">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary/[0.08] flex items-center justify-center">
-                      <Icon size={20} className="text-primary" />
-                    </div>
-                    <h3 className="font-display text-xl font-bold text-primary">
+                  <div className="mb-4">
+                    <h3 className="font-display text-xl md:text-2xl font-bold text-primary tracking-tight">
                       {service.title}
                     </h3>
                   </div>

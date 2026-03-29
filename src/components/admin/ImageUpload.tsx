@@ -46,9 +46,19 @@ export const ImageUpload = ({
 
       const { data, error: uploadError } = await supabase.storage
         .from(bucket)
-        .upload(filePath, file);
+        .upload(filePath, file, { cacheControl: '3600', upsert: true });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("DEBUG: Storage upload error details:", uploadError);
+        // Special handling for common errors
+        if ((uploadError as any).message === "Bucket not found") {
+          throw new Error(`Storage bucket '${bucket}' not found. Please create it in your Supabase dashboard and set it to public.`);
+        }
+        if ((uploadError as any).status === 403 || (uploadError as any).message?.includes("security policy")) {
+          throw new Error(`Permission denied for bucket '${bucket}'. Please ensure you have run the Storage RLS setup script.`);
+        }
+        throw uploadError;
+      }
 
       const { data: { publicUrl } } = supabase.storage
         .from(bucket)
@@ -58,8 +68,6 @@ export const ImageUpload = ({
       toast.success("Image uploaded successfully!");
     } catch (error: any) {
       console.error("DEBUG: Image upload failed", error);
-      if (error.message) console.error("DEBUG: Error message:", error.message);
-      if (error.status) console.error("DEBUG: Error status:", error.status);
       toast.error(error.message || "Failed to upload image");
     } finally {
       setIsUploading(false);
@@ -141,7 +149,7 @@ export const ImageUpload = ({
         <div className="w-1/3 flex flex-col gap-2">
           <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Or paste URL</div>
           <textarea
-            value={value}
+            value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder="https://images.unsplash.com/..."
             className="flex-1 w-full rounded-xl border border-border bg-secondary/30 p-3 text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue/20 resize-none"

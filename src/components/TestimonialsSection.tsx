@@ -7,10 +7,11 @@ import { useState, useMemo, useRef, useEffect } from "react";
 const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   
-  const { data: testimonials = [] } = useQuery({
+  const { data: testimonials = [], isLoading, error } = useQuery({
     queryKey: ["testimonials-home"],
     queryFn: async () => {
-      const { data } = await supabase.from("testimonials").select("*").order("sort_order");
+      const { data, error } = await supabase.from("testimonials").select("*").order("sort_order");
+      if (error) throw error;
       return data || [];
     },
   });
@@ -23,7 +24,11 @@ const TestimonialsSection = () => {
     },
   });
 
-  const activeTestimonial = testimonials[activeIndex];
+  const defaultTestimonials = [
+    { id: 't1', name: 'Rajesh Sharma', role: 'CEO, Nepal Ventures', content: 'Sharp Edge provided us with exceptional audit services. Their attention to detail and professional integrity are unmatched.', image_url: null, sort_order: 1 },
+    { id: 't2', name: 'Sita Thapa', role: 'Finance Director', content: 'The taxation strategy developed by their team saved us significant resources. Highly recommended for any business in Nepal.', image_url: null, sort_order: 2 },
+    { id: 't3', name: 'Anil Kapali', role: 'Founder, TechHive', content: 'Expert legal advice that helped us navigate complex regulatory hurdles. A true partner in our growth journey.', image_url: null, sort_order: 3 },
+  ];
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -70,12 +75,15 @@ const TestimonialsSection = () => {
     };
   }, []);
 
+  const testimonialsToDisplay = testimonials.length > 0 ? testimonials : defaultTestimonials;
+  const activeTestimonial = testimonialsToDisplay[activeIndex] || defaultTestimonials[0];
+  
   // Dynamically calculate positions in a large circle to utilize space
   const floatingPositions = useMemo(() => {
-    const total = testimonials.length;
+    const total = testimonialsToDisplay.length;
     if (total <= 1) return [];
     
-    return testimonials.map((_, i) => {
+    return testimonialsToDisplay.map((_, i) => {
       const angle = (i / total) * Math.PI * 2;
       const rx = 46; // horizontal radius in %
       const ry = 42; // vertical radius in %
@@ -85,12 +93,14 @@ const TestimonialsSection = () => {
         delay: i * 0.1
       };
     });
-  }, [testimonials.length]);
-
-  if (testimonials.length === 0) return null;
+  }, [testimonialsToDisplay.length]);
 
   // Duplicate testimonials for the infinite scroll on mobile
-  const mobileTestimonials = [...testimonials, ...testimonials];
+  const mobileTestimonials = [...testimonialsToDisplay, ...testimonialsToDisplay];
+
+  // Early returns must come AFTER all hooks
+  if (isLoading) return <div className="h-[600px] bg-secondary/10 animate-pulse rounded-[40px] mx-6 my-24 flex items-center justify-center text-muted-foreground">Loading testimonials...</div>;
+  if (testimonials.length === 0 && !error) return null;
 
   return (
     <section id="testimonials" className="relative bg-[#fafbff] pt-24 pb-32 overflow-hidden min-h-[900px] flex flex-col items-center">
@@ -161,6 +171,9 @@ const TestimonialsSection = () => {
                             src={activeTestimonial?.image_url || `https://i.pravatar.cc/150?u=${activeTestimonial?.id}`} 
                             alt={activeTestimonial?.name} 
                             className="w-full h-full object-cover" 
+                            onError={(e) => {
+                              e.currentTarget.src = `https://i.pravatar.cc/150?u=${activeTestimonial?.id}`;
+                            }}
                           />
                        </motion.div>
                        <div className="absolute w-[calc(100%+2rem)] h-[calc(100%+2rem)] rounded-full border border-dashed border-brand-blue/20 animate-[spin_15s_linear_infinite]" />
@@ -174,7 +187,7 @@ const TestimonialsSection = () => {
             </div>
 
             {/* Floating Other Members */}
-            {testimonials.map((t, i) => {
+            {testimonialsToDisplay.map((t, i) => {
               if (i === activeIndex) return null;
               const pos = floatingPositions[i];
               
@@ -199,6 +212,9 @@ const TestimonialsSection = () => {
                       src={t.image_url || `https://i.pravatar.cc/150?u=${t.id}`} 
                       alt={t.name} 
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+                      onError={(e) => {
+                        e.currentTarget.src = `https://i.pravatar.cc/150?u=${t.id}`;
+                      }}
                     />
                     <div className="absolute inset-0 bg-brand-blue/10 group-hover:bg-transparent transition-colors duration-500" />
                     
@@ -234,7 +250,13 @@ const TestimonialsSection = () => {
               </p>
               <div className="mt-auto flex items-center gap-4 pt-4 border-t border-border/50">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-orange-50 shrink-0">
-                  <img src={t.image_url || `https://i.pravatar.cc/150?u=${t.id}`} alt={t.name} className="w-full h-full object-cover" />
+                  <img src={t.image_url || `https://i.pravatar.cc/150?u=${t.id}`} 
+                    alt={t.name} 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => {
+                      e.currentTarget.src = `https://i.pravatar.cc/150?u=${t.id}`;
+                    }}
+                  />
                 </div>
                 <div>
                   <h4 className="font-bold text-primary text-sm">{t.name}</h4>
@@ -250,7 +272,7 @@ const TestimonialsSection = () => {
         <div className="mt-4 lg:mt-24 mb-10 flex flex-col items-center gap-8 relative z-20">
            {/* Pagination dots (Desktop only) */}
            <div className="hidden lg:flex gap-2">
-              {testimonials.map((_, i) => (
+              {testimonialsToDisplay.map((_, i) => (
                 <button 
                   key={i} 
                   onClick={() => setActiveIndex(i)}

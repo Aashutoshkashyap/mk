@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Save } from "lucide-react";
 import { toast } from "sonner";
 
@@ -17,14 +17,18 @@ const CTAEditor = () => {
 
   const [form, setForm] = useState({ heading: "", description: "", cta_text: "", cta_link: "" });
 
+  const initialized = useRef(false);
   useEffect(() => {
-    if (data) setForm({ heading: data.heading || "", description: data.description || "", cta_text: data.cta_text || "", cta_link: data.cta_link || "" });
+    if (data && !initialized.current) {
+      initialized.current = true;
+      setForm({ heading: data.heading || "", description: data.description || "", cta_text: data.cta_text || "", cta_link: data.cta_link || "" });
+    }
   }, [data]);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      if (data?.id) {
-        const { error } = await supabase.from("prefooter_cta").update(form).eq("id", data.id);
+    mutationFn: async ({ form, id }: any) => {
+      if (id) {
+        const { error } = await supabase.from("prefooter_cta").update(form).eq("id", id);
         if (error) throw error;
       } else {
         const { error } = await supabase.from("prefooter_cta").insert(form);
@@ -53,7 +57,7 @@ const CTAEditor = () => {
           <div><label className="block text-sm font-semibold text-foreground mb-1.5">CTA Link</label>
             <input value={form.cta_link} onChange={(e) => setForm({ ...form, cta_link: e.target.value })} className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" /></div>
         </div>
-        <button onClick={() => mutation.mutate()} disabled={mutation.isPending}
+        <button onClick={() => mutation.mutate({ form, id: data?.id })} disabled={mutation.isPending}
           className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors disabled:opacity-50">
           <Save size={16} /> {mutation.isPending ? "Saving..." : "Save Changes"}
         </button>

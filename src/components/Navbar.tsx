@@ -25,7 +25,11 @@ const Navbar = () => {
   const { data: settings } = useQuery({
     queryKey: ["site_settings"],
     queryFn: async () => {
-      const { data } = await supabase.from("site_settings").select("*").eq("id", "current").single();
+      const { data } = await supabase
+        .from("site_settings")
+        .select("*")
+        .eq("id", "00000000-0000-0000-0000-000000000000")
+        .maybeSingle();
       return data;
     },
   });

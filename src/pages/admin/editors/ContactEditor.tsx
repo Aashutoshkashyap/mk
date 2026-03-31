@@ -16,8 +16,8 @@ const ContactEditor = () => {
   });
 
   const addMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("contact_info").insert({ icon_name: "Mail", title: "New Contact", details: ["Detail"], sort_order: items.length });
+    mutationFn: async ({ len }: any) => {
+      const { error } = await supabase.from("contact_info").insert({ icon_name: "Mail", title: "New Contact", details: ["Detail"], sort_order: len });
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-contact"] }); toast.success("Added!"); },
@@ -30,7 +30,7 @@ const ContactEditor = () => {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl font-extrabold text-primary">Contact Info</h2>
-        <button onClick={() => addMutation.mutate()} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
+        <button onClick={() => addMutation.mutate({ len: items.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
           <Plus size={16} /> Add
         </button>
       </div>
@@ -50,12 +50,12 @@ const ContactCard = ({ item }: { item: any }) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({ form, id }: any) => {
       const { error } = await supabase.from("contact_info").update({
         icon_name: form.icon_name, title: form.title,
         details: form.details.split("\n").filter(Boolean),
         action_label: form.action_label || null, action_href: form.action_href || null,
-      }).eq("id", item.id);
+      }).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-contact"] }); toast.success("Updated!"); },
@@ -63,8 +63,8 @@ const ContactCard = ({ item }: { item: any }) => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("contact_info").delete().eq("id", item.id);
+    mutationFn: async ({ id }: any) => {
+      const { error } = await supabase.from("contact_info").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-contact"] }); toast.success("Deleted!"); },
@@ -81,8 +81,8 @@ const ContactCard = ({ item }: { item: any }) => {
         </div>
         <div><label className="block text-xs font-semibold mb-1">Title</label><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
         <div className="flex items-end gap-2">
-          <button onClick={() => updateMutation.mutate()} className="rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground"><Save size={14} /></button>
-          <button onClick={() => deleteMutation.mutate()} className="rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive"><Trash2 size={14} /></button>
+          <button onClick={() => updateMutation.mutate({ form, id: item.id })} className="rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground"><Save size={14} /></button>
+          <button onClick={() => deleteMutation.mutate({ id: item.id })} className="rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive"><Trash2 size={14} /></button>
         </div>
       </div>
       <div><label className="block text-xs font-semibold mb-1">Details (one per line)</label><textarea value={form.details} onChange={(e) => setForm({ ...form, details: e.target.value })} rows={3} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>

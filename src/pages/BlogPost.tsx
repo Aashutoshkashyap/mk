@@ -98,19 +98,35 @@ const BlogPost = () => {
           )}
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-            {post.content.split("\n\n").map((paragraph, i) => (
+            {(post.content || "").split("\n\n").map((paragraph, i) => (
               <div key={i}>
                 <p className="text-muted-foreground leading-relaxed mb-6 text-base md:text-lg">{paragraph}</p>
                 {/* Insert image_1 after 2nd paragraph */}
                 {i === 1 && post.image_1_url && (
                   <div className="my-8">
-                    <img src={post.image_1_url} alt="Article illustration" className="w-full rounded-xl" loading="lazy" />
+                    <img 
+                      src={post.image_1_url} 
+                      alt="Article illustration" 
+                      className="w-full rounded-xl" 
+                      loading="lazy" 
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'; // Hide if broken
+                      }}
+                    />
                   </div>
                 )}
                 {/* Insert image_2 after 4th paragraph or last if shorter */}
                 {i === 3 && post.image_2_url && (
                   <div className="my-8">
-                    <img src={post.image_2_url} alt="Article illustration" className="w-full rounded-xl" loading="lazy" />
+                    <img 
+                      src={post.image_2_url} 
+                      alt="Article illustration" 
+                      className="w-full rounded-xl" 
+                      loading="lazy" 
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'; // Hide if broken
+                      }}
+                    />
                   </div>
                 )}
               </div>

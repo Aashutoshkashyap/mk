@@ -9,22 +9,41 @@ const HeroSection = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["hero"],
     queryFn: async () => {
-      const { data } = await supabase.from("hero_section").select("*").maybeSingle();
-      return data;
+      const { data } = await supabase.from("hero_section").select("*").limit(1).maybeSingle();
+      return data || null;
     },
+    staleTime: 1000 * 60 * 5,
   });
 
-  const avatars = [
-    "https://i.pravatar.cc/150?u=1",
-    "https://i.pravatar.cc/150?u=2",
-    "https://i.pravatar.cc/150?u=3",
-    "https://i.pravatar.cc/150?u=4"
-  ];
+
 
   // Default professional illustration if no image is uploaded
   const defaultHandshakeImg = "/images/hero-handshake.png";
 
-  // Removed blocking isLoading return to allow immediate rendering with defaults
+  if (isLoading) {
+    return (
+      <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full animate-pulse">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="max-w-2xl text-center lg:text-left space-y-6">
+              <div className="h-16 bg-secondary/80 rounded-2xl w-3/4 mx-auto lg:mx-0"></div>
+              <div className="h-16 bg-secondary/80 rounded-2xl w-2/3 mx-auto lg:mx-0"></div>
+              <div className="h-20 bg-secondary/40 rounded-2xl w-full mt-8"></div>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-10">
+                <div className="h-14 w-40 bg-secondary/80 rounded-2xl"></div>
+                <div className="h-14 w-40 bg-secondary/40 rounded-2xl"></div>
+              </div>
+            </div>
+            <div className="relative flex justify-center lg:justify-end">
+              <div className="w-full max-w-[550px] aspect-square flex items-center justify-center">
+                <div className="w-[95%] h-[95%] bg-secondary/30 rounded-[4rem] border border-border"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
@@ -92,30 +111,6 @@ const HeroSection = () => {
                 <span>{data?.secondary_cta_text || "Learn More"}</span>
               </PrimaryButton>
             </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="mt-12 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6"
-            >
-              <div className="flex -space-x-3">
-                {avatars.map((url, i) => (
-                  <div key={i} className="w-12 h-12 rounded-full border-4 border-white overflow-hidden shadow-md bg-secondary shrink-0">
-                    <img src={url} alt="User" className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-              <div className="text-sm font-semibold text-muted-foreground text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start gap-1.5 mb-0.5">
-                  <span className="text-primary font-bold text-lg">5,000+</span>
-                  <div className="flex gap-0.5 text-orange-400">
-                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={12} fill="currentColor" />)}
-                  </div>
-                </div>
-                Trusted global partners and entrepreneurs
-              </div>
-            </motion.div>
           </div>
 
           {/* Right Visual (Business Illustration) */}
@@ -136,6 +131,9 @@ const HeroSection = () => {
                   <img 
                     src={data?.image_url || defaultHandshakeImg} 
                     alt="Business Partnership" 
+                    onError={(e) => {
+                      e.currentTarget.src = defaultHandshakeImg;
+                    }}
                   />
                 </div>
               </div>

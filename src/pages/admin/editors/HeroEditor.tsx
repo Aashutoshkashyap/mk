@@ -1,9 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Save } from "lucide-react";
 import { toast } from "sonner";
-
 import { ImageUpload } from "@/components/admin/ImageUpload";
 
 const HeroEditor = () => {
@@ -11,51 +10,57 @@ const HeroEditor = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin-hero"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("hero_section").select("*").maybeSingle();
+      const { data, error } = await supabase.from("hero_section").select("*").limit(1).maybeSingle();
       if (error) throw error;
       return data;
     },
   });
 
-  const [form, setForm] = useState({ 
-    title: "", 
-    subtitle: "", 
-    description: "", 
-    cta_text: "", 
-    cta_link: "", 
-    secondary_cta_text: "", 
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    cta_text: "",
+    cta_link: "",
+    secondary_cta_text: "",
     secondary_cta_link: "",
     image_url: ""
   });
 
+  const initialized = useRef(false);
   useEffect(() => {
-    if (data) setForm({
-      title: data.title || "", 
-      subtitle: data.subtitle || "", 
-      description: data.description || "",
-      cta_text: data.cta_text || "", 
-      cta_link: data.cta_link || "",
-      secondary_cta_text: data.secondary_cta_text || "", 
-      secondary_cta_link: data.secondary_cta_link || "",
-      image_url: (data as any).image_url || ""
-    });
+    if (data && !initialized.current) {
+      initialized.current = true;
+      setForm({
+        title: data.title || "",
+        description: data.description || "",
+        cta_text: data.cta_text || "",
+        cta_link: data.cta_link || "",
+        secondary_cta_text: data.secondary_cta_text || "",
+        secondary_cta_link: data.secondary_cta_link || "",
+        image_url: (data as any).image_url || ""
+      });
+    }
   }, [data]);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      if (data?.id) {
-        const { error } = await supabase.from("hero_section").update(form).eq("id", data.id);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from("hero_section").insert(form);
-        if (error) throw error;
-      }
+    mutationFn: async ({ payload, id }: { payload: typeof form, id?: string }) => {
+      const { error } = await supabase
+        .from("hero_section")
+        .upsert({ 
+          ...(id ? { id } : {}),
+          ...payload,
+          subtitle: "",
+        });
+      if (error) throw error;
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-hero"] }); toast.success("Hero updated!"); },
+    onSuccess: () => { 
+      qc.invalidateQueries({ queryKey: ["admin-hero"] }); 
+      toast.success("Hero updated!"); 
+    },
     onError: (e: any) => toast.error(e.message),
   });
 
-  if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
+  if (isLoading && !data) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
   if (error) return <div className="p-4 text-destructive text-sm rounded-xl bg-destructive/10">Failed to load: {(error as any).message}</div>;
 
   return (
@@ -65,29 +70,39 @@ const HeroEditor = () => {
       <div className="rounded-2xl bg-card border border-border p-6 space-y-6">
         <div className="grid lg:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <Field label="Subtitle" value={form.subtitle} onChange={(v) => setForm({ ...form, subtitle: v })} />
-            <Field label="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
+            <Field label="Headline / Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
             <Field label="Description" value={form.description} onChange={(v) => setForm({ ...form, description: v })} textarea />
           </div>
           <div className="space-y-4">
-            <ImageUpload 
-              label="Hero Image (Optional)" 
-              value={form.image_url} 
-              onChange={(url) => setForm({ ...form, image_url: url })} 
+            <ImageUpload
+              label="Hero Image (Optional)"
+              value={form.image_url}
+              onChange={(url) => setForm({ ...form, image_url: url })}
               folder="hero"
             />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <Field label="CTA Text" value={form.cta_text} onChange={(v) => setForm({ ...form, cta_text: v })} />
-          <Field label="CTA Link" value={form.cta_link} onChange={(v) => setForm({ ...form, cta_link: v })} />
+          <Field label="Primary CTA Text" value={form.cta_text} onChange={(v) => setForm({ ...form, cta_text: v })} />
+          <Field label="Primary CTA Link" value={form.cta_link} onChange={(v) => setForm({ ...form, cta_link: v })} />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Field label="Secondary CTA Text" value={form.secondary_cta_text} onChange={(v) => setForm({ ...form, secondary_cta_text: v })} />
           <Field label="Secondary CTA Link" value={form.secondary_cta_link} onChange={(v) => setForm({ ...form, secondary_cta_link: v })} />
         </div>
-        <button onClick={() => mutation.mutate()} disabled={mutation.isPending}
-          className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors disabled:opacity-50">
+        <button
+          onClick={() => mutation.mutate({ payload: {
+            title: form.title,
+            description: form.description,
+            cta_text: form.cta_text,
+            cta_link: form.cta_link,
+            secondary_cta_text: form.secondary_cta_text,
+            secondary_cta_link: form.secondary_cta_link,
+            image_url: form.image_url,
+          }, id: data?.id })}
+          disabled={mutation.isPending}
+          className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors disabled:opacity-50"
+        >
           <Save size={16} /> {mutation.isPending ? "Saving..." : "Save Changes"}
         </button>
       </div>
@@ -99,7 +114,7 @@ const Field = ({ label, value, onChange, textarea }: { label: string; value: str
   <div>
     <label className="block text-sm font-semibold text-foreground mb-1.5">{label}</label>
     {textarea ? (
-      <textarea value={value || ""} onChange={(e) => onChange(e.target.value)} rows={3}
+      <textarea value={value || ""} onChange={(e) => onChange(e.target.value)} rows={4}
         className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
     ) : (
       <input value={value || ""} onChange={(e) => onChange(e.target.value)}

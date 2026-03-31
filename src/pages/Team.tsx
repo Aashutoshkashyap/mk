@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import PreFooterCTA from "@/components/PreFooterCTA";
+import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 
 const Team = () => {
   const teamRef = useRef(null);
@@ -16,12 +17,18 @@ const Team = () => {
       const { data } = await supabase.from("team_members").select("*, team_sectors(*)").order("sort_order");
       return data || [];
     },
+    staleTime: 1000 * 60 * 5,
   });
+
+  const { isVisible } = useSectionVisibility();
 
   return (
     <>
-      {/* Hero Banner */}
-      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-primary overflow-hidden">
+      {isVisible("team") && (
+        <>
+          {/* Hero Banner */}
+          <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-primary overflow-hidden">
+
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-blue/10 blur-3xl" />
           <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-brand-green/5 blur-3xl" />
@@ -39,12 +46,12 @@ const Team = () => {
 
       <section ref={teamRef} className="py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="flex flex-wrap justify-center gap-8">
             {members.map((member: any, i: number) => {
               const sectors = (member.team_sectors || []).sort((a: any, b: any) => a.sort_order - b.sort_order);
               return (
                 <motion.div key={member.id} initial={{ opacity: 0, y: 40 }} animate={teamInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 * i }}
-                  className="group rounded-2xl bg-card border border-border overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                  className="group rounded-2xl bg-card border border-border overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 w-full md:w-[calc(33.333%-1.5rem)] min-w-[300px]">
                   <div className="relative h-72 overflow-hidden bg-secondary">
                     <img src={member.image_url || ""} alt={member.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent p-5">
@@ -76,7 +83,9 @@ const Team = () => {
             })}
           </div>
         </div>
-      </section>
+        </section>
+        </>
+      )}
 
       <PreFooterCTA />
     </>

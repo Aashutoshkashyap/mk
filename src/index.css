@@ -109,15 +109,19 @@
   }
 
   .marquee {
-    animation: marquee 40s linear infinite;
+    animation: marquee 80s linear infinite;
   }
 
   .marquee-reverse {
-    animation: marquee-reverse 40s linear infinite;
+    animation: marquee-reverse 80s linear infinite;
   }
 
   .marquee-slow {
-    animation: marquee 55s linear infinite;
+    animation: marquee 110s linear infinite;
+  }
+
+  .marquee-pause:hover div {
+    animation-play-state: paused;
   }
 }
 

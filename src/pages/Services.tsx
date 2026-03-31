@@ -6,8 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import PreFooterCTA from "@/components/PreFooterCTA";
+import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 
 const Services = () => {
+  const { isVisible } = useSectionVisibility();
   const { data: services = [] } = useQuery({
     queryKey: ["services-full"],
     queryFn: async () => {
@@ -19,29 +21,33 @@ const Services = () => {
   return (
     <>
       {/* Hero Banner */}
-      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-primary overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-blue/10 blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-brand-green/5 blur-3xl" />
-        </div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="text-center">
-            <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">What We Offer</span>
-            <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">Our Services</h1>
-            <p className="mt-5 text-primary-foreground/70 max-w-2xl mx-auto">
-              We commitment to deliver valuable, trustworthy, and efficient services rooted in their expertise and experience in audit, taxation, regulatory compliance, and related business services.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {isVisible("services_hero") && (
+        <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-primary overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-blue/10 blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-brand-green/5 blur-3xl" />
+          </div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="text-center">
+              <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">What We Offer</span>
+              <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">Our Services</h1>
+              <p className="mt-5 text-primary-foreground/70 max-w-2xl mx-auto">
+                We commitment to deliver valuable, trustworthy, and efficient services rooted in their expertise and experience in audit, taxation, regulatory compliance, and related business services.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-20">
-          {services.map((service: any, idx: number) => (
-            <ServiceBlock key={service.id} service={service} index={idx} />
-          ))}
-        </div>
-      </section>
+      {isVisible("services_list") && (
+        <section className="py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-20">
+            {services.map((service: any, idx: number) => (
+              <ServiceBlock key={service.id} service={service} index={idx} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <PreFooterCTA />
     </>

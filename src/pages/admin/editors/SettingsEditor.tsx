@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Save, Globe, Image as ImageIcon, Link as LinkIcon, Info } from "lucide-react";
@@ -14,8 +14,8 @@ const SettingsEditor = () => {
       const { data, error } = await supabase
         .from("site_settings")
         .select("*")
-        .eq("id", "current")
-        .single();
+        .eq("id", "00000000-0000-0000-0000-000000000000")
+        .maybeSingle();
       
       if (error) throw error;
       return data;
@@ -28,8 +28,10 @@ const SettingsEditor = () => {
     favicon_url: "",
   });
 
+  const initialized = useRef(false);
   useEffect(() => {
-    if (settings) {
+    if (settings && !initialized.current) {
+      initialized.current = true;
       setForm({
         company_name: settings.company_name || "",
         logo_url: settings.logo_url || "",
@@ -42,8 +44,10 @@ const SettingsEditor = () => {
     mutationFn: async (values: typeof form) => {
       const { error } = await supabase
         .from("site_settings")
-        .update(values)
-        .eq("id", "current");
+        .upsert({
+          id: "00000000-0000-0000-0000-000000000000",
+          ...values
+        });
       if (error) throw error;
     },
     onSuccess: () => {

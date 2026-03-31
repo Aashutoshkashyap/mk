@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
-import { Save, Plus, Trash2, LayoutGrid, List } from "lucide-react";
+import { Save, Plus, Trash2, LayoutGrid, List, GripVertical } from "lucide-react";
 import { toast } from "sonner";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { BulkImageUpload } from "@/components/admin/BulkImageUpload";
 
@@ -19,11 +20,11 @@ const PartnersEditor = () => {
   });
 
   const addPartner = useMutation({
-    mutationFn: async (partnerData?: { name: string, logo_url: string }) => {
+    mutationFn: async ({ partnerData, len }: any = {}) => {
       const { error } = await supabase.from("partners").insert({ 
         name: partnerData?.name || "New Partner", 
         logo_url: partnerData?.logo_url || "https://via.placeholder.com/150", 
-        sort_order: partners.length 
+        sort_order: len || 0
       });
       if (error) throw error;
     },
@@ -50,6 +51,28 @@ const PartnersEditor = () => {
       console.error("Failed to save bulk partners", error);
       toast.error(error.message || "Failed to save partners to database");
     }
+  };
+
+  const updateOrderMutation = useMutation({
+    mutationFn: async (items: any[]) => {
+      const promises = items.map((item, index) => 
+        supabase.from("partners").update({ sort_order: index }).eq("id", item.id)
+      );
+      await Promise.all(promises);
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["partners"] });
+    }
+  });
+
+  const onDragEnd = (result: any) => {
+    if (!result.destination) return;
+    const items = Array.from(partners);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    
+    qc.setQueryData(["partners"], items);
+    updateOrderMutation.mutate(items);
   };
 
   if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
@@ -81,7 +104,7 @@ const PartnersEditor = () => {
             </button>
           </div>
           <button 
-            onClick={() => addPartner.mutate(undefined)} 
+            onClick={() => addPartner.mutate({ len: partners.length })} 
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all shadow-lg shadow-primary/10"
           >
             <Plus size={20} /> Add One
@@ -94,22 +117,43 @@ const PartnersEditor = () => {
         <BulkImageUpload onUploadComplete={handleBulkUpload} folder="partners" />
       </div>
 
-      <div className={view === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
-        {partners.map((partner: any) => (
-          <PartnerCard key={partner.id} partner={partner} view={view} />
-        ))}
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="partners-list" direction={view === "grid" ? "horizontal" : "vertical"}>
+          {(provided) => (
+            <div 
+              {...provided.droppableProps} 
+              ref={provided.innerRef} 
+              className={view === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}
+            >
+              {partners.map((partner: any, index: number) => (
+                <Draggable key={partner.id} draggableId={partner.id} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      className={`${snapshot.isDragging ? "z-50 relative shadow-2xl ring-1 ring-primary/20 rounded-2xl" : ""}`}
+                    >
+                      <PartnerCard partner={partner} view={view} dragHandleProps={provided.dragHandleProps} />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };
 
-const PartnerCard = ({ partner, view }: { partner: any; view: "grid" | "list" }) => {
+const PartnerCard = ({ partner, view, dragHandleProps }: { partner: any; view: "grid" | "list", dragHandleProps?: any }) => {
   const qc = useQueryClient();
   const [form, setForm] = useState({ name: partner.name, logo_url: partner.logo_url });
 
   const updatePartner = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("partners").update(form).eq("id", partner.id);
+    mutationFn: async ({ form, id }: any) => {
+      const { error } = await supabase.from("partners").update(form).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -119,8 +163,8 @@ const PartnerCard = ({ partner, view }: { partner: any; view: "grid" | "list" })
   });
 
   const deletePartner = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("partners").delete().eq("id", partner.id);
+    mutationFn: async ({ id }: any) => {
+      const { error } = await supabase.from("partners").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -132,6 +176,9 @@ const PartnerCard = ({ partner, view }: { partner: any; view: "grid" | "list" })
   if (view === "list") {
     return (
       <div className="flex items-center gap-4 bg-card border border-border p-3 rounded-xl">
+        <div {...dragHandleProps} className="cursor-grab text-muted-foreground/30 hover:text-primary transition-colors p-1 rounded-lg hover:bg-secondary">
+          <GripVertical size={20} />
+        </div>
         <div className="w-12 h-12 bg-secondary rounded-lg overflow-hidden flex items-center justify-center p-2 shrink-0">
           <img src={partner.logo_url} alt={partner.name} className="max-w-full max-h-full object-contain" />
         </div>
@@ -141,10 +188,10 @@ const PartnerCard = ({ partner, view }: { partner: any; view: "grid" | "list" })
           className="flex-1 bg-transparent border-none text-sm font-bold focus:ring-0" 
         />
         <div className="flex items-center gap-2">
-          <button onClick={() => updatePartner.mutate()} className="p-2 text-brand-blue hover:bg-brand-blue/10 rounded-lg">
+          <button onClick={() => updatePartner.mutate({ form, id: partner.id })} className="p-2 text-brand-blue hover:bg-brand-blue/10 rounded-lg">
             <Save size={16} />
           </button>
-          <button onClick={() => deletePartner.mutate()} className="p-2 text-destructive hover:bg-destructive/10 rounded-lg">
+          <button onClick={() => deletePartner.mutate({ id: partner.id })} className="p-2 text-destructive hover:bg-destructive/10 rounded-lg">
             <Trash2 size={16} />
           </button>
         </div>
@@ -153,7 +200,10 @@ const PartnerCard = ({ partner, view }: { partner: any; view: "grid" | "list" })
   }
 
   return (
-    <div className="group rounded-2xl bg-card border border-border overflow-hidden transition-all hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5">
+    <div className="group rounded-2xl bg-card border border-border overflow-hidden transition-all hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 relative">
+      <div {...dragHandleProps} className="absolute top-3 right-3 p-1.5 bg-background/80 backdrop-blur-md rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-grab z-10 text-muted-foreground hover:text-primary shadow-sm border border-border">
+        <GripVertical size={16} />
+      </div>
       <div className="p-6">
         <ImageUpload 
           label="Partner Logo" 
@@ -180,13 +230,13 @@ const PartnerCard = ({ partner, view }: { partner: any; view: "grid" | "list" })
           
           <div className="flex gap-2 pt-2">
             <button 
-              onClick={() => updatePartner.mutate()} 
+              onClick={() => updatePartner.mutate({ form, id: partner.id })} 
               className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-primary/5 px-4 py-2.5 text-xs font-bold text-primary hover:bg-primary/10 transition-colors"
             >
               <Save size={14} /> Save Changes
             </button>
             <button 
-              onClick={() => deletePartner.mutate()} 
+              onClick={() => deletePartner.mutate({ id: partner.id })} 
               className="inline-flex items-center justify-center rounded-xl bg-destructive/5 px-4 py-2.5 text-xs font-bold text-destructive hover:bg-destructive/10 transition-colors"
             >
               <Trash2 size={14} />

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Save } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
@@ -18,29 +18,36 @@ const AboutEditor = () => {
 
   const [form, setForm] = useState({ heading: "", subheading: "", description: "", image_url: "", vision_title: "", vision_text: "", mission_title: "", mission_text: "" });
 
+  const initialized = useRef(false);
   useEffect(() => {
-    if (data) setForm({
-      heading: data.heading || "", subheading: data.subheading || "", description: data.description || "",
-      image_url: data.image_url || "", vision_title: data.vision_title || "", vision_text: data.vision_text || "",
-      mission_title: data.mission_title || "", mission_text: data.mission_text || "",
-    });
+    if (data && !initialized.current) {
+      initialized.current = true;
+      setForm({
+        heading: data.heading || "", subheading: data.subheading || "", description: data.description || "",
+        image_url: data.image_url || "", vision_title: data.vision_title || "", vision_text: data.vision_text || "",
+        mission_title: data.mission_title || "", mission_text: data.mission_text || "",
+      });
+    }
   }, [data]);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      if (data?.id) {
-        const { error } = await supabase.from("about_section").update(form).eq("id", data.id);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from("about_section").insert(form);
-        if (error) throw error;
-      }
+    mutationFn: async ({ payload, id }: { payload: typeof form, id?: string }) => {
+      const { error } = await supabase
+        .from("about_section")
+        .upsert({ 
+          ...(id ? { id } : {}),
+          ...payload 
+        });
+      if (error) throw error;
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-about"] }); toast.success("About section updated!"); },
+    onSuccess: () => { 
+      qc.invalidateQueries({ queryKey: ["admin-about"] }); 
+      toast.success("About section updated!"); 
+    },
     onError: (e: any) => toast.error(e.message),
   });
 
-  if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
+  if (isLoading && !data) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
   if (error) return <div className="p-4 text-destructive text-sm rounded-xl bg-destructive/10">Failed to load: {(error as any).message}</div>;
 
   return (
@@ -97,7 +104,7 @@ const AboutEditor = () => {
           <textarea value={form.mission_text} onChange={(e) => setForm({ ...form, mission_text: e.target.value })} rows={3}
             className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
         </div>
-        <button onClick={() => mutation.mutate()} disabled={mutation.isPending}
+        <button onClick={() => mutation.mutate({ payload: form, id: data?.id })} disabled={mutation.isPending}
           className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors disabled:opacity-50">
           <Save size={16} /> {mutation.isPending ? "Saving..." : "Save Changes"}
         </button>

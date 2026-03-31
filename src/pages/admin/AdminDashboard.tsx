@@ -3,7 +3,7 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Navigate } from "react-router-dom";
 import {
   LayoutDashboard, FileText, Users, Settings, Briefcase, Image, MessageSquare,
-  BarChart3, LogOut, ChevronRight, Home, Mail, Star, HelpCircle, Quote
+  BarChart3, LogOut, ChevronRight, Home, Mail, Star, HelpCircle, Quote, Eye
 } from "lucide-react";
 import HeroEditor from "./editors/HeroEditor";
 import StatsEditor from "./editors/StatsEditor";
@@ -20,6 +20,7 @@ import SettingsEditor from "./editors/SettingsEditor";
 import FAQEditor from "./editors/FAQEditor";
 import TestimonialsEditor from "./editors/TestimonialsEditor";
 import PartnersEditor from "./editors/PartnersEditor";
+import VisibilityEditor from "./editors/VisibilityEditor";
 
 const tabs = [
   { id: "hero", label: "Hero Section", icon: Home },
@@ -35,6 +36,7 @@ const tabs = [
   { id: "faqs", label: "FAQs", icon: HelpCircle },
   { id: "testimonials", label: "Testimonials", icon: Quote },
   { id: "partners", label: "Partners", icon: LayoutDashboard },
+  { id: "visibility", label: "Visibility", icon: Eye },
   { id: "settings", label: "Site Settings", icon: Settings },
   { id: "cta", label: "Pre-Footer CTA", icon: LayoutDashboard },
 ];
@@ -83,7 +85,7 @@ const AdminDashboard = () => {
 
       {/* Main Content — all editors stay mounted, only visibility toggles */}
       <main className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-5xl">
+        <div className="max-w-5xl mx-auto">
           <div style={{ display: activeTab === "hero" ? "block" : "none" }}><HeroEditor /></div>
           <div style={{ display: activeTab === "stats" ? "block" : "none" }}><StatsEditor /></div>
           <div style={{ display: activeTab === "about" ? "block" : "none" }}><AboutEditor /></div>
@@ -98,6 +100,7 @@ const AdminDashboard = () => {
           <div style={{ display: activeTab === "faqs" ? "block" : "none" }}><FAQEditor /></div>
           <div style={{ display: activeTab === "testimonials" ? "block" : "none" }}><TestimonialsEditor /></div>
           <div style={{ display: activeTab === "partners" ? "block" : "none" }}><PartnersEditor /></div>
+          <div style={{ display: activeTab === "visibility" ? "block" : "none" }}><VisibilityEditor /></div>
           <div style={{ display: activeTab === "settings" ? "block" : "none" }}><SettingsEditor /></div>
         </div>
       </main>

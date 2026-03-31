@@ -15,9 +15,12 @@ const categoryColors: Record<string, string> = {
   General: "bg-secondary text-foreground",
 };
 
+import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+
 const Blog = () => {
   const gridRef = useRef(null);
   const gridInView = useInView(gridRef, { once: true, margin: "-80px" });
+  const { isVisible } = useSectionVisibility();
 
   const { data: posts = [] } = useQuery({
     queryKey: ["blog-posts"],
@@ -51,63 +54,67 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Featured Post */}
-      {featured && (
-        <section className="py-16 md:py-24">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-              className="grid md:grid-cols-2 gap-8 items-center rounded-2xl bg-card border border-border overflow-hidden">
-              <div className="h-64 md:h-full">
-                <img src={featured.thumbnail_url || ""} alt={featured.title} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-8 md:p-10">
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${categoryColors[featured.category || ""] || "bg-secondary text-foreground"}`}>
-                  {featured.category}
-                </span>
-                <h2 className="mt-4 font-display text-2xl md:text-3xl font-extrabold text-primary leading-tight">{featured.title}</h2>
-                <p className="mt-3 text-muted-foreground leading-relaxed">{featured.excerpt}</p>
-                <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1.5"><User size={12} /> {featured.author}</span>
-                  {featured.published_at && <span className="flex items-center gap-1.5"><Calendar size={12} /> {new Date(featured.published_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>}
-                  <span className="flex items-center gap-1.5"><Eye size={12} /> {featured.views}</span>
-                </div>
-                <Link to={`/blog/${featured.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-blue hover:gap-3 transition-all">
-                  Read Article <ArrowRight size={14} />
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* Blog Grid */}
-      <section ref={gridRef} className="pb-20 md:pb-28">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {gridPosts.map((post, i) => (
-              <motion.article key={post.id} initial={{ opacity: 0, y: 30 }} animate={gridInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.08 * i }}
-                className="group rounded-2xl bg-card border border-border overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
-                <Link to={`/blog/${post.slug}`}>
-                  <div className="h-48 overflow-hidden">
-                    <img src={post.thumbnail_url || ""} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+      {isVisible("blog") && (
+        <>
+          {/* Featured Post */}
+          {featured && (
+            <section className="py-16 md:py-24">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+                  className="grid md:grid-cols-2 gap-8 items-center rounded-2xl bg-card border border-border overflow-hidden">
+                  <div className="h-64 md:h-full">
+                    <img src={featured.thumbnail_url || ""} alt={featured.title} className="w-full h-full object-cover" />
                   </div>
-                  <div className="p-6">
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${categoryColors[post.category || ""] || "bg-secondary text-foreground"}`}>
-                      {post.category}
+                  <div className="p-8 md:p-10">
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${categoryColors[featured.category || ""] || "bg-secondary text-foreground"}`}>
+                      {featured.category}
                     </span>
-                    <h3 className="mt-3 font-display text-lg font-bold text-primary leading-snug line-clamp-2">{post.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">{post.excerpt}</p>
-                    <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                      {post.published_at && <span className="flex items-center gap-1.5"><Calendar size={11} /> {new Date(post.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>}
-                      <span className="flex items-center gap-1.5"><Eye size={11} /> {post.views}</span>
+                    <h2 className="mt-4 font-display text-2xl md:text-3xl font-extrabold text-primary leading-tight">{featured.title}</h2>
+                    <p className="mt-3 text-muted-foreground leading-relaxed">{featured.excerpt}</p>
+                    <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1.5"><User size={12} /> {featured.author}</span>
+                      {featured.published_at && <span className="flex items-center gap-1.5"><Calendar size={12} /> {new Date(featured.published_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>}
+                      <span className="flex items-center gap-1.5"><Eye size={12} /> {featured.views}</span>
                     </div>
+                    <Link to={`/blog/${featured.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-blue hover:gap-3 transition-all">
+                      Read Article <ArrowRight size={14} />
+                    </Link>
                   </div>
-                </Link>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
+                </motion.div>
+              </div>
+            </section>
+          )}
+
+          {/* Blog Grid */}
+          <section ref={gridRef} className="pb-20 md:pb-28">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {gridPosts.map((post, i) => (
+                  <motion.article key={post.id} initial={{ opacity: 0, y: 30 }} animate={gridInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.08 * i }}
+                    className="group rounded-2xl bg-card border border-border overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
+                    <Link to={`/blog/${post.slug}`}>
+                      <div className="h-48 overflow-hidden">
+                        <img src={post.thumbnail_url || ""} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                      </div>
+                      <div className="p-6">
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${categoryColors[post.category || ""] || "bg-secondary text-foreground"}`}>
+                          {post.category}
+                        </span>
+                        <h3 className="mt-3 font-display text-lg font-bold text-primary leading-snug line-clamp-2">{post.title}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">{post.excerpt}</p>
+                        <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                          {post.published_at && <span className="flex items-center gap-1.5"><Calendar size={11} /> {new Date(post.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>}
+                          <span className="flex items-center gap-1.5"><Eye size={11} /> {post.views}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       <PreFooterCTA />
     </>

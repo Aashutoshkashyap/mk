@@ -8,8 +8,11 @@ import { toast } from "sonner";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import PreFooterCTA from "@/components/PreFooterCTA";
 
+import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const { isVisible } = useSectionVisibility();
 
   const { data: contactItems = [] } = useQuery({
     queryKey: ["contact-info"],
@@ -32,7 +35,7 @@ const Contact = () => {
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Failed to send message. Please try again or use the email provided below.");
+      toast.error("Failed to send message. Please try again.");
     }
   };
 
@@ -54,34 +57,39 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Cards */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {contactItems.map((info: any, i: number) => {
-              const Icon = getIcon(info.icon_name);
-              return (
-                <motion.div key={info.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 * i }}
-                  className="rounded-2xl bg-card border border-border p-6 hover:border-primary/20 hover:shadow-lg transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4">
-                    <Icon size={22} className="text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg font-bold text-primary mb-3">{info.title}</h3>
-                  <div className="space-y-1 mb-4">
-                    {(info.details || []).map((d: string) => <p key={d} className="text-sm text-muted-foreground">{d}</p>)}
-                  </div>
-                  {info.action_label && info.action_href && (
-                    <a href={info.action_href} target={info.action_href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:gap-2.5 transition-all">
-                      {info.action_label} <ExternalLink size={12} />
-                    </a>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* Contact Cards & Form */}
+      {isVisible("contact") && (
+        <>
+          {/* Contact Cards */}
+          <section className="py-16 md:py-24">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {contactItems.map((info: any, i: number) => {
+                  const Icon = getIcon(info.icon_name);
+                  return (
+                    <motion.div key={info.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 * i }}
+                      className="rounded-2xl bg-card border border-border p-6 hover:border-primary/20 hover:shadow-lg transition-all duration-300">
+                      <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4">
+                        <Icon size={22} className="text-primary" />
+                      </div>
+                      <h3 className="font-display text-lg font-bold text-primary mb-3">{info.title}</h3>
+                      <div className="space-y-1 mb-4">
+                        {(info.details || []).map((d: string) => <p key={d} className="text-sm text-muted-foreground">{d}</p>)}
+                      </div>
+                      {info.action_label && info.action_href && (
+                        <a href={info.action_href} target={info.action_href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:gap-2.5 transition-all">
+                          {info.action_label} <ExternalLink size={12} />
+                        </a>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Contact Form */}
       <section className="py-16 md:py-24 bg-secondary/50">

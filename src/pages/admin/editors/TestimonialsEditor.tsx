@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Save, Plus, Trash2, Quote, User, Layout } from "lucide-react";
@@ -10,6 +10,9 @@ const TestimonialsEditor = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<any>(null);
   const [sectionMeta, setSectionMeta] = useState({ title: "", description: "", review_count: 2578, rating: 5.0 });
+  // Guard: only seed editForm when the user explicitly clicks Edit (editingId changes),
+  // NOT when testimonials refetch after a save — otherwise typed edits get wiped.
+  const editFormSeeded = useRef<string | null>(null);
 
   const { data: testimonials = [], isLoading, error } = useQuery({
     queryKey: ["testimonials"],
@@ -23,13 +26,15 @@ const TestimonialsEditor = () => {
   const { data: fetchedSectionMeta }: any = useQuery({
     queryKey: ["testimonials-section-meta"],
     queryFn: async () => {
-      const { data } = await supabase.from("testimonials_section" as any).select("*").maybeSingle();
+      const { data } = await supabase.from("testimonials_section" as any).select("*").limit(1).maybeSingle();
       return data;
     },
   });
 
+  const metaInitialized = useRef(false);
   useEffect(() => {
-    if (fetchedSectionMeta) {
+    if (fetchedSectionMeta && !metaInitialized.current) {
+      metaInitialized.current = true;
       setSectionMeta({
         title: fetchedSectionMeta.title || "",
         description: fetchedSectionMeta.description || "",
@@ -48,8 +53,17 @@ const TestimonialsEditor = () => {
 
   const updateSectionMutation = useMutation({
     mutationFn: async (updated: any) => {
-      const { error } = await supabase.from("testimonials_section" as any).update(updated).eq("id", "current");
-      if (error) throw error;
+      const { error } = await supabase
+        .from("testimonials_section" as any)
+        .upsert({ 
+          ...(fetchedSectionMeta?.id ? { id: fetchedSectionMeta.id } : {}),
+          ...updated 
+        });
+      
+      if (error) {
+        if (error.code === "42P01") throw new Error("Missing Table: Please run the SQL migration script.");
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["testimonials-section-meta"] });
@@ -82,9 +96,9 @@ const TestimonialsEditor = () => {
       if (error) throw error;
     },
     onSuccess: () => {
+      // Invalidate to refresh list, but do NOT close the form — user can keep editing & re-saving
       queryClient.invalidateQueries({ queryKey: ["testimonials"] });
-      setEditingId(null);
-      toast.success("Testimonial updated successfully");
+      toast.success("Testimonial saved!");
     },
     onError: (e: any) => toast.error(formatError(e))
   });
@@ -103,10 +117,20 @@ const TestimonialsEditor = () => {
 
   useEffect(() => {
     if (editingId) {
-      const t = testimonials.find(item => item.id === editingId);
-      if (t) setEditForm({ ...t });
+      // Only seed the form when it's a NEW item being opened for edit.
+      // Skip re-seeding if this item's form was already seeded — this prevents
+      // the testimonials refetch (triggered by invalidateQueries after save) from
+      // overwriting the user's in-progress edits.
+      if (editFormSeeded.current !== editingId) {
+        const t = testimonials.find(item => item.id === editingId);
+        if (t) {
+          setEditForm({ ...t });
+          editFormSeeded.current = editingId;
+        }
+      }
     } else {
       setEditForm(null);
+      editFormSeeded.current = null;
     }
   }, [editingId, testimonials]);
 
@@ -254,7 +278,7 @@ const TestimonialsEditor = () => {
                     />
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
-                    <button type="button" onClick={() => setEditingId(null)} className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary">Cancel</button>
+                    <button type="button" onClick={() => setEditingId(null)} className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary">Done</button>
                     <button 
                       onClick={() => updateMutation.mutate(editForm)}
                       disabled={updateMutation.isPending}

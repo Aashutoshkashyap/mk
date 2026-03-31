@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import PreFooterCTA from "@/components/PreFooterCTA";
+import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 
 const About = () => {
   const heroRef = useRef(null);
@@ -19,17 +20,22 @@ const About = () => {
   const { data: about } = useQuery({
     queryKey: ["about"],
     queryFn: async () => { const { data } = await supabase.from("about_section").select("*").single(); return data; },
+    staleTime: 1000 * 60 * 5,
   });
 
   const { data: values = [] } = useQuery({
     queryKey: ["core-values"],
     queryFn: async () => { const { data } = await supabase.from("core_values").select("*").order("sort_order"); return data || []; },
+    staleTime: 1000 * 60 * 5,
   });
 
   const { data: gallery = [] } = useQuery({
     queryKey: ["gallery"],
     queryFn: async () => { const { data } = await supabase.from("gallery_images").select("*").order("sort_order"); return data || []; },
+    staleTime: 1000 * 60 * 5,
   });
+
+  const { isVisible } = useSectionVisibility();
 
   return (
     <>
@@ -51,36 +57,40 @@ const About = () => {
       </section>
 
       {/* Company Overview */}
-      <section ref={heroRef} className="py-20 md:py-28">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
-              <div className="relative">
-                <img src={about?.image_url || ""} alt="Sharp Edge Office" className="w-full rounded-2xl shadow-2xl shadow-primary/10" />
-                <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground rounded-xl px-5 py-3 shadow-lg">
-                  <div className="font-display text-2xl font-extrabold">10+</div>
-                  <div className="text-xs text-primary-foreground/70">Years of Excellence</div>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
-              <h2 className="font-display text-3xl font-extrabold text-primary leading-tight">{about?.heading || ""}</h2>
-              <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || "Sharp Edge Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services. The firm's team consists of dedicated and knowledgeable professionals, such as Chartered Accountants, Attorneys, and Consultants, offering a complete set of company services."}</p>
-              <div className="mt-8 grid grid-cols-3 gap-4">
-                {[{ icon: Globe, label: "Global\nStandards" }, { icon: Users, label: "Expert\nTeam" }, { icon: Award, label: "Proven\nTrack Record" }].map((item, i) => (
-                  <div key={i} className="text-center p-4 rounded-xl bg-secondary/80">
-                    <item.icon size={24} className="mx-auto text-primary mb-2" strokeWidth={1.5} />
-                    <div className="text-xs font-semibold text-foreground whitespace-pre-line">{item.label}</div>
+      {isVisible("about_intro") && (
+        <section ref={heroRef} className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <motion.div initial={{ opacity: 0, x: -30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
+                <div className="relative">
+                  <img src={about?.image_url || "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000"} alt="Sharp Edge Office" className="w-full rounded-2xl shadow-2xl shadow-primary/10" />
+                  <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground rounded-xl px-5 py-3 shadow-lg">
+                    <div className="font-display text-2xl font-extrabold">10+</div>
+                    <div className="text-xs text-primary-foreground/70">Years of Excellence</div>
                   </div>
-                ))}
-              </div>
-            </motion.div>
+                </div>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, x: 30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
+                <h2 className="font-display text-3xl font-extrabold text-primary leading-tight">{about?.heading || ""}</h2>
+                <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || "Sharp Edge Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services. The firm's team consists of dedicated and knowledgeable professionals, such as Chartered Accountants, Attorneys, and Consultants, offering a complete set of company services."}</p>
+                <div className="mt-8 grid grid-cols-3 gap-4">
+                  {[{ icon: Globe, label: "Global\nStandards" }, { icon: Users, label: "Expert\nTeam" }, { icon: Award, label: "Proven\nTrack Record" }].map((item, i) => (
+                    <div key={i} className="text-center p-4 rounded-xl bg-secondary/80">
+                      <item.icon size={24} className="mx-auto text-primary mb-2" strokeWidth={1.5} />
+                      <div className="text-xs font-semibold text-foreground whitespace-pre-line">{item.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Vision & Mission */}
-      <section ref={visionRef} className="py-20 md:py-28 bg-secondary/50">
+      {isVisible("vision_mission") && (
+        <section ref={visionRef} className="py-20 md:py-28 bg-secondary/50">
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="rounded-2xl bg-card border border-border p-8 md:p-10">
@@ -95,21 +105,24 @@ const About = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* Core Values */}
-      <section ref={valuesRef} className="py-20 md:py-28">
+      {isVisible("core_values") && (
+        <section ref={valuesRef} className="py-20 md:py-28">
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={valuesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-14">
             <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">What Drives Us</span>
             <h2 className="mt-3 font-display text-3xl md:text-4xl font-extrabold text-primary">Our Core Values</h2>
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="flex flex-wrap justify-center gap-5">
             {values.map((v: any, i: number) => {
               const Icon = getIcon(v.icon_name);
               return (
                 <motion.div key={v.id} initial={{ opacity: 0, y: 30 }} animate={valuesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 * i }}
-                  className="rounded-2xl bg-card border border-border p-7 text-center hover:border-primary/20 hover:shadow-lg transition-all duration-300">
+                  className="rounded-2xl bg-card border border-border p-7 text-center hover:border-primary/20 hover:shadow-lg transition-all duration-300 w-full sm:w-[calc(50%-1.25rem)] lg:w-[calc(25%-1.25rem)] min-w-[260px]">
                   <div className="w-14 h-14 mx-auto rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4"><Icon size={24} className="text-primary" strokeWidth={1.5} /></div>
                   <h3 className="font-display text-lg font-bold text-primary mb-2">{v.title}</h3>
                   <p className="text-sm text-muted-foreground">{v.description}</p>
@@ -118,10 +131,13 @@ const About = () => {
             })}
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* Gallery */}
-      <section ref={galleryRef} className="py-20 md:py-28 bg-secondary/50">
+      {isVisible("gallery") && (
+        <section ref={galleryRef} className="py-20 md:py-28 bg-secondary/50">
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={galleryInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-14">
             <span className="text-xs font-bold tracking-widest uppercase text-brand-blue">Our Space</span>
@@ -135,7 +151,8 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       <PreFooterCTA />
     </>

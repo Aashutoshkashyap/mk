@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -21,13 +21,39 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 60 * 1000, // 1 minute
+      staleTime: 1000 * 60 * 5, // 5 minutes default for performance
+      gcTime: 1000 * 60 * 30, // 30 minutes garbage collection
     },
   },
 });
 
+const APP_VERSION = "1.0.5"; // Increment this to force a global cache/storage clear
+
+const CacheClearer = () => {
+  useEffect(() => {
+    const savedVersion = localStorage.getItem("app_version");
+    if (savedVersion !== APP_VERSION) {
+      console.log("App Version Mismatch. Clearing cache and storage...");
+      
+      // Clear TanStack Query Cache
+      queryClient.clear();
+      
+      // Clear LocalStorage (Warning: this logs out users)
+      localStorage.clear();
+      
+      // Set new version
+      localStorage.setItem("app_version", APP_VERSION);
+      
+      // Optional: force reload to ensure all static assets are fresh
+      window.location.reload();
+    }
+  }, []);
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <CacheClearer />
     <TooltipProvider>
       <Toaster />
       <Sonner />

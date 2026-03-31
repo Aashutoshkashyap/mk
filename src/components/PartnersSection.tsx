@@ -74,6 +74,20 @@ const PartnersSection = () => {
     },
   });
 
+  const { data: settings } = useQuery({
+    queryKey: ["site_settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings").select("*").eq("id", "00000000-0000-0000-0000-000000000000").maybeSingle();
+      return data;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const partnersConfig = (settings as any)?.section_visibility?.partners_config || {};
+  const displayHeading = partnersConfig.heading || "The Companies We Serve";
+  const displaySubheading = partnersConfig.subheading || "We are honored to have worked with some of the most innovative and industry-leading organizations across the region.";
+  const displayPadding = partnersConfig.padding || "py-24 md:py-32";
+
   // Optimize space: if explicitly empty in DB and no error, hide section.
   // If there's an error, show professional fallbacks.
   if (isLoading) return <div className="h-60 bg-secondary/20 animate-pulse rounded-3xl mx-4 my-20" />;
@@ -92,7 +106,7 @@ const PartnersSection = () => {
   const row3 = partnersToDisplay.filter((_, i) => i % 3 === 2);
 
   return (
-    <section id="partners" className="py-24 md:py-32 bg-white relative overflow-hidden" ref={ref}>
+    <section id="partners" className={`${displayPadding} bg-white relative overflow-hidden`} ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -105,10 +119,12 @@ const PartnersSection = () => {
             Strategic Partners
           </div>
           <h2 className="font-display text-4xl md:text-6xl font-extrabold text-primary tracking-tight mb-6">
-            The Companies We <span className="text-brand-blue">Serve</span>
+            {displayHeading.split(' ').map((word, i, arr) => 
+              i === arr.length - 1 ? <span key={i} className="text-brand-blue">{word}</span> : word + ' '
+            )}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We are honored to have worked with some of the most innovative and industry-leading organizations across the region.
+            {displaySubheading}
           </p>
         </motion.div>
       </div>

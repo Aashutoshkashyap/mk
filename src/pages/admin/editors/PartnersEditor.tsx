@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Save, Plus, Trash2, LayoutGrid, List, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
@@ -10,6 +10,47 @@ import { BulkImageUpload } from "@/components/admin/BulkImageUpload";
 const PartnersEditor = () => {
   const qc = useQueryClient();
   const [view, setView] = useState<"grid" | "list">("grid");
+
+  const { data: settings = {}, isLoading: settingsLoading } = useQuery({
+    queryKey: ["site_settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings").select("*").eq("id", "00000000-0000-0000-0000-000000000000").maybeSingle();
+      return data || {};
+    }
+  });
+
+  const [headingConfig, setHeadingConfig] = useState({ 
+    heading: "", 
+    subheading: "",
+    padding: "py-24"
+  });
+
+  useEffect(() => {
+    if ((settings as any)?.section_visibility?.partners_config) {
+      setHeadingConfig((settings as any).section_visibility.partners_config);
+    }
+  }, [settings]);
+
+  const saveConfig = useMutation({
+    mutationFn: async () => {
+      const currentVisibility = (settings as any)?.section_visibility || {};
+      const { error } = await supabase
+        .from("site_settings")
+        .update({ 
+          section_visibility: { 
+            ...currentVisibility, 
+            partners_config: headingConfig 
+          } 
+        } as any)
+        .eq("id", "00000000-0000-0000-0000-000000000000");
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["site_settings"] });
+      toast.success("Partners heading updated!");
+    },
+    onError: (e: any) => toast.error(e.message)
+  });
 
   const { data: partners = [], isLoading } = useQuery({
     queryKey: ["partners"],
@@ -75,10 +116,68 @@ const PartnersEditor = () => {
     updateOrderMutation.mutate(items);
   };
 
-  if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
+  if (isLoading || settingsLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
+
+  const currentHeading = headingConfig.heading || (settings as any)?.section_visibility?.partners_config?.heading || "The Companies We Serve";
+  const currentSubheading = headingConfig.subheading || (settings as any)?.section_visibility?.partners_config?.subheading || "We work with top industry experts.";
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-20">
+      {/* Section Content Configuration */}
+      <div className="bg-card rounded-3xl border border-border p-8 shadow-sm">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center text-brand-blue">
+            <LayoutGrid size={20} />
+          </div>
+          <div>
+            <h3 className="font-display text-lg font-bold text-primary">Section Content</h3>
+            <p className="text-xs text-muted-foreground">Manage the text displayed on the public site.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-6">
+          <div className="space-y-2">
+            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Heading</label>
+            <input 
+              value={headingConfig.heading || ""} 
+              onChange={(e) => setHeadingConfig({ ...headingConfig, heading: e.target.value })}
+              className="w-full rounded-2xl border border-border bg-secondary/30 px-5 py-3 text-sm font-bold focus:ring-2 focus:ring-primary/20 outline-none"
+              placeholder={currentHeading}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Subheading</label>
+            <input 
+              value={headingConfig.subheading || ""} 
+              onChange={(e) => setHeadingConfig({ ...headingConfig, subheading: e.target.value })}
+              className="w-full rounded-2xl border border-border bg-secondary/30 px-5 py-3 text-sm font-bold focus:ring-2 focus:ring-primary/20 outline-none"
+              placeholder={currentSubheading}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Section Spacing</label>
+            <select 
+              value={headingConfig.padding || "py-24"} 
+              onChange={(e) => setHeadingConfig({ ...headingConfig, padding: e.target.value })}
+              className="w-full rounded-2xl border border-border bg-secondary/30 px-5 py-3 text-sm font-bold focus:ring-2 focus:ring-primary/20 outline-none"
+            >
+              <option value="py-12">Compact (Small)</option>
+              <option value="py-24">Regular (Normal)</option>
+              <option value="py-32">Spacious (Large)</option>
+              <option value="py-44">Elegant (Huge)</option>
+            </select>
+          </div>
+        </div>
+
+        <button 
+          onClick={() => saveConfig.mutate()} 
+          disabled={saveConfig.isPending}
+          className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all disabled:opacity-50"
+        >
+          {saveConfig.isPending ? "Saving..." : <><Save size={18} /> Update Section Text</>}
+        </button>
+      </div>
+
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="font-display text-2xl font-extrabold text-primary tracking-tight">Clients & Partners</h2>

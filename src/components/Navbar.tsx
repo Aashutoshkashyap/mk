@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PrimaryButton } from "./ui/PrimaryButton";
 import { cn } from "@/lib/utils";
@@ -21,6 +21,41 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
+  const queryClient = useQueryClient();
+  
+  const prefetchData = (href: string) => {
+    const staleTime = 1000 * 60 * 5;
+    if (href === "/about") {
+      queryClient.prefetchQuery({
+        queryKey: ["about"],
+        queryFn: async () => { const { data } = await supabase.from("about_section").select("*").single(); return data; },
+        staleTime
+      });
+      queryClient.prefetchQuery({
+        queryKey: ["core-values"],
+        queryFn: async () => { const { data } = await supabase.from("core_values").select("*").order("sort_order"); return data || []; },
+        staleTime
+      });
+    } else if (href === "/team") {
+      queryClient.prefetchQuery({
+        queryKey: ["team"],
+        queryFn: async () => { const { data } = await supabase.from("team_members").select("*, team_sectors(*)").order("sort_order"); return data || []; },
+        staleTime
+      });
+    } else if (href === "/services") {
+      queryClient.prefetchQuery({
+        queryKey: ["services-home"], // Shared with home
+        queryFn: async () => { const { data } = await supabase.from("services").select("*").order("sort_order"); return data || []; },
+        staleTime
+      });
+    } else if (href === "/blog") {
+      queryClient.prefetchQuery({
+        queryKey: ["home-blogs"],
+        queryFn: async () => { const { data } = await supabase.from("blog_posts").select("*").eq("is_published", true).order("published_at", { ascending: false }).limit(3); return data || []; },
+        staleTime
+      });
+    }
+  };
 
   const { data: settings } = useQuery({
     queryKey: ["site_settings"],
@@ -119,6 +154,7 @@ const Navbar = () => {
                   key={link.href}
                   to={link.href}
                   onClick={() => handleNavClick(link.href)}
+                  onMouseEnter={() => prefetchData(link.href)}
                   className={`px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
                     isActive(link.href)
                       ? "text-primary bg-primary/[0.08]"

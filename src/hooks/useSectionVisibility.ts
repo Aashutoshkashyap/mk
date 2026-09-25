@@ -3,36 +3,26 @@ import { supabase } from "@/integrations/supabase/client";
 
 const CACHE_KEY = "mk_section_visibility_cache";
 
-const getCachedVisibility = (): Record<string, boolean> => {
-  try {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) return JSON.parse(cached);
-  } catch (e) {
-    // Ignore storage parse error
-  }
-  return {
-    hero: true,
-    stats: false, // Default hidden to prevent flash before DB loads
-    about_overview: true,
-    services: true,
-    testimonials: true,
-    partners: false,
-    cta: true,
-    about_intro: true,
-    vision_mission: true,
-    core_values: true,
-    gallery: true,
-    team: true,
-    services_hero: true,
-    services_list: true,
-    faqs: true,
-    blog: true,
-    contact: true,
-  };
+// Sections that default to TRUE (visible) when no DB record exists
+const DEFAULT_VISIBLE_SECTIONS = new Set([
+  "hero", "about_overview", "services", "testimonials",
+  "cta", "about_intro", "vision_mission", "core_values",
+  "gallery", "team", "services_hero", "services_list",
+  "faqs", "blog", "contact",
+]);
+
+// Sections that default to FALSE (hidden) when no DB record exists
+const DEFAULT_HIDDEN_SECTIONS = new Set(["stats", "partners"]);
+
+const getDefaultVisibility = (): Record<string, boolean> => {
+  const result: Record<string, boolean> = {};
+  DEFAULT_VISIBLE_SECTIONS.forEach((k) => (result[k] = true));
+  DEFAULT_HIDDEN_SECTIONS.forEach((k) => (result[k] = false));
+  return result;
 };
 
 export const useSectionVisibility = () => {
-  const { data: settings = getCachedVisibility(), isLoading } = useQuery({
+  const { data: settings, isLoading } = useQuery({
     queryKey: ["site_visibility"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -40,33 +30,24 @@ export const useSectionVisibility = () => {
         .select("*")
         .eq("id", "00000000-0000-0000-0000-000000000000")
         .maybeSingle();
-      
+
       if (error || !data) {
-        return getCachedVisibility();
+        return getDefaultVisibility();
       }
-      
+
       const settingsData = data as any;
-      const userVisibility = settingsData?.section_visibility || {};
-      
-      const finalVisibility = {
-        hero: userVisibility.hero !== false,
-        stats: userVisibility.stats === true, // Explicitly respect admin setting (if false, it stays false)
-        about_overview: userVisibility.about_overview !== false,
-        services: userVisibility.services !== false,
-        testimonials: userVisibility.testimonials !== false,
-        partners: userVisibility.partners === true,
-        cta: userVisibility.cta !== false,
-        about_intro: userVisibility.about_intro !== false,
-        vision_mission: userVisibility.vision_mission !== false,
-        core_values: userVisibility.core_values !== false,
-        gallery: userVisibility.gallery !== false,
-        team: userVisibility.team !== false,
-        services_hero: userVisibility.services_hero !== false,
-        services_list: userVisibility.services_list !== false,
-        faqs: userVisibility.faqs !== false,
-        blog: userVisibility.blog !== false,
-        contact: userVisibility.contact !== false,
-      };
+      const userVisibility: Record<string, boolean> = settingsData?.section_visibility || {};
+
+      // Merge: start from defaults, then apply only explicit false/true from DB
+      const finalVisibility: Record<string, boolean> = { ...getDefaultVisibility() };
+      for (const [key, val] of Object.entries(userVisibility)) {
+        if (typeof val === "boolean") {
+          finalVisibility[key] = val;
+        }
+      }
+      // stats and partners are opt-in: only show if explicitly true
+      finalVisibility.stats = userVisibility.stats === true;
+      finalVisibility.partners = userVisibility.partners === true;
 
       try {
         localStorage.setItem(CACHE_KEY, JSON.stringify(finalVisibility));
@@ -76,14 +57,19 @@ export const useSectionVisibility = () => {
 
       return finalVisibility;
     },
-    initialData: getCachedVisibility,
+    // Default to everything visible so sections never flash-hide on first load
+    initialData: getDefaultVisibility,
   });
 
-  const isVisible = (sectionId: string) => {
-    if (settings && typeof settings === 'object') {
-      return (settings as any)[sectionId] === true;
+  const isVisible = (sectionId: string): boolean => {
+    if (!settings || typeof settings !== "object") {
+      // When no data yet: visible unless it's an opt-in section
+      return !DEFAULT_HIDDEN_SECTIONS.has(sectionId);
     }
-    return false;
+    const val = (settings as Record<string, boolean>)[sectionId];
+    // If key is absent from DB map, default to visible (unless opt-in)
+    if (val === undefined) return !DEFAULT_HIDDEN_SECTIONS.has(sectionId);
+    return val === true;
   };
 
   return { isVisible, settings, isLoading };

@@ -133,7 +133,7 @@ const TestimonialsSection = () => {
 
             {/* Central Active Testimonial Card */}
             <div className="absolute inset-0 m-auto w-[460px] h-[460px] flex flex-col items-center justify-center text-center z-20 pointer-events-none">
-              <div className="pointer-events-auto w-full bg-white/95 backdrop-blur-xl rounded-[2.5rem] p-8 border-2 border-[#888A8C]/30 shadow-2xl shadow-black/10 flex flex-col items-center">
+              <div className="pointer-events-auto w-full flex flex-col items-center p-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeTestimonial.id}

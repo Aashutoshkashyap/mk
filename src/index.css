@@ -126,6 +126,24 @@
   .text-\[\#888A8C\] {
     color: #000000 !important;
   }
+
+  /* Pill / Badge styling in dark theme: white font color */
+  .dark .rounded-full,
+  .dark [class*="rounded-full"],
+  .dark .rounded-full span,
+  .dark .rounded-full p,
+  .dark .rounded-full a,
+  .dark .rounded-full button,
+  .dark span[class*="rounded-full"],
+  .dark div[class*="rounded-full"],
+  .dark a[class*="rounded-full"] {
+    color: #ffffff !important;
+  }
+
+  .dark .rounded-full[class*="border"],
+  .dark [class*="rounded-full"][class*="border"] {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
 }
 
 @layer utilities {

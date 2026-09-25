@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+import { sanitizeDbRecord, filterOutLegacyFinancial } from "@/lib/contentFilter";
 
 const About = () => {
   const heroRef = useRef(null);
@@ -18,23 +19,25 @@ const About = () => {
   const galleryInView = useInView(galleryRef, { once: true, margin: "-80px" });
   const { isVisible } = useSectionVisibility();
 
-  const { data: about } = useQuery({
+  const { data: rawAbout } = useQuery({
     queryKey: ["about"],
     queryFn: async () => { const { data } = await supabase.from("about_section").select("*").single(); return data; },
     staleTime: 1000 * 60 * 5,
   });
 
-  const { data: values = [] } = useQuery({
+  const { data: rawValues = [] } = useQuery({
     queryKey: ["core-values"],
     queryFn: async () => { const { data } = await supabase.from("core_values").select("*").order("sort_order"); return data || []; },
     staleTime: 1000 * 60 * 5,
   });
 
-  const { data: gallery = [] } = useQuery({
+  const { data: rawGallery = [] } = useQuery({
     queryKey: ["gallery"],
     queryFn: async () => { const { data } = await supabase.from("gallery_images").select("*").order("sort_order"); return data || []; },
     staleTime: 1000 * 60 * 5,
   });
+
+  const about = sanitizeDbRecord(rawAbout);
 
   const defaultValues = [
     { id: "v1", title: "Zero-Harm Safety First", description: "Uncompromising adherence to occupational safety standards and strict HSE protocols across all Himalayan and Terai jobsites.", icon_name: "ShieldCheck" },
@@ -49,13 +52,15 @@ const About = () => {
     { id: "g3", image_url: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=800", alt_text: "Highway Viaduct Segmental Gantry" },
     { id: "g4", image_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800", alt_text: "Industrial Logistics Super-Flat Slabs" },
     { id: "g5", image_url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", alt_text: "Cable-Stayed Transit Bridge" },
-    { id: "g6", image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800", alt_text: "Institutional Complex & Administration" },
+    { id: "g6", image_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800", alt_text: "Institutional Complex & Administration" },
     { id: "g7", image_url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800", alt_text: "Hydropower Penstock & Headworks" },
     { id: "g8", image_url: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=800", alt_text: "Reinforced Concrete Foundation Pour" },
   ];
 
-  const displayValues = values.length > 0 ? values : defaultValues;
-  const displayGallery = gallery.length > 0 ? gallery : defaultGallery;
+  const validValues = filterOutLegacyFinancial(rawValues);
+  const validGallery = filterOutLegacyFinancial(rawGallery);
+  const displayValues = validValues.length > 0 ? validValues : defaultValues;
+  const displayGallery = validGallery.length > 0 ? validGallery : defaultGallery;
 
   return (
     <>

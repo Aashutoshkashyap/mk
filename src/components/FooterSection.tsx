@@ -23,10 +23,10 @@ const FooterSection = () => {
               </div>
               <div>
                 <span className="font-display font-extrabold text-lg text-white tracking-tight leading-tight block">
-                  MK Construction
+                  MK Engineering & Construction
                 </span>
                 <div className="text-[10px] uppercase tracking-widest text-primary font-bold">
-                  Company Pvt. Ltd.
+                  MK Construction Company Pvt. Ltd.
                 </div>
               </div>
             </div>
@@ -53,11 +53,11 @@ const FooterSection = () => {
               {[
                 { label: "Home", to: "/" },
                 { label: "About Us", to: "/about" },
-                { label: "Services", to: "/services" },
-                { label: "Projects", to: "/projects" },
-                { label: "Capabilities", to: "/capabilities" },
-                { label: "Leadership", to: "/leadership" },
-                { label: "News & Insights", to: "/news" },
+                { label: "Engineering Services", to: "/services" },
+                { label: "Featured Projects", to: "/projects" },
+                { label: "Quality & Safety (HSE)", to: "/safety" },
+                { label: "Engineering Leadership", to: "/team" },
+                { label: "Project News & Insights", to: "/blog" },
                 { label: "Careers", to: "/careers" },
                 { label: "Contact Us", to: "/contact" },
               ].map((link) => (

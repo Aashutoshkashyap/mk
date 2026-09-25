@@ -90,10 +90,10 @@ const Navbar = () => {
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-extrabold text-base sm:text-lg text-foreground tracking-tight leading-none">
-                  MK <span className="text-primary">Construction</span>
+                  MK <span className="text-primary">Engineering</span>
                 </span>
                 <span className="text-[9px] uppercase tracking-widest text-muted-foreground font-bold mt-1">
-                  Company Pvt. Ltd.
+                  MK Construction Company Pvt. Ltd.
                 </span>
               </div>
             </Link>

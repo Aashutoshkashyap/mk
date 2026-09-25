@@ -13,8 +13,8 @@ const defaultConstructionTeam = [
     name: "Er. M.K. Shrestha, PE",
     role: "Chairman & Managing Director",
     experience: "28+ Yrs Exp",
-    bio: "Founding leader of MK Construction Company Pvt. Ltd. Oversees corporate strategy, mega-infrastructure execution, and multilateral agency partnership with DoR, ADB, and World Bank across Nepal.",
-    image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
+    bio: "Founding leader of MK Engineering and Construction. Oversees corporate strategy, mega-infrastructure execution, and multilateral agency partnerships with DoR, ADB, and World Bank across Nepal.",
+    image_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
       { id: "ts1", label: "National Highways", icon_name: "Building2", sort_order: 1 },
       { id: "ts2", label: "Major Bridges", icon_name: "ShieldCheck", sort_order: 2 },
@@ -26,7 +26,7 @@ const defaultConstructionTeam = [
     role: "Executive Director & Head of Operations",
     experience: "24+ Yrs Exp",
     bio: "Directs turnkey field mobilization, captive heavy equipment fleet deployments, and river training hydraulic protection works across the Mid-Hills and Terai flood plains.",
-    image_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+    image_url: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
       { id: "ts3", label: "River Training", icon_name: "Compass", sort_order: 1 },
       { id: "ts4", label: "Fleet Logistics", icon_name: "Truck", sort_order: 2 },
@@ -38,7 +38,7 @@ const defaultConstructionTeam = [
     role: "Chief Technical Officer & Head of Engineering",
     experience: "21+ Yrs Exp",
     bio: "Spearheads structural design coordination, seismic detailing per Nepal Building Code (NBC 105:2020), geotechnical foundation validation, and site QA/QC testing labs.",
-    image_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=600",
+    image_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
       { id: "ts5", label: "NBC Seismic Code", icon_name: "HardHat", sort_order: 1 },
       { id: "ts6", label: "QA/QC Testing Labs", icon_name: "Award", sort_order: 2 },
@@ -50,13 +50,15 @@ const defaultConstructionTeam = [
     role: "Director of Contracts & Multilateral Procurement",
     experience: "18+ Yrs Exp",
     bio: "Manages public-sector procurement, FIDIC commercial contract administration, ADB/World Bank compliance frameworks, and tender documentation across all 6 service lines.",
-    image_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
+    image_url: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
       { id: "ts7", label: "FIDIC Contracts", icon_name: "FileText", sort_order: 1 },
       { id: "ts8", label: "Tender Bidding", icon_name: "CheckCircle2", sort_order: 2 },
     ],
   },
 ];
+
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 
 const Team = () => {
   const teamRef = useRef(null);
@@ -72,7 +74,8 @@ const Team = () => {
   });
 
   const { isVisible } = useSectionVisibility();
-  const displayMembers = members.length > 0 ? members : defaultConstructionTeam;
+  const validMembers = filterOutLegacyFinancial(members);
+  const displayMembers = validMembers.length > 0 ? validMembers : defaultConstructionTeam;
 
   return (
     <>

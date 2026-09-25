@@ -15,13 +15,15 @@ import FAQSection from "@/components/FAQSection";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 
+import { sanitizeDbRecord, filterOutLegacyFinancial } from "@/lib/contentFilter";
+
 const Index = () => {
   const aboutRef = useRef(null);
   const statsRef = useRef(null);
   const aboutInView = useInView(aboutRef, { once: true, margin: "-60px" });
   const statsInView = useInView(statsRef, { once: true, margin: "-60px" });
 
-  const { data: stats = [] } = useQuery({
+  const { data: rawStats = [] } = useQuery({
     queryKey: ["stats"],
     queryFn: async () => {
       const { data } = await supabase.from("stats").select("*").order("sort_order");
@@ -30,7 +32,7 @@ const Index = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { data: about } = useQuery({
+  const { data: rawAbout } = useQuery({
     queryKey: ["about-home"],
     queryFn: async () => {
       const { data } = await supabase.from("about_section").select("*").maybeSingle();
@@ -39,6 +41,7 @@ const Index = () => {
     staleTime: 1000 * 60 * 5,
   });
 
+  const about = sanitizeDbRecord(rawAbout);
   const { isVisible } = useSectionVisibility();
 
   const defaultStats = [
@@ -48,7 +51,8 @@ const Index = () => {
     { id: '4', icon_name: 'MapPin', value: '32', label: 'Districts Reached' },
   ];
 
-  const displayStats = stats.length > 0 ? stats : defaultStats;
+  const validStats = filterOutLegacyFinancial(rawStats);
+  const displayStats = validStats.length > 0 ? validStats : defaultStats;
 
   return (
     <>

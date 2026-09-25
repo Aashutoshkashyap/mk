@@ -76,7 +76,7 @@ const SmoothPreloader = ({ onComplete }: SmoothPreloaderProps) => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="font-display text-xl font-extrabold tracking-tight text-white"
             >
-              MK Construction
+              MK Engineering & Construction
             </motion.h2>
 
             <motion.p

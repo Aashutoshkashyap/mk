@@ -33,10 +33,10 @@ const STEPS = [
   },
   {
     step: "05",
-    title: "Commissioning, LEED & Turnkey Handover",
-    description: "Rigorous integrated systems commissioning, acoustic/air-barrier testing, LEED Platinum certification documentation, and seamless facility operations transfer.",
+    title: "Commissioning, QA Certification & Turnkey Handover",
+    description: "Rigorous integrated systems testing, material QA compliance certificates, client handover inspections with GoN/DoR authorities, and seamless operational transfer.",
     icon: Award,
-    tags: ["Full Systems Commissioning", "LEED Platinum Audit", "Zero-Punchlist Handover"],
+    tags: ["Full Systems Commissioning", "Final DoR/DUDBC QA Inspection", "Zero-Punchlist Handover"],
   },
 ];
 

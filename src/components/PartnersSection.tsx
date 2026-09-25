@@ -96,14 +96,17 @@ const PartnersSection = () => {
     staleTime: 1000 * 60 * 5,
   });
 
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+
   const partnersConfig = (settings as any)?.section_visibility?.partners_config || {};
-  const displayHeading = partnersConfig.heading || "Trusted by Public Authorities & Private Developers";
-  const displaySubheading = partnersConfig.subheading || "Collaborating with municipal transit departments, tier-one REITs, sovereign infrastructure funds, and international engineering consortia to build enduring civic and commercial assets.";
+  const displayHeading = partnersConfig.heading || "Trusted by Public Authorities & Regional Developers";
+  const displaySubheading = partnersConfig.subheading || "Collaborating with the Department of Roads (DoR), Nepal Electricity Authority (NEA), DWIDP, and multilateral partners to deliver resilient civil engineering assets across Nepal.";
   const displayPadding = partnersConfig.padding || "py-24 md:py-32";
 
   if (isLoading) return <div className="h-60 bg-secondary/20 animate-pulse rounded-3xl mx-4 my-20" />;
 
-  const partnersToDisplay = partners.length > 0 ? partners : defaultPartners;
+  const validPartners = filterOutLegacyFinancial(partners);
+  const partnersToDisplay = validPartners.length > 0 ? validPartners : defaultPartners;
 
   // Distribute partners into 3 rows
   const row1 = partnersToDisplay.filter((_, i) => i % 3 === 0);

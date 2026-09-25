@@ -15,7 +15,7 @@ const defaultFaqs = [
     id: "f2",
     category: "Contracts & Tendering",
     question: "What types of government and donor-funded contracts does MK Construction execute?",
-    answer: "We execute contracts under Department of Roads (DoR), Department of Water Induced Disaster Prevention (DWIDP), Nepal Electricity Authority (NEA), and donor-funded packages from ADB, World Bank, JICA, and bilateral government grants. We bid through PPMO-compliant GoN procurement portals and participate in national competitive bidding (NCB) and international competitive bidding (ICB) tenders, meeting all PQ (pre-qualification) requirements including financial capacity, equipment ownership, and past performance.",
+    answer: "We execute contracts under Department of Roads (DoR), Department of Water Induced Disaster Prevention (DWIDP), Nepal Electricity Authority (NEA), and donor-funded packages from ADB, World Bank, JICA, and bilateral government grants. We bid through PPMO-compliant GoN procurement portals and participate in national competitive bidding (NCB) and international competitive bidding (ICB) tenders, meeting all PQ (pre-qualification) criteria including average annual construction turnover, captive equipment ownership, and verified past performance credentials.",
   },
   {
     id: "f3",
@@ -62,6 +62,8 @@ const defaultFaqs = [
 ];
 
 
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [selectedFilter, setSelectedFilter] = useState<string>("All");
@@ -74,7 +76,8 @@ const FAQSection = () => {
     },
   });
 
-  const displayFaqs = faqs.length > 0 ? faqs : defaultFaqs;
+  const validFaqs = filterOutLegacyFinancial(faqs);
+  const displayFaqs = validFaqs.length > 0 ? validFaqs : defaultFaqs;
 
   const categories = ["All", ...Array.from(new Set(displayFaqs.map((f: any) => f.category || "General")))];
 

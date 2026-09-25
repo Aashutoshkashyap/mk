@@ -2,11 +2,12 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PrimaryButton } from "./ui/PrimaryButton";
+import { sanitizeDbRecord } from "@/lib/contentFilter";
 
 const HeroSection = () => {
-  const { data, isLoading } = useQuery({
+  const { data: rawData, isLoading } = useQuery({
     queryKey: ["hero"],
     queryFn: async () => {
       const { data } = await supabase.from("hero_section").select("*").limit(1).maybeSingle();
@@ -15,10 +16,10 @@ const HeroSection = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-
+  const data = sanitizeDbRecord(rawData);
 
   // Default construction engineering visual if no image is uploaded from CMS
-  const defaultConstructionImg = "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200";
+  const defaultConstructionImg = "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200";
 
   return (
     <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
@@ -33,15 +34,15 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
           {/* Left Content */}
-          <div className="max-w-2xl text-center lg:text-left">
+          <div className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0">
             <motion.div 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs uppercase tracking-wider mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border-0 text-primary font-bold text-xs uppercase tracking-wider mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
-              General Contracting & Heavy Civil Engineering
+              Class-A Licensed Contractor · Heavy Civil Engineering
             </motion.div>
 
             <motion.h1 
@@ -59,7 +60,7 @@ const HeroSection = () => {
                   ))}
                 </>
               ) : (
-                <>Building Monumental <span className="text-primary">Infrastructure & <br/> Modern Landmarks.</span></>
+                <>Pioneering Nepal's <span className="text-primary">Critical Infrastructure & <br className="hidden sm:inline"/> Modern Landmarks.</span></>
               )}
             </motion.h1>
 
@@ -69,7 +70,7 @@ const HeroSection = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
-              {data?.description || "Tier-1 General Contracting and Civil Infrastructure engineering. From iconic commercial skyscrapers to arterial highway viaducts and automated logistics hubs, we build with uncompromised precision and Zero-Harm safety standards."}
+              {data?.description || "Tier-1 General Contracting and Civil Infrastructure engineering. From arterial national highway corridors and long-span river bridges to hydraulic river training and civic complexes, MK Engineering and Construction builds with uncompromised precision and Zero-Harm safety standards across Nepal."}
             </motion.p>
 
             <motion.div 
@@ -80,21 +81,21 @@ const HeroSection = () => {
             >
               <PrimaryButton 
                 as={Link}
-                to={data?.cta_link || "/contact"}
-                className="group py-4 px-10 rounded-2xl text-lg shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 active:scale-95 transition-all duration-300"
+                to={data?.cta_link || "/projects"}
+                className="group py-4 px-10 rounded-2xl text-lg shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 active:scale-95 transition-all duration-300 border-none"
               >
                 <span className="flex items-center gap-2">
-                  {data?.cta_text || "Get Started"}
+                  {data?.cta_text || "Explore Our Projects"}
                   <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
                 </span>
               </PrimaryButton>
 
               <PrimaryButton 
                 as={Link}
-                to={data?.secondary_cta_link || "/about"}
-                className="group py-4 px-10 rounded-2xl bg-white border-2 border-primary/20 text-foreground hover:bg-primary/5 hover:border-primary/40 text-lg active:scale-95 transition-all duration-300 shadow-sm"
+                to={data?.secondary_cta_link || "/services"}
+                className="group py-4 px-10 rounded-2xl bg-orange-50 text-foreground hover:bg-orange-100 text-lg active:scale-95 transition-all duration-300 shadow-sm border-none"
               >
-                <span>{data?.secondary_cta_text || "Learn More"}</span>
+                <span>{data?.secondary_cta_text || "Engineering Verticals"}</span>
               </PrimaryButton>
             </motion.div>
 

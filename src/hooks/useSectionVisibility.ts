@@ -13,13 +13,36 @@ export const useSectionVisibility = () => {
       
       if (error) {
         console.error("Frontend Visibility Error:", error);
-        return {};
+        return { stats: true, partners: false };
       }
       if (!data) {
-        return {};
+        return { stats: true, partners: false };
       }
       
       const settingsData = data as any;
+      // If the row belongs to legacy Sharp Edge template, override with MK Construction defaults
+      if (settingsData?.company_name === "Sharp Edge") {
+        return {
+          hero: true,
+          stats: true,
+          about_overview: true,
+          services: true,
+          testimonials: true,
+          partners: false, // User requested: No clients section
+          cta: true,
+          about_intro: true,
+          vision_mission: true,
+          core_values: true,
+          gallery: true,
+          team: true,
+          services_hero: true,
+          services_list: true,
+          faqs: true,
+          blog: true,
+          contact: true,
+        };
+      }
+
       return (settingsData?.section_visibility as Record<string, boolean>) || {};
     },
   });

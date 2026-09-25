@@ -3,9 +3,10 @@ import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PrimaryButton } from "./ui/PrimaryButton";
+import { sanitizeDbRecord } from "@/lib/contentFilter";
 
 const PreFooterCTA = () => {
-  const { data } = useQuery({
+  const { data: rawData } = useQuery({
     queryKey: ["prefooter-cta"],
     queryFn: async () => {
       const { data } = await supabase.from("prefooter_cta").select("*").single();
@@ -13,10 +14,12 @@ const PreFooterCTA = () => {
     },
   });
 
+  const data = sanitizeDbRecord(rawData);
+
   return (
     <section className="py-20 md:py-28 bg-white relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="relative rounded-3xl bg-gradient-to-r from-primary via-orange-600 to-amber-600 overflow-hidden shadow-2xl shadow-primary/25">
+        <div className="relative rounded-3xl bg-gradient-to-r from-primary via-orange-600 to-amber-600 overflow-hidden shadow-2xl shadow-primary/25 border-none">
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-black/10 blur-3xl pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
@@ -26,10 +29,10 @@ const PreFooterCTA = () => {
               Turnkey General Contracting & Engineering
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight">
-              {data?.heading || "Ready to Groundbreak Your Next Milestone Project?"}
+              {data?.heading || "Ready to Groundbreak Nepal's Next Landmark Infrastructure?"}
             </h2>
             <p className="mt-5 text-white/90 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-normal">
-              {data?.description || "Consult with our Principal Engineers and Pre-Construction Directors. From geotechnical analysis and 5D BIM virtual design to turnkey site delivery, we guarantee precision at every stage."}
+              {data?.description || "Partner with MK Engineering and Construction for Class-A general contracting, heavy civil engineering, and turnkey project delivery across Nepal."}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <PrimaryButton

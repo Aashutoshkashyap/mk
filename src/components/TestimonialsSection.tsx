@@ -51,6 +51,8 @@ const defaultTestimonials = [
   },
 ];
 
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -63,7 +65,8 @@ const TestimonialsSection = () => {
     },
   });
 
-  const displayTestimonials = testimonials.length > 0 ? testimonials : defaultTestimonials;
+  const validTestimonials = filterOutLegacyFinancial(testimonials);
+  const displayTestimonials = validTestimonials.length > 0 ? validTestimonials : defaultTestimonials;
   const current = displayTestimonials[currentIndex] || defaultTestimonials[0];
 
   const handleNext = () => {

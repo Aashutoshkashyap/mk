@@ -37,7 +37,7 @@ export const DEFAULT_NEPAL_SERVICES = [
     title: 'Buildings & Institutional Complexes', 
     description: 'Institutional, commercial, and administrative structures executed in strict compliance with the Nepal National Building Code (NBC) with ductile seismic detailing, high-grade concrete frames, and full MEP coordination.', 
     icon_name: 'Building2', 
-    image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200',
+    image_url: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200',
     scope: ['Ductile RCC Frames', 'MEP Infrastructure Coordination', 'Finishes & Architectural Joinery', 'Site Infrastructure Development'],
   },
   { 
@@ -58,6 +58,8 @@ export const DEFAULT_NEPAL_SERVICES = [
   },
 ];
 
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+
 const BentoServicesSection = () => {
   const { data: dbServices = [], isLoading } = useQuery({
     queryKey: ["services-home"],
@@ -68,7 +70,8 @@ const BentoServicesSection = () => {
     },
   });
 
-  const services = dbServices.length > 0 ? dbServices : DEFAULT_NEPAL_SERVICES;
+  const validDbServices = filterOutLegacyFinancial(dbServices);
+  const services = validDbServices.length > 0 ? validDbServices : DEFAULT_NEPAL_SERVICES;
 
   return (
     <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-orange-50/15 to-white relative overflow-hidden">

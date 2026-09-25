@@ -117,8 +117,8 @@ const Index = () => {
                       25+
                     </div>
                     <div>
-                      <div className="font-bold text-foreground text-sm">Years of Proven Delivery</div>
-                      <div className="text-xs text-muted-foreground">Certified Tier-1 EPC Contractor</div>
+                      <div className="font-bold text-foreground dark:text-black text-sm">Years of Proven Delivery</div>
+                      <div className="text-xs text-muted-foreground dark:text-black">Certified Tier-1 EPC Contractor</div>
                     </div>
                   </motion.div>
                 </div>
@@ -159,9 +159,9 @@ const Index = () => {
                     "Hydropower Civil Works & Headworks",
                     "Municipal Bulk Water & Sanitation",
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-[#888A8C]/30 shadow-xs">
+                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground dark:text-black bg-white/80 p-2.5 rounded-xl border border-[#888A8C]/30 shadow-xs">
                       <CheckCircle2 size={18} className="text-primary shrink-0" />
-                      <span>{item}</span>
+                      <span className="dark:text-black">{item}</span>
                     </div>
                   ))}
                 </div>

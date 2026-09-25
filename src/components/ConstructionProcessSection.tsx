@@ -93,7 +93,7 @@ export const ConstructionProcessSection = () => {
                   {step.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 rounded-lg bg-[#888A8C]/10 border border-[#888A8C]/20 text-[10px] font-bold text-foreground/80"
+                      className="px-2.5 py-1 rounded-lg bg-[#888A8C]/10 border border-[#888A8C]/20 text-[10px] font-bold text-foreground/80 dark:text-black"
                     >
                       {tag}
                     </span>

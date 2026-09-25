@@ -234,6 +234,27 @@
   .dark .bg-white div:not(a) > span:not([class*="bg-"]):not([class*="text-white"]):not([class*="text-primary"]) {
     color: #000000 !important;
   }
+
+  /* ── ConstructionProcessSection: pill tags inside white cards → black ── */
+  /* tags are spans with bg-[#888A8C]/10 inside rounded-3xl bg-white cards  */
+  .dark .bg-white span[class*="rounded-lg"],
+  .dark .bg-white span[class*="rounded"] {
+    color: #000000 !important;
+  }
+
+  /* ── bg-white/80 and bg-white/95 capability items & floating badge → black ── */
+  .dark [class*="bg-white\\/"] .text-foreground,
+  .dark [class*="bg-white\\/"] .text-muted-foreground,
+  .dark [class*="bg-white\\/"] span,
+  .dark [class*="bg-white\\/"] div {
+    color: #000000 !important;
+  }
+
+  /* ── Full Specifications link: always red (text-primary) in all modes ── */
+  .dark .bg-white a.text-primary,
+  .dark .bg-white a[class*="text-primary"] {
+    color: #F5333F !important;
+  }
 }
 
 @layer utilities {

@@ -104,7 +104,7 @@ export const BentoServicesSection = () => {
                   <div className="p-6 md:p-7 flex flex-col flex-1 bg-white">
                     {/* Icon + Title on same row */}
                     <div className="flex items-center gap-3 mb-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-neutral-100 flex items-center justify-center text-foreground group-hover:bg-[#F5333F]/10 group-hover:text-[#F5333F] group-hover:scale-110 transition-all duration-300 shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-neutral-100 flex items-center justify-center text-foreground dark:text-[#F5333F] group-hover:bg-[#F5333F]/10 group-hover:text-[#F5333F] group-hover:scale-110 transition-all duration-300 shrink-0">
                         <Icon size={18} />
                       </div>
                       <h3 className="font-display text-lg md:text-xl font-bold text-foreground tracking-tight group-hover:text-[#F5333F] transition-colors">

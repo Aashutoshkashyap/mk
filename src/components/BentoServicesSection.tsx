@@ -51,177 +51,53 @@ export const BentoServicesSection = () => {
                     {/* Background subtle mesh grid */}
                     <div className="absolute inset-0 bg-[radial-gradient(#888a8c10_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-60" />
 
-                    {/* Render custom technical preview mockup based on index */}
-                    {index === 0 && (
-                      <div className="relative w-full max-w-[270px] h-38 bg-white rounded-xl shadow-md group-hover:shadow-lg border border-neutral-200/80 p-3 flex flex-col justify-between overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
-                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-red-400 group-hover:animate-pulse" />
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                          </div>
-                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">DoR Highway Standard</span>
+                    {/* Inner Mockup Window with FULL-SIZE Image */}
+                    <div className="relative w-full max-w-[280px] h-42 bg-white rounded-xl shadow-md group-hover:shadow-2xl border border-neutral-200/80 flex flex-col overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
+                      {/* Window top bar */}
+                      <div className="flex items-center justify-between px-3 py-1.5 bg-neutral-50/90 border-b border-neutral-200/70 shrink-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-red-400 group-hover:animate-pulse" />
+                          <span className="w-2 h-2 rounded-full bg-amber-400" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         </div>
-                        <div className="flex items-center gap-3 pt-1">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
-                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <div className="h-2 w-16 bg-neutral-200 rounded-full group-hover:w-20 transition-all duration-500" />
-                            <div className="h-1.5 w-20 bg-neutral-100 rounded-full" />
-                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded mt-1 group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
-                              Asphalt / DBST
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 text-[9px] border-t border-neutral-100 text-neutral-500">
-                          <span className="font-semibold text-neutral-700 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping inline-flex mr-0.5" />
-                            QA/QC Verified
+                        <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider">
+                          Sector 0{index + 1} · {service.title.split(' ')[0]}
+                        </span>
+                      </div>
+
+                      {/* Full-bleed Photo of respective service */}
+                      <div className="relative flex-1 w-full overflow-hidden bg-neutral-900">
+                        <img
+                          src={service.image_url}
+                          alt={service.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent pointer-events-none" />
+
+                        {/* Floating Technical Overlay Chips */}
+                        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
+                          <span className="text-[9px] font-black text-white bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/20 shadow-xs">
+                            {index === 0 && "Asphalt / DBST"}
+                            {index === 1 && "Span: 200m+ Caisson"}
+                            {index === 2 && "RCC Guided Spurs"}
+                            {index === 3 && "NBC 105:2020"}
+                            {index === 4 && "RoR Weir Headworks"}
+                            {index === 5 && "Bulk DI PN16 Mains"}
                           </span>
-                          <span className="font-mono font-bold text-neutral-400">Class-A Standard</span>
-                        </div>
-                      </div>
-                    )}
 
-                    {index === 1 && (
-                      <div className="relative w-full max-w-[270px] h-38 bg-white rounded-xl shadow-md group-hover:shadow-lg border border-neutral-200/80 p-3 flex flex-col justify-between overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
-                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-red-400" />
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                          </div>
-                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">Bridge Crossings</span>
-                        </div>
-                        <div className="flex items-center gap-3 pt-1">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
-                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <div className="text-[10px] font-bold text-neutral-800">Span: 200m+ Caisson</div>
-                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
-                              Zone V Seismic
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 text-[9px] text-neutral-500 border-t border-neutral-100">
-                          <span className="font-semibold text-neutral-700">Pre-Stressed Girders</span>
-                          <span className="text-[#F5333F] font-black font-mono">FIDIC</span>
+                          <span className="text-[9px] font-bold text-white bg-[#F5333F] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                            {index === 0 && "QA/QC Verified"}
+                            {index === 1 && "FIDIC Standard"}
+                            {index === 2 && "Monsoon Ready"}
+                            {index === 3 && "Ductile Frame"}
+                            {index === 4 && "Turbine Ready"}
+                            {index === 5 && "WTP 24/7"}
+                          </span>
                         </div>
                       </div>
-                    )}
-
-                    {index === 2 && (
-                      <div className="relative w-full max-w-[270px] h-38 bg-white rounded-xl shadow-md group-hover:shadow-lg border border-neutral-200/80 p-3 flex flex-col justify-between overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
-                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-red-400" />
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                          </div>
-                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">Hydraulic Protection</span>
-                        </div>
-                        <div className="flex items-center gap-3 pt-1">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
-                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <div className="text-[10px] font-bold text-neutral-800">RCC Guided Spurs</div>
-                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
-                              Gabion Revetment
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 border-t border-neutral-100 text-[9px] text-neutral-500">
-                          <span className="font-semibold text-neutral-700">Monsoon Mitigation</span>
-                          <span className="font-mono font-bold text-neutral-400">Scour Control</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {index === 3 && (
-                      <div className="relative w-full max-w-[270px] h-38 bg-white rounded-xl shadow-md group-hover:shadow-lg border border-neutral-200/80 p-3 flex flex-col justify-between overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
-                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-red-400" />
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                          </div>
-                          <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-mono">NBC 105:2020</span>
-                        </div>
-                        <div className="flex items-center gap-3 pt-1">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
-                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-1 min-w-0 space-y-0.5 text-[10px]">
-                            <div className="font-bold text-neutral-800">Ductile RCC Frame</div>
-                            <div className="text-neutral-500 text-[9px]">Integrated MEP Civils</div>
-                            <div className="text-[9px] font-bold text-[#F5333F]">Turnkey Complex</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 border-t border-neutral-100 text-[9px] text-neutral-400 font-mono">
-                          <span>Institutional Civic</span>
-                          <span className="text-neutral-700 font-bold">Grade M30+</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {index === 4 && (
-                      <div className="relative w-full max-w-[270px] h-38 bg-white rounded-xl shadow-md group-hover:shadow-lg border border-neutral-200/80 p-3 flex flex-col justify-between overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
-                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-red-400" />
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                          </div>
-                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">RoR Civil Scheme</span>
-                        </div>
-                        <div className="flex items-center gap-3 pt-1">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
-                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <div className="text-[10px] font-bold text-neutral-800">Ogee Diversion Weir</div>
-                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
-                              Drill & Blast Tunnels
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 text-[9px] text-neutral-500 border-t border-neutral-100">
-                          <span className="font-semibold text-neutral-700">Penstock & Powerhouse</span>
-                          <span className="text-emerald-600 font-bold font-mono">Turbine Ready</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {index === 5 && (
-                      <div className="relative w-full max-w-[270px] h-38 bg-white rounded-xl shadow-md group-hover:shadow-lg border border-neutral-200/80 p-3 flex flex-col justify-between overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
-                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-red-400" />
-                            <span className="w-2 h-2 rounded-full bg-amber-400" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                          </div>
-                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">Potable Supply</span>
-                        </div>
-                        <div className="flex items-center gap-3 pt-1">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
-                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-1 min-w-0 space-y-1">
-                            <div className="text-[10px] font-bold text-neutral-800">PN16 Bulk DI Mains</div>
-                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
-                              RCC OHT Reservoirs
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 border-t border-neutral-100 text-[9px] text-neutral-500">
-                          <span className="font-semibold text-neutral-700">District Distribution</span>
-                          <span className="text-emerald-600 font-bold">WTP 24/7</span>
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* Bottom Content Area */}

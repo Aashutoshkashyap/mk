@@ -19,19 +19,24 @@ const PreFooterCTA = () => {
   return (
     <section className="py-20 md:py-28 bg-white relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Stone / Charcoal Theme Card */}
+        {/* Pre-Footer CTA Card with beforefooter.jpg background */}
         <div 
-          className="relative rounded-3xl overflow-hidden shadow-2xl border-none text-white"
-          style={{
-            background: "linear-gradient(135deg, #24272A 0%, #42464B 45%, #888A8C 100%)",
-          }}
+          className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 text-white group"
         >
-          {/* Subtle Grid Pattern Overlay */}
+          {/* Background Image from public/images/beforefooter.jpg */}
+          <img 
+            src="/images/beforefooter.jpg" 
+            alt="MK Engineering & Construction Projects"
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000 ease-out"
+          />
+          
+          {/* Dark Overlay for optimal readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/90 via-neutral-900/85 to-neutral-950/90" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
           
-          {/* Ambient Lighting */}
+          {/* Ambient Brand Accent Lighting */}
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#888A8C]/20 blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-[#F5333F]/15 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-[#F5333F]/20 blur-3xl pointer-events-none" />
           
           <div className="relative z-10 p-10 md:p-16 text-center">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-xs font-black uppercase tracking-widest mb-6 border border-white/15">

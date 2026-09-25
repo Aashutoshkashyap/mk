@@ -17,9 +17,9 @@ const HeroSection = () => {
 
   const data = sanitizeDbRecord(rawData);
 
-  // Default verified high-resolution construction engineering visual
-  const defaultConstructionImg = "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200";
-  const backupConstructionImg = "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1200";
+  // Default verified high-resolution construction engineering visual from public images
+  const defaultConstructionImg = "/images/hero.jpg";
+  const backupConstructionImg = "/images/hero-handshake.png";
 
   return (
     <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">

@@ -63,12 +63,12 @@ export const BentoServicesSection = () => {
                           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">DoR Highway Standard</span>
                         </div>
                         <div className="flex items-center gap-3 pt-1">
-                          <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
                             <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
                           </div>
                           <div className="flex-1 min-w-0 space-y-1">
-                            <div className="h-2 w-20 bg-neutral-200 rounded-full group-hover:w-24 transition-all duration-500" />
-                            <div className="h-1.5 w-24 bg-neutral-100 rounded-full" />
+                            <div className="h-2 w-16 bg-neutral-200 rounded-full group-hover:w-20 transition-all duration-500" />
+                            <div className="h-1.5 w-20 bg-neutral-100 rounded-full" />
                             <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded mt-1 group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
                               Asphalt / DBST
                             </span>
@@ -94,18 +94,15 @@ export const BentoServicesSection = () => {
                           </div>
                           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">Bridge Crossings</span>
                         </div>
-                        <div className="grid grid-cols-3 gap-1.5 pt-1">
-                          <div className="rounded-lg bg-neutral-50 group-hover:bg-neutral-100/80 border border-neutral-100 p-1.5 text-center flex flex-col items-center justify-center transition-colors">
-                            <span className="text-[8px] text-neutral-400">Span</span>
-                            <span className="text-[11px] font-black text-[#24272A]">200m+</span>
+                        <div className="flex items-center gap-3 pt-1">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
+                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
                           </div>
-                          <div className="rounded-lg bg-neutral-50 group-hover:bg-neutral-100/80 border border-neutral-100 p-1.5 text-center flex flex-col items-center justify-center transition-colors">
-                            <span className="text-[8px] text-neutral-400">Piers</span>
-                            <span className="text-[11px] font-black text-[#24272A]">Caisson</span>
-                          </div>
-                          <div className="rounded-lg bg-neutral-50 group-hover:bg-neutral-100/80 border border-neutral-100 p-1.5 text-center flex flex-col items-center justify-center transition-colors">
-                            <span className="text-[8px] text-neutral-400">Seismic</span>
-                            <span className="text-[11px] font-black text-[#F5333F]">Zone V</span>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="text-[10px] font-bold text-neutral-800">Span: 200m+ Caisson</div>
+                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
+                              Zone V Seismic
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between pt-1 text-[9px] text-neutral-500 border-t border-neutral-100">
@@ -125,14 +122,15 @@ export const BentoServicesSection = () => {
                           </div>
                           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">Hydraulic Protection</span>
                         </div>
-                        <div className="space-y-1.5 pt-1">
-                          <div className="flex items-center justify-between bg-neutral-50 group-hover:bg-emerald-50/50 px-2 py-1 rounded border border-neutral-100 text-[10px] transition-colors">
-                            <span className="font-medium text-neutral-700">RCC Guided Spurs</span>
-                            <span className="font-bold text-emerald-600">Active</span>
+                        <div className="flex items-center gap-3 pt-1">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
+                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
                           </div>
-                          <div className="flex items-center justify-between bg-neutral-50 group-hover:bg-red-50/50 px-2 py-1 rounded border border-neutral-100 text-[10px] transition-colors">
-                            <span className="font-medium text-neutral-700">Gabion Revetment</span>
-                            <span className="font-bold text-[#F5333F]">High Flow</span>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="text-[10px] font-bold text-neutral-800">RCC Guided Spurs</div>
+                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
+                              Gabion Revetment
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between pt-1 border-t border-neutral-100 text-[9px] text-neutral-500">
@@ -153,7 +151,7 @@ export const BentoServicesSection = () => {
                           <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-mono">NBC 105:2020</span>
                         </div>
                         <div className="flex items-center gap-3 pt-1">
-                          <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 group-hover:scale-105 transition-transform duration-500">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
                             <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
                           </div>
                           <div className="flex-1 min-w-0 space-y-0.5 text-[10px]">
@@ -179,14 +177,15 @@ export const BentoServicesSection = () => {
                           </div>
                           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">RoR Civil Scheme</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-1.5 pt-1">
-                          <div className="rounded-lg bg-neutral-50 group-hover:bg-neutral-100 border border-neutral-100 p-1.5 text-center transition-colors">
-                            <span className="text-[8px] text-neutral-400 block">Headworks</span>
-                            <span className="text-[10px] font-black text-[#24272A]">Ogee Weir</span>
+                        <div className="flex items-center gap-3 pt-1">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
+                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
                           </div>
-                          <div className="rounded-lg bg-neutral-50 group-hover:bg-neutral-100 border border-neutral-100 p-1.5 text-center transition-colors">
-                            <span className="text-[8px] text-neutral-400 block">Tunnels</span>
-                            <span className="text-[10px] font-black text-[#F5333F]">Drill & Blast</span>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="text-[10px] font-bold text-neutral-800">Ogee Diversion Weir</div>
+                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
+                              Drill & Blast Tunnels
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between pt-1 text-[9px] text-neutral-500 border-t border-neutral-100">
@@ -206,14 +205,15 @@ export const BentoServicesSection = () => {
                           </div>
                           <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider">Potable Supply</span>
                         </div>
-                        <div className="space-y-1.5 pt-1">
-                          <div className="flex items-center justify-between bg-neutral-50 group-hover:bg-neutral-100 px-2 py-1 rounded border border-neutral-100 text-[10px] transition-colors">
-                            <span className="font-medium text-neutral-700">Bulk DI Transmission</span>
-                            <span className="font-bold text-neutral-800">PN16 Mains</span>
+                        <div className="flex items-center gap-3 pt-1">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-neutral-100 relative group-hover:scale-105 transition-transform duration-500">
+                            <img src={service.image_url} alt={service.title} className="w-full h-full object-cover" />
                           </div>
-                          <div className="flex items-center justify-between bg-neutral-50 group-hover:bg-neutral-100 px-2 py-1 rounded border border-neutral-100 text-[10px] transition-colors">
-                            <span className="font-medium text-neutral-700">Overhead Reservoirs</span>
-                            <span className="font-bold text-[#F5333F]">RCC OHT</span>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="text-[10px] font-bold text-neutral-800">PN16 Bulk DI Mains</div>
+                            <span className="inline-block text-[9px] font-black text-[#F5333F] bg-[#F5333F]/10 px-1.5 py-0.5 rounded group-hover:bg-[#F5333F] group-hover:text-white transition-colors duration-300">
+                              RCC OHT Reservoirs
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between pt-1 border-t border-neutral-100 text-[9px] text-neutral-500">

@@ -117,8 +117,8 @@ const Index = () => {
                       25+
                     </div>
                     <div>
-                      <div className="font-bold text-foreground dark:text-black text-sm">Years of Proven Delivery</div>
-                      <div className="text-xs text-muted-foreground dark:text-black">Certified Tier-1 EPC Contractor</div>
+                      <div className="font-bold text-sm" style={{ color: '#000000' }}>Years of Proven Delivery</div>
+                      <div className="text-xs" style={{ color: '#000000' }}>Certified Tier-1 EPC Contractor</div>
                     </div>
                   </motion.div>
                 </div>

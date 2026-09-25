@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, HardHat, ArrowRight } from "lucide-react";
+import { Menu, X, HardHat, ArrowRight, Moon, Sun } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
+  const { isDark, toggle: toggleDark } = useDarkMode();
 
   const { data: settings } = useQuery({
     queryKey: ["site_settings"],
@@ -117,8 +119,17 @@ const Navbar = () => {
             </div>
           </nav>
 
-          {/* Contact Button & Mobile Toggle */}
-          <div className="flex items-center gap-3">
+          {/* Right: Dark Mode Toggle + Contact + Mobile */}
+          <div className="flex items-center gap-2">
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDark}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              className="p-2 rounded-xl bg-white/90 dark:bg-white/10 border border-[#888A8C]/30 backdrop-blur-md text-foreground transition-all hover:bg-[#888A8C]/10 flex items-center justify-center shrink-0 shadow-sm"
+            >
+              {isDark ? <Sun size={18} className="text-primary" /> : <Moon size={18} className="text-foreground/70" />}
+            </button>
+
             <div className="hidden sm:flex items-center">
               <Link
                 to="/contact"

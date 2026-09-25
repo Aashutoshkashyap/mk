@@ -55,25 +55,36 @@
   }
 
   .dark {
-    --background: 215 25% 8%;
-    --foreground: 210 20% 96%;
-    --card: 215 25% 11%;
-    --card-foreground: 210 20% 96%;
-    --popover: 215 25% 11%;
-    --popover-foreground: 210 20% 96%;
-    --primary: 207 90% 42%;
+    /* Deep charcoal backgrounds matching MK brand */
+    --background: 210 10% 8%;           /* Deep #11131A charcoal */
+    --foreground: 210 15% 94%;          /* Near-white text */
+
+    --card: 210 10% 11%;                /* Slightly lighter charcoal cards */
+    --card-foreground: 210 15% 94%;
+
+    --popover: 210 10% 11%;
+    --popover-foreground: 210 15% 94%;
+
+    --primary: 357 90% 58%;             /* SDC Red stays #F5333F */
     --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 207 90% 42%;
+
+    --secondary: 210 10% 16%;           /* Dark charcoal secondary */
+    --secondary-foreground: 210 15% 88%;
+
+    --muted: 210 10% 16%;
+    --muted-foreground: 210 5% 55%;     /* Stone-toned muted */
+
+    --accent: 357 90% 58%;              /* SDC Red accent */
     --accent-foreground: 0 0% 100%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+
+    --border: 210 10% 20%;              /* Subtle dark border */
+    --input: 210 10% 20%;
+    --ring: 357 90% 58%;                /* SDC Red ring */
+
+    --brand-stone: 210 2% 55%;          /* Stone #888A8C unchanged */
   }
 }
 

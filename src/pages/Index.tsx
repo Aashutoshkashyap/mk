@@ -40,39 +40,45 @@ const Index = () => {
 
   const { isVisible } = useSectionVisibility();
 
+  const defaultStats = [
+    { id: '1', icon_name: 'Building2', value: '350+', label: 'Projects Completed' },
+    { id: '2', icon_name: 'Award', value: '25+ Yrs', label: 'Engineering Excellence' },
+    { id: '3', icon_name: 'Truck', value: '1,200+', label: 'Heavy Equipment Fleet' },
+    { id: '4', icon_name: 'ShieldCheck', value: '99.8%', label: 'Zero-Harm Safety Rate' },
+  ];
+
+  const displayStats = stats.length > 0 ? stats : defaultStats;
+
   return (
     <>
       {isVisible("hero") && <HeroSection />}
 
-      {/* Stats Strip */}
+      {/* Stats Strip with microanimations */}
       {isVisible("stats") && (
-        <section ref={statsRef} className="relative -mt-10 z-10 pb-10">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            <div className="flex flex-wrap justify-center gap-6">
-              {stats.length > 0 ? (
-                stats.map((stat: any, i: number) => {
-                  const Icon = getIcon(stat.icon_name);
-                  return (
-                    <motion.div key={stat.id} initial={{ opacity: 0, y: 30 }} animate={statsInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 * i }}
-                      className="rounded-2xl bg-card border border-border p-6 text-center shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 min-w-[200px]">
-                      <div className="w-12 h-12 mx-auto rounded-xl bg-primary/[0.08] flex items-center justify-center mb-3">
-                        <Icon size={22} className="text-primary" strokeWidth={1.5} />
-                      </div>
-                      <div className="font-display text-3xl md:text-4xl font-extrabold text-primary">{stat.value}</div>
-                      <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
-                    </motion.div>
-                  );
-                })
-              ) : (
-                // Skeleton placeholders for stats
-                [1, 2, 3].map((_, i) => (
-                  <div key={i} className="rounded-2xl bg-card border border-border p-6 text-center shadow-lg shadow-primary/5 min-w-[200px] animate-pulse">
-                    <div className="w-12 h-12 mx-auto rounded-xl bg-secondary mb-3"></div>
-                    <div className="h-8 bg-secondary rounded w-2/3 mx-auto mb-2"></div>
-                    <div className="h-4 bg-secondary rounded w-1/2 mx-auto"></div>
-                  </div>
-                ))
-              )}
+        <section ref={statsRef} className="relative -mt-12 z-20 pb-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              {displayStats.map((stat: any, i: number) => {
+                const Icon = getIcon(stat.icon_name);
+                return (
+                  <motion.div 
+                    key={stat.id} 
+                    initial={{ opacity: 0, y: 30 }} 
+                    animate={statsInView ? { opacity: 1, y: 0 } : {}} 
+                    transition={{ duration: 0.5, delay: 0.08 * i }}
+                    whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                    className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-orange-100 p-6 text-center shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 transition-all duration-300"
+                  >
+                    <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                      <Icon size={26} className="text-primary group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
+                    </div>
+                    <div className="font-display text-3xl md:text-4xl font-extrabold text-foreground tracking-tight group-hover:text-primary transition-colors">
+                      {stat.value}
+                    </div>
+                    <div className="mt-1.5 text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -80,56 +86,96 @@ const Index = () => {
 
       {/* About Preview */}
       {isVisible("about_overview") && (
-        <section ref={aboutRef} className="py-20 md:py-28">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {!about ? (
-                // Skeleton Loader for About
-                <>
-                  <div className="relative rounded-2xl overflow-hidden h-80 bg-secondary animate-pulse" />
-                  <div className="space-y-6 animate-pulse">
-                    <div className="flex gap-3">
-                      <div className="h-6 w-20 bg-secondary rounded-full" />
-                      <div className="h-6 w-20 bg-secondary rounded-full" />
-                      <div className="h-6 w-20 bg-secondary rounded-full" />
+        <section ref={aboutRef} className="py-20 md:py-32 bg-gradient-to-b from-white via-orange-50/20 to-white relative overflow-hidden">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <motion.div 
+                initial={{ opacity: 0, x: -40 }} 
+                animate={aboutInView ? { opacity: 1, x: 0 } : {}} 
+                transition={{ duration: 0.7 }}
+                className="relative"
+              >
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
+                  <img 
+                    src={about?.image_url || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1600"} 
+                    alt="Modern Civil Construction Project" 
+                    className="w-full h-[450px] object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700 ease-out" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent rounded-2xl pointer-events-none" />
+                  
+                  {/* Floating Experience Badge */}
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md border border-white/60 p-4 rounded-2xl shadow-xl flex items-center gap-4"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary/30">
+                      25+
                     </div>
-                    <div className="h-12 w-3/4 bg-secondary rounded-xl" />
-                    <div className="h-24 w-full bg-secondary rounded-xl" />
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="h-6 bg-secondary rounded w-full" />
-                      <div className="h-6 bg-secondary rounded w-full" />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <motion.div initial={{ opacity: 0, x: -30 }} animate={aboutInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
-                    <div className="relative rounded-2xl overflow-hidden">
-                      <img src={about?.image_url || "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1500"} alt="Sharp Edge Office" className="w-full h-80 object-cover rounded-2xl" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent rounded-2xl" />
+                    <div>
+                      <div className="font-bold text-foreground text-sm">Years of Proven Delivery</div>
+                      <div className="text-xs text-muted-foreground">Certified Tier-1 EPC Contractor</div>
                     </div>
                   </motion.div>
-                  <motion.div initial={{ opacity: 0, x: 30 }} animate={aboutInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
-                    <div className="flex flex-wrap gap-3 mb-6">
-                      {["Precision", "Integrity", "Excellence"].map((value, i) => (
-                        <span key={value} className="text-[10px] font-black tracking-widest uppercase text-brand-blue bg-brand-blue/5 px-4 py-1.5 rounded-full border border-brand-blue/10 inline-block">
-                          {value}
-                        </span>
-                      ))}
+                </div>
+                
+                {/* Micro decorative accents */}
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl -z-10" />
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-400/10 rounded-full blur-2xl -z-10" />
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 40 }} 
+                animate={aboutInView ? { opacity: 1, x: 0 } : {}} 
+                transition={{ duration: 0.7, delay: 0.15 }}
+              >
+                <div className="flex flex-wrap gap-2.5 mb-6">
+                  {["Structural Integrity", "LEED Certified", "Zero-Harm Safety", "BIM 5D Technology"].map((value) => (
+                    <span key={value} className="text-[10px] font-black tracking-widest uppercase text-primary bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 inline-block shadow-sm">
+                      {value}
+                    </span>
+                  ))}
+                </div>
+                
+                <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground leading-[1.15] tracking-tight">
+                  {about?.heading || "Setting the Benchmark in Commercial & Civil Heavy Construction"}
+                </h2>
+                
+                <p className="mt-6 text-muted-foreground leading-relaxed text-base md:text-lg">
+                  {about?.description || "MK Construction & Infrastructure is a premier general contractor and civil engineering powerhouse. For over two decades, we have engineered iconic corporate towers, heavy highway infrastructure, high-bay industrial logistics hubs, and resilient residential communities. Backed by an extensive captive heavy machinery fleet, ISO 45001 safety compliance, and comprehensive 5D BIM virtual modeling, we deliver monumental scale with pinpoint precision, on time and on budget."}
+                </p>
+
+                <div className="mt-8 grid sm:grid-cols-2 gap-3.5">
+                  {[
+                    "Commercial High-Rise & Campuses",
+                    "Highways, Bridges & Culverts",
+                    "Deep Foundations & Geotechnical",
+                    "LEED Platinum Green Buildings",
+                    "Pre-Engineered Metal Structures",
+                    "Turnkey EPC & Project Controls",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-orange-100/80 shadow-xs">
+                      <CheckCircle2 size={18} className="text-primary shrink-0" />
+                      <span>{item}</span>
                     </div>
-                    <h2 className="mt-3 font-display text-3xl md:text-5xl font-extrabold text-primary leading-tight tracking-tight">{about?.heading || "Trusted Expertise Since Day One"}</h2>
-                    <p className="mt-5 text-muted-foreground leading-relaxed">{about?.description || "Sharp Egde Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services."}</p>
-                    <div className="mt-6 grid grid-cols-2 gap-3">
-                      {["Chartered Accountants", "Legal Experts", "Tax Advisors", "Business Consultants"].map((item) => (
-                        <div key={item} className="flex items-center gap-2 text-sm text-foreground"><CheckCircle2 size={16} className="text-brand-green shrink-0" />{item}</div>
-                      ))}
-                    </div>
-                    <Link to="/about" className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-primary/20 px-6 py-3 text-sm font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
-                      Learn More <ArrowRight size={14} />
-                    </Link>
-                  </motion.div>
-                </>
-              )}
+                  ))}
+                </div>
+
+                <div className="mt-10 flex flex-wrap items-center gap-4">
+                  <Link 
+                    to="/about" 
+                    className="inline-flex items-center gap-2.5 rounded-full bg-primary px-7 py-3.5 text-sm font-bold text-white hover:bg-primary/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+                  >
+                    Explore Company Profile <ArrowRight size={16} />
+                  </Link>
+
+                  <Link 
+                    to="/portfolio" 
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-primary/25 px-6 py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-all duration-300"
+                  >
+                    View Our Portfolio
+                  </Link>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>

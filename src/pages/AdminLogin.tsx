@@ -41,7 +41,7 @@ const AdminLogin = () => {
             <div className="relative">
               <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-border bg-secondary/50 pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="admin@sharpedge.com.np" />
+                className="w-full rounded-xl border border-border bg-secondary/50 pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="admin@mkconstruction.com" />
             </div>
           </div>
           <div>

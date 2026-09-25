@@ -37,12 +37,12 @@ const VisibilityEditor = () => {
         .select("*")
         .eq("id", "00000000-0000-0000-0000-000000000000")
         .maybeSingle();
-      
+
       if (error) {
         console.error("Visibility Error: Supabase Query Failed", error);
         return {};
       }
-      
+
       if (!data) {
         console.warn("Visibility Warning: No record found at Fixed ID 0000...0000");
         return {};
@@ -69,11 +69,11 @@ const VisibilityEditor = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ payloadVisibility }: any) => {
-      const payload = { 
+      const payload = {
         section_visibility: payloadVisibility,
         updated_at: new Date().toISOString()
       };
-      
+
       // Use a fixed ID to guarantee we are always editing the same singleton row.
       const { error } = await supabase
         .from("site_settings")
@@ -100,7 +100,7 @@ const VisibilityEditor = () => {
   const pages = [...new Set(SECTIONS.map((s) => s.page))];
 
   if (isLoading && !settings) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
-  
+
   // Check if the column actually exists in the response
   const columnExists = settings && "section_visibility" in settings;
   const recordExists = !!settings;
@@ -113,7 +113,7 @@ const VisibilityEditor = () => {
         </div>
         <h2 className="text-xl font-bold">Database Repair Required</h2>
       </div>
-      
+
       {!recordExists ? (
         <p className="mb-4 text-sm">The "Fixed ID" settings record is missing from your database.</p>
       ) : !columnExists ? (
@@ -128,18 +128,18 @@ const VisibilityEditor = () => {
           <li>Paste and run the code below:</li>
         </ol>
         <pre className="text-[10px] bg-black/80 text-green-400 p-4 rounded-xl overflow-x-auto border border-white/10 font-mono">
-{`-- 1. Add the column
+          {`-- 1. Add the column
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS section_visibility JSONB DEFAULT '{}'::jsonb;
 
 -- 2. Create the fixed singleton row
 INSERT INTO site_settings (id, company_name)
-VALUES ('00000000-0000-0000-0000-000000000000', 'Sharp Edge')
+VALUES ('00000000-0000-0000-0000-000000000000', 'MK BuildCraft')
 ON CONFLICT (id) DO NOTHING;
 
 -- 3. Delete duplicates
 DELETE FROM site_settings WHERE id != '00000000-0000-0000-0000-000000000000';`}
         </pre>
-        <button 
+        <button
           onClick={() => qc.invalidateQueries({ queryKey: ["site_settings"] })}
           className="mt-4 px-6 py-2 bg-destructive text-white rounded-lg text-sm font-bold hover:bg-destructive/90 transition-all"
         >
@@ -188,16 +188,14 @@ DELETE FROM site_settings WHERE id != '00000000-0000-0000-0000-000000000000';`}
                   </div>
                   <button
                     onClick={() => toggle(section.id)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                      isVisible ? "bg-primary" : "bg-secondary border border-border"
-                    }`}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 ${isVisible ? "bg-primary" : "bg-secondary border border-border"
+                      }`}
                     role="switch"
                     aria-checked={isVisible}
                   >
                     <span
-                      className={`inline-block h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${
-                        isVisible ? "translate-x-6" : "translate-x-1"
-                      }`}
+                      className={`inline-block h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${isVisible ? "translate-x-6" : "translate-x-1"
+                        }`}
                     />
                     <span className="sr-only">{isVisible ? "Visible" : "Hidden"}</span>
                   </button>
@@ -213,7 +211,7 @@ DELETE FROM site_settings WHERE id != '00000000-0000-0000-0000-000000000000';`}
         <div>
           <p className="text-sm font-semibold text-amber-800">How this works</p>
           <p className="text-xs text-amber-700 mt-1">
-            Toggling a section off hides it from the live website. The content is preserved — you can re-enable it any time. 
+            Toggling a section off hides it from the live website. The content is preserved — you can re-enable it any time.
             This requires the frontend components to check <code className="bg-amber-100 px-1 rounded">section_visibility</code> from site settings.
           </p>
         </div>

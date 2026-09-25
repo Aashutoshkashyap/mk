@@ -21,18 +21,28 @@ const MarqueeRow = ({
           key={`${item.id}-${i}`}
           onMouseEnter={() => onHover(item.name)}
           onMouseLeave={onLeave}
-          className="flex-shrink-0 w-[240px] h-[120px] md:w-[320px] md:h-[160px] mx-4 rounded-3xl bg-card/60 backdrop-blur-sm border border-border flex items-center justify-center p-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 hover:border-brand-blue/30 hover:bg-white hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-500 cursor-none"
+          className="flex-shrink-0 w-[240px] h-[110px] md:w-[290px] md:h-[130px] mx-3 rounded-2xl bg-white/90 backdrop-blur-md border border-orange-100 flex items-center justify-center p-6 shadow-sm hover:border-primary hover:bg-orange-50/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 cursor-default group"
         >
-          <img
-            src={item.logo_url}
-            alt={item.name}
-            className="max-w-full max-h-full object-contain"
-            loading="lazy"
-            onError={(e) => {
-              e.currentTarget.src = "https://sharpedge.com.np/static/img/logo.png";
-              e.currentTarget.style.filter = "grayscale(1) opacity(0.2)";
-            }}
-          />
+          {item.logo_url ? (
+            <img
+              src={item.logo_url}
+              alt={item.name}
+              className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          ) : (
+            <div className="flex items-center gap-3 text-center">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 group-hover:bg-primary group-hover:text-white flex items-center justify-center text-primary font-black text-xs shrink-0 transition-colors">
+                🏗️
+              </div>
+              <span className="font-display font-bold text-foreground text-sm group-hover:text-primary transition-colors line-clamp-2 text-left">
+                {item.name}
+              </span>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -46,12 +56,15 @@ const PartnersSection = () => {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const defaultPartners = [
-    { id: 'p1', name: 'ICAI Nepal', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
-    { id: 'p2', name: 'Revenue Board', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
-    { id: 'p3', name: 'Standard Chartered', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
-    { id: 'p4', name: 'Nabil Bank', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
-    { id: 'p5', name: 'Investment Bank', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
-    { id: 'p6', name: 'Global IME', logo_url: 'https://sharpedge.com.np/static/img/logo.png' },
+    { id: 'p1', name: 'Metropolitan Transit Authority', logo_url: '' },
+    { id: 'p2', name: 'Apex Real Estate Consortium', logo_url: '' },
+    { id: 'p3', name: 'Holcim Infrastructure', logo_url: '' },
+    { id: 'p4', name: 'Caterpillar Heavy Systems', logo_url: '' },
+    { id: 'p5', name: 'Skanska Global Alliance', logo_url: '' },
+    { id: 'p6', name: 'Vanguard Logistics Hubs', logo_url: '' },
+    { id: 'p7', name: 'Trimble BIM Technologies', logo_url: '' },
+    { id: 'p8', name: 'National Highway Authority', logo_url: '' },
+    { id: 'p9', name: 'Balfour Civil Engineering', logo_url: '' },
   ];
 
   const [hoveredPartner, setHoveredPartner] = useState<string | null>(null);
@@ -84,21 +97,13 @@ const PartnersSection = () => {
   });
 
   const partnersConfig = (settings as any)?.section_visibility?.partners_config || {};
-  const displayHeading = partnersConfig.heading || "The Companies We Serve";
-  const displaySubheading = partnersConfig.subheading || "We are honored to have worked with some of the most innovative and industry-leading organizations across the region.";
+  const displayHeading = partnersConfig.heading || "Trusted by Public Authorities & Private Developers";
+  const displaySubheading = partnersConfig.subheading || "Collaborating with municipal transit departments, tier-one REITs, sovereign infrastructure funds, and international engineering consortia to build enduring civic and commercial assets.";
   const displayPadding = partnersConfig.padding || "py-24 md:py-32";
 
-  // Optimize space: if explicitly empty in DB and no error, hide section.
-  // If there's an error, show professional fallbacks.
   if (isLoading) return <div className="h-60 bg-secondary/20 animate-pulse rounded-3xl mx-4 my-20" />;
-  if (partners.length === 0 && !error) return null;
 
   const partnersToDisplay = partners.length > 0 ? partners : defaultPartners;
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = "/placeholder.svg"; // Fallback to a local SVG or original logo
-    e.currentTarget.className = "max-w-[120px] opacity-20 grayscale";
-  };
 
   // Distribute partners into 3 rows
   const row1 = partnersToDisplay.filter((_, i) => i % 3 === 0);
@@ -112,18 +117,16 @@ const PartnersSection = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/5 border border-brand-blue/10 text-brand-blue font-bold text-[10px] tracking-widest uppercase mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse" />
-            Strategic Partners
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-[10px] tracking-widest uppercase mb-6 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
+            Infrastructure Partnerships & Client Alliances
           </div>
-          <h2 className="font-display text-4xl md:text-6xl font-extrabold text-primary tracking-tight mb-6">
-            {displayHeading.split(' ').map((word, i, arr) => 
-              i === arr.length - 1 ? <span key={i} className="text-brand-blue">{word}</span> : word + ' '
-            )}
+          <h2 className="font-display text-4xl md:text-5xl font-extrabold text-foreground tracking-tight mb-6">
+            {displayHeading}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {displaySubheading}
           </p>
         </motion.div>

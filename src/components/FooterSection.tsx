@@ -13,85 +13,103 @@ const FooterSection = () => {
   });
 
   return (
-    <footer className="py-12 bg-primary text-primary-foreground">
+    <footer className="py-16 bg-neutral-950 text-white relative border-t-4 border-primary">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-4 gap-10">
           <div>
-            <img
-              src={settings?.logo_url || "https://sharpedge.com.np/static/img/logo.png"}
-              alt={settings?.company_name || "Sharp Edge Business Solutions"}
-              className="h-12 w-auto brightness-0 invert"
-            />
-            <p className="mt-4 text-sm text-primary-foreground/60 leading-relaxed">
-              Sharp Egde Business Solutions is a firm that provides clients with a wide range of services in auditing assurance, taxation, regulatory matters, and advisory services.
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-black text-lg shadow-lg shadow-primary/30">
+                MK
+              </div>
+              <div>
+                <span className="font-display font-extrabold text-xl text-white tracking-tight">MK BuildCraft</span>
+                <div className="text-[10px] uppercase tracking-widest text-primary font-bold">Construction & Engineering</div>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-neutral-400 leading-relaxed">
+              Tier-1 General Contracting and Civil Infrastructure engineering group. Transforming complex architectural visions into monumental landmarks through sustainable engineering, self-owned heavy machinery, and Zero-Harm safety standards.
             </p>
+            <div className="mt-4 flex items-center gap-2 text-xs text-neutral-400">
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              <span>OSHA & ISO 45001 / 9001 Certified</span>
+            </div>
           </div>
           <div>
-            <h4 className="font-display font-bold text-primary-foreground mb-4">Pages</h4>
+            <h4 className="font-display font-bold text-white mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-3 bg-primary rounded-sm" />
+              Company
+            </h4>
             <div className="flex flex-col gap-2.5">
               {[
                 { label: "Home", to: "/" },
                 { label: "About Us", to: "/about" },
-                { label: "Services", to: "/services" },
-                { label: "Team", to: "/team" },
-                { label: "Blog", to: "/blog" },
-                { label: "Contact", to: "/contact" },
+                { label: "Our Services", to: "/services" },
+                { label: "Projects & Portfolio", to: "/portfolio" },
+                { label: "Fleet & Safety Standards", to: "/safety" },
+                { label: "Leadership Team", to: "/team" },
+                { label: "Field Reports & Insights", to: "/blog" },
+                { label: "Request a Quote", to: "/contact" },
               ].map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+                  className="text-sm text-neutral-400 hover:text-primary transition-colors flex items-center gap-1.5"
                 >
-                  {link.label}
+                  <span className="text-primary/50 text-xs">›</span> {link.label}
                 </Link>
               ))}
             </div>
           </div>
           <div>
-            <h4 className="font-display font-bold text-primary-foreground mb-4">Services</h4>
+            <h4 className="font-display font-bold text-white mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-3 bg-primary rounded-sm" />
+              Specialized Disciplines
+            </h4>
             <div className="flex flex-col gap-2.5">
-              {["Audit & Assurance", "Corporate Law", "Taxation", "Business Consulting", "Training"].map((s) => (
+              {[
+                "Commercial High-Rise Towers",
+                "Highways, Viaducts & Bridges",
+                "Industrial Logistics Hubs",
+                "BIM 5D Virtual Design",
+                "Deep Geotechnical Foundations",
+                "LEED Sustainable Retrofits",
+              ].map((s) => (
                 <Link
                   key={s}
                   to="/services"
-                  className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+                  className="text-sm text-neutral-400 hover:text-primary transition-colors flex items-center gap-1.5"
                 >
-                  {s}
+                  <span className="text-primary/50 text-xs">›</span> {s}
                 </Link>
               ))}
             </div>
           </div>
           <div>
-            <h4 className="font-display font-bold text-primary-foreground mb-4">Contact</h4>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-start gap-3 text-sm text-primary-foreground/60">
-                <Mail size={14} className="text-brand-blue shrink-0 mt-0.5" />
-                <span>casubratsapkota@gmail.com<br />cadiwashdahal@gmail.com</span>
+            <h4 className="font-display font-bold text-white mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-3 bg-primary rounded-sm" />
+              Headquarters
+            </h4>
+            <div className="flex flex-col gap-3.5">
+              <div className="flex items-start gap-3 text-sm text-neutral-400">
+                <MapPin size={16} className="text-primary shrink-0 mt-0.5" />
+                <span>MK Engineering Tower, 450 Grand Avenue<br />Infrastructure District, Metro Center</span>
               </div>
-              <div className="flex items-start gap-3 text-sm text-primary-foreground/60">
-                <MapPin size={14} className="text-brand-blue shrink-0 mt-0.5" />
-                <span>Thapagaun-10, New Baneshwor<br />Kathmandu, Nepal</span>
+              <div className="flex items-start gap-3 text-sm text-neutral-400">
+                <Mail size={16} className="text-primary shrink-0 mt-0.5" />
+                <span>tenders@mkconstruction.com<br />projects@mkconstruction.com</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-primary-foreground/60">
-                <Phone size={14} className="text-brand-blue shrink-0" />
-                +(977) 9841690746
+              <div className="flex items-center gap-3 text-sm text-neutral-400">
+                <Phone size={16} className="text-primary shrink-0" />
+                <span>+1 (800) 555-BUILD / +1 (800) 555-2845</span>
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-10 pt-6 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-primary-foreground/40">
-          <p>© {new Date().getFullYear()} Sharp Edge Business Solutions. All rights reserved.</p>
-          <p>
-            Supported by{" "}
-            <a 
-              href="https://thebytejar.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-brand-blue hover:text-white transition-colors font-semibold"
-            >
-              Byte Jar Pvt Ltd
-            </a>
-          </p>
+        <div className="mt-12 pt-6 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-400">
+          <p>© {new Date().getFullYear()} MK Construction & Infrastructure Group. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <span className="text-primary font-bold">Safety • Integrity • Engineering Mastery</span>
+          </div>
         </div>
       </div>
     </footer>

@@ -185,6 +185,55 @@
   .dark [class*="rounded-full"][class*="border"] {
     border-color: rgba(255, 255, 255, 0.4) !important;
   }
+
+  /* ── Navbar: keep links black in dark mode (nav capsule stays light-bg) ── */
+  .dark .glass-nav a,
+  .dark nav .glass-nav a {
+    color: #000000 !important;
+  }
+
+  /* ── Cards with white bg: force dark text so it's readable ── */
+  /* Targets h*, p, span (non-link) inside any element with bg-white */
+  /* Hyperlink <a> tags inside cards are intentionally excluded */
+  .dark .bg-white h1,
+  .dark .bg-white h2,
+  .dark .bg-white h3,
+  .dark .bg-white h4,
+  .dark .bg-white h5,
+  .dark .bg-white h6 {
+    color: #000000 !important;
+  }
+
+  .dark .bg-white p,
+  .dark .bg-white > div p,
+  .dark .bg-white > div > div p {
+    color: #000000 !important;
+  }
+
+  /* Non-link spans inside white cards */
+  .dark .bg-white span:not([class*="bg-"]):not([class*="text-white"]):not([class*="text-primary"]):not([class*="animate-"]) {
+    color: #000000 !important;
+  }
+
+  /* Tailwind muted/foreground overrides scoped to white cards */
+  .dark .bg-white .text-muted-foreground,
+  .dark .bg-white .text-foreground,
+  .dark .bg-white .text-neutral-300,
+  .dark .bg-white .text-neutral-400,
+  .dark .bg-white .text-neutral-500,
+  .dark .bg-white .text-neutral-600,
+  .dark .bg-white .text-stone-400,
+  .dark .bg-white .text-stone-500,
+  .dark .bg-white .text-gray-400,
+  .dark .bg-white .text-gray-500,
+  .dark .bg-white .text-gray-600 {
+    color: #000000 !important;
+  }
+
+  /* Flex/icon label rows inside white cards (but not links) */
+  .dark .bg-white div:not(a) > span:not([class*="bg-"]):not([class*="text-white"]):not([class*="text-primary"]) {
+    color: #000000 !important;
+  }
 }
 
 @layer utilities {

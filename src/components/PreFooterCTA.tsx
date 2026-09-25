@@ -23,14 +23,12 @@ const PreFooterCTA = () => {
         <div 
           className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 text-white group bg-neutral-950"
         >
-          {/* Scaled-down Background Image */}
-          <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
-            <img 
-              src="/images/beforefooter.jpg" 
-              alt="MK Engineering & Construction Projects"
-              className="w-full h-full object-cover object-center scale-[0.80] opacity-40 group-hover:scale-[0.85] transition-transform duration-1000 ease-out"
-            />
-          </div>
+          {/* Full-coverage Background Image */}
+          <img 
+            src="/images/beforefooter.jpg" 
+            alt="MK Engineering & Construction Projects"
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000 ease-out"
+          />
           
           {/* Dark Overlay for optimal readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/80 to-neutral-950/95" />

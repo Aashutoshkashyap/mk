@@ -74,8 +74,8 @@ export const ConstructionProcessSection = () => {
                 }`}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                    <Icon size={26} strokeWidth={1.75} />
+                  <div className="w-14 h-14 rounded-2xl bg-[#F5333F]/10 flex items-center justify-center">
+                    <Icon size={26} strokeWidth={1.75} className="text-[#F5333F]" />
                   </div>
                   <span className="font-display text-3xl font-black text-[#888A8C]/40">
                     {step.step}

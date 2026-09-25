@@ -69,14 +69,14 @@ const Navbar = () => {
       animate={{ 
         y: visible ? 0 : -100,
         opacity: visible ? 1 : 0,
-        paddingTop: scrolled ? "8px" : "20px",
-        paddingBottom: scrolled ? "8px" : "20px",
+        paddingTop: scrolled ? "6px" : "12px",
+        paddingBottom: scrolled ? "6px" : "12px",
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between gap-4 h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo on the left */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="transition-transform hover:scale-105 flex items-center gap-3">

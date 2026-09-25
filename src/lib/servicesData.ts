@@ -1,0 +1,96 @@
+/**
+ * Single source of truth for all 6 MK Construction engineering verticals.
+ * Used by both the Services page and the BentoServicesSection on the home page.
+ */
+export const DEFAULT_CONSTRUCTION_SERVICES = [
+  {
+    id: "s1",
+    title: "Roads & Highways",
+    disciplineNumber: "01",
+    description: "National highways, district roads, rural feeder networks, and urban arterials across complex mountain and plains topography. Full-depth asphalt, DBST, gravel, and rigid concrete pavement with integrated slope stabilization and drainage culverts.",
+    icon_name: "Truck",
+    image_url: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200",
+    scope: ["Asphalt Concrete Paving", "Cut & Fill Mass Hauling", "Bio-Engineering & Slopes"],
+    sub_services: [
+      { id: "ss1", label: "Earthwork & Sub-grade Preparation", icon_name: "Hammer", sort_order: 1 },
+      { id: "ss2", label: "Pavement Layers (Asphalt / DBST)", icon_name: "Truck", sort_order: 2 },
+      { id: "ss3", label: "Cross-Drainage & Box Culverts", icon_name: "Wrench", sort_order: 3 },
+      { id: "ss4", label: "Slope Bio-Engineering & Retaining", icon_name: "ShieldCheck", sort_order: 4 },
+    ],
+  },
+  {
+    id: "s2",
+    title: "Bridges & Structures",
+    disciplineNumber: "02",
+    description: "Steel-truss, RCC, and pre-stressed long-span river crossings engineered for Nepal's torrential monsoon river dynamics. Span ranges from 20m to 200m+ with deep pneumatic well-foundations, heavy pier fabrication, and seismic elastomeric bearings.",
+    icon_name: "Compass",
+    image_url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200",
+    scope: ["Pneumatic Caisson Sinking", "Post-Tensioned Girders", "River Bed Scour Protection"],
+    sub_services: [
+      { id: "ss5", label: "Pier & Abutment Well Sinking", icon_name: "Hammer", sort_order: 1 },
+      { id: "ss6", label: "Pre-Stressed Girder Launching", icon_name: "Compass", sort_order: 2 },
+      { id: "ss7", label: "Deck Slab Casting & Approaches", icon_name: "Building2", sort_order: 3 },
+      { id: "ss8", label: "Bearings & Expansion Joints", icon_name: "ShieldCheck", sort_order: 4 },
+    ],
+  },
+  {
+    id: "s3",
+    title: "River Training & Flood Mitigation",
+    disciplineNumber: "03",
+    description: "Hydraulic protection works for riverbank stabilization and flood mitigation in dynamic monsoon-fed river systems. Heavy gabion revetments, RCC spurs, boulder pitching, channelization, and guided flood dykes safeguarding agricultural basins and towns.",
+    icon_name: "Waves",
+    image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
+    scope: ["RCC Deflective Spurs", "Geo-Synthetic Revetments", "Embankment Dykes"],
+    sub_services: [
+      { id: "ss9", label: "Gabion & RCC Guided Spurs", icon_name: "Waves", sort_order: 1 },
+      { id: "ss10", label: "Flood Embankment Dykes", icon_name: "Building2", sort_order: 2 },
+      { id: "ss11", label: "Toe Protection & Armor Rock", icon_name: "Hammer", sort_order: 3 },
+      { id: "ss12", label: "River Channelization Dredging", icon_name: "Truck", sort_order: 4 },
+    ],
+  },
+  {
+    id: "s4",
+    title: "Buildings & Institutional Complexes",
+    disciplineNumber: "04",
+    description: "Institutional, commercial, and administrative structures executed in strict compliance with the Nepal National Building Code (NBC 105:2020) with ductile seismic detailing, high-grade concrete frames, and full MEP coordination.",
+    icon_name: "Building2",
+    image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+    scope: ["Seismic Moment Resisting Frames", "Basement Retention Piling", "Turnkey Architectural MEP"],
+    sub_services: [
+      { id: "ss13", label: "Ductile Structural Concrete Frames", icon_name: "Building2", sort_order: 1 },
+      { id: "ss14", label: "Integrated MEP Infrastructure", icon_name: "Zap", sort_order: 2 },
+      { id: "ss15", label: "Architectural Finishes & Joinery", icon_name: "CheckCircle2", sort_order: 3 },
+      { id: "ss16", label: "Site Grading & Ancillary Pavements", icon_name: "Truck", sort_order: 4 },
+    ],
+  },
+  {
+    id: "s5",
+    title: "Hydropower Civil Works",
+    disciplineNumber: "05",
+    description: "Turnkey civil packages for run-of-river hydropower generation. Engineering weir diversion headworks, intake basins, gravel traps, underground tunnels, surge shafts, penstock foundations, and powerhouse civil structures.",
+    icon_name: "Zap",
+    image_url: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=1200",
+    scope: ["Drill & Blast Tunnels", "Ogee Weir & Sluice Concrete", "Powerhouse Caverns"],
+    sub_services: [
+      { id: "ss17", label: "Diversion Weirs & Intake Basins", icon_name: "Waves", sort_order: 1 },
+      { id: "ss18", label: "Tunnel & Adit Rock Excavation", icon_name: "Hammer", sort_order: 2 },
+      { id: "ss19", label: "Penstock Anchor Thrust Blocks", icon_name: "Wrench", sort_order: 3 },
+      { id: "ss20", label: "Powerhouse Substructure Casting", icon_name: "Building2", sort_order: 4 },
+    ],
+  },
+  {
+    id: "s6",
+    title: "Water & Sanitation Infrastructure",
+    disciplineNumber: "06",
+    description: "Municipal water supply systems, bulk transmission pipelines, overhead water storage reservoirs, distribution pipeline networks, and urban sewerage infrastructure delivering potable water to urban and rural centers.",
+    icon_name: "Droplets",
+    image_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
+    scope: ["DI Bulk Mains Transmission", "Overhead RCC Reservoirs", "Water Treatment Civils"],
+    sub_services: [
+      { id: "ss21", label: "Bulk DI / HDPE Transmission Mains", icon_name: "Droplets", sort_order: 1 },
+      { id: "ss22", label: "Elevated RCC Storage Reservoirs", icon_name: "Building2", sort_order: 2 },
+      { id: "ss23", label: "District Distribution Networks", icon_name: "Compass", sort_order: 3 },
+      { id: "ss24", label: "Water Treatment Filtration Plants", icon_name: "ShieldCheck", sort_order: 4 },
+    ],
+  },
+];

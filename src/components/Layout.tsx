@@ -21,7 +21,7 @@ const Layout = () => {
         className="fixed inset-0 w-full h-full pointer-events-none -z-50 bg-cover bg-center bg-no-repeat transition-opacity duration-500"
         style={{
           backgroundImage: "url('/images/bg.jpg')",
-          opacity: 0.85,
+          opacity: 0.07,
         }}
         aria-hidden="true"
       />

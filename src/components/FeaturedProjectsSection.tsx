@@ -139,7 +139,7 @@ export const FeaturedProjectsSection = () => {
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                   active
                     ? "bg-primary text-white shadow-md shadow-primary/30"
-                    : "bg-orange-50 text-foreground/80 hover:bg-orange-100 hover:text-primary border border-orange-100"
+                    : "bg-red-50 text-foreground/80 hover:bg-red-50 hover:text-primary border border-red-100"
                 }`}
               >
                 {tab.label}
@@ -159,7 +159,7 @@ export const FeaturedProjectsSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="group rounded-3xl bg-white border-2 border-orange-100 overflow-hidden shadow-sm hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
+                className="group rounded-3xl bg-white border-2 border-red-100 overflow-hidden shadow-sm hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
               >
                 {/* Image */}
                 <div className="relative h-64 sm:h-72 overflow-hidden bg-neutral-900">
@@ -180,7 +180,7 @@ export const FeaturedProjectsSection = () => {
                   </span>
 
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <div className="flex items-center gap-2 text-xs text-orange-200 mb-1">
+                    <div className="flex items-center gap-2 text-xs text-red-200 mb-1">
                       <MapPin size={13} /> {project.location} · {project.completionYear}
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-white leading-snug">
@@ -195,7 +195,7 @@ export const FeaturedProjectsSection = () => {
                     {project.description}
                   </p>
 
-                  <div className="space-y-2 pt-4 border-t border-orange-100 mb-6">
+                  <div className="space-y-2 pt-4 border-t border-red-100 mb-6">
                     {project.highlights.map((h, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs font-semibold text-foreground">
                         <CheckCircle2 size={14} className="text-primary shrink-0" />
@@ -204,7 +204,7 @@ export const FeaturedProjectsSection = () => {
                     ))}
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between border-t border-orange-50">
+                  <div className="pt-2 flex items-center justify-between border-t border-red-50">
                     <span className="text-xs text-muted-foreground font-semibold">
                       Sector: <strong className="text-foreground">{project.sector}</strong>
                     </span>

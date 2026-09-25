@@ -78,7 +78,7 @@ const BlogPost = () => {
       {/* Hero Banner */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 text-white overflow-hidden">
         <div className="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-red-700/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(#f9731615_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none opacity-40" />
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
@@ -133,7 +133,7 @@ const BlogPost = () => {
               initial={{ opacity: 0, y: 20 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.5 }} 
-              className="mb-12 rounded-3xl overflow-hidden shadow-2xl border-4 border-orange-50 group h-80 sm:h-[480px]"
+              className="mb-12 rounded-3xl overflow-hidden shadow-2xl border-4 border-red-50 group h-80 sm:h-[480px]"
             >
               <img 
                 src={post.thumbnail_url} 
@@ -156,7 +156,7 @@ const BlogPost = () => {
                 </p>
                 {/* Secondary image if present */}
                 {i === 1 && post.image_1_url && (
-                  <div className="my-8 rounded-2xl overflow-hidden border border-orange-100 shadow-md">
+                  <div className="my-8 rounded-2xl overflow-hidden border border-red-100 shadow-md">
                     <img src={post.image_1_url} alt="Engineering schematic" className="w-full" loading="lazy" />
                   </div>
                 )}
@@ -165,7 +165,7 @@ const BlogPost = () => {
           </motion.div>
 
           {/* Author Box & Scope Callout */}
-          <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-orange-50 to-amber-50/50 border-2 border-orange-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-red-50 to-red-50/50 border-2 border-red-100 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary/25 shrink-0">
                 MK

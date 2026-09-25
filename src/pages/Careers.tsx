@@ -128,7 +128,7 @@ const Careers = () => {
       {/* Hero Banner */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 text-white overflow-hidden">
         <div className="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-red-700/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(#f9731615_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none opacity-40" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
@@ -191,7 +191,7 @@ const Careers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="rounded-3xl bg-white border-2 border-orange-100 p-7 shadow-sm hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
+                className="rounded-3xl bg-white border-2 border-red-100 p-7 shadow-sm hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-5">
                   <perk.icon size={26} strokeWidth={1.75} />
@@ -205,7 +205,7 @@ const Careers = () => {
       </section>
 
       {/* Open Positions List */}
-      <section id="positions" className="py-16 md:py-24 bg-gradient-to-b from-white via-orange-50/20 to-white">
+      <section id="positions" className="py-16 md:py-24 bg-gradient-to-b from-white via-red-50/20 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
             <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-4 shadow-xs">
@@ -226,7 +226,7 @@ const Careers = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="rounded-3xl bg-white border-2 border-orange-100 p-8 shadow-sm hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+                className="rounded-3xl bg-white border-2 border-red-100 p-8 shadow-sm hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col lg:flex-row lg:items-center justify-between gap-6"
               >
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -296,7 +296,7 @@ const Careers = () => {
 
           <form
             onSubmit={handleSubmit}
-            className="rounded-3xl bg-white border-2 border-orange-100 p-8 md:p-12 shadow-xl shadow-primary/5 space-y-6"
+            className="rounded-3xl bg-white border-2 border-red-100 p-8 md:p-12 shadow-xl shadow-primary/5 space-y-6"
           >
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
@@ -308,7 +308,7 @@ const Careers = () => {
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="e.g. Ramesh Shrestha"
                 />
               </div>
@@ -322,7 +322,7 @@ const Careers = () => {
                   required
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="e.g. ramesh.civil@gmail.com"
                 />
               </div>
@@ -338,7 +338,7 @@ const Careers = () => {
                   required
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="+977 98XXXXXXXX"
                 />
               </div>
@@ -351,7 +351,7 @@ const Careers = () => {
                   type="text"
                   value={form.district}
                   onChange={(e) => setForm({ ...form, district: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="Kathmandu / Pokhara / Itahari"
                 />
               </div>
@@ -363,7 +363,7 @@ const Careers = () => {
                 <select
                   value={form.experience}
                   onChange={(e) => setForm({ ...form, experience: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 >
                   <option value="Entry / 0-2 Years">Entry / 0-2 Years</option>
                   <option value="2-5 Years">2-5 Years</option>
@@ -382,7 +382,7 @@ const Careers = () => {
                 required
                 value={selectedJob}
                 onChange={(e) => setSelectedJob(e.target.value)}
-                className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-semibold"
+                className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-semibold"
               />
             </div>
 
@@ -395,7 +395,7 @@ const Careers = () => {
                 required
                 value={form.resumeLink}
                 onChange={(e) => setForm({ ...form, resumeLink: e.target.value })}
-                className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 placeholder="Google Drive / Dropbox / LinkedIn profile link"
               />
               <span className="text-[11px] text-muted-foreground mt-1 block">
@@ -411,7 +411,7 @@ const Careers = () => {
                 rows={4}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
+                className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
                 placeholder="Detail your engineering certifications (NEC Reg No.), major bridge/road contracts handled, software proficiencies, and notice period..."
               />
             </div>

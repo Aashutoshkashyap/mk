@@ -74,11 +74,11 @@ const BentoServicesSection = () => {
   const services = validDbServices.length > 0 ? validDbServices : DEFAULT_NEPAL_SERVICES;
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-orange-50/15 to-white relative overflow-hidden">
+    <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/15 to-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-orange-400/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-red-500/10 rounded-full blur-[120px]" />
         <div className="absolute inset-0 bg-[radial-gradient(#f9731612_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
       </div>
 
@@ -112,7 +112,7 @@ const BentoServicesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="group relative overflow-hidden rounded-3xl bg-white border-2 border-orange-100/90 shadow-sm hover:shadow-2xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
+                className="group relative overflow-hidden rounded-3xl bg-white border-2 border-red-100/90 shadow-sm hover:shadow-2xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
               >
                 {/* Visual Image Banner with Provision for Uploaded Image */}
                 <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
@@ -150,7 +150,7 @@ const BentoServicesSection = () => {
 
                   {/* Scope of works pills if available */}
                   {scopeItems && scopeItems.length > 0 && (
-                    <div className="space-y-1.5 pt-4 border-t border-orange-100 mb-6">
+                    <div className="space-y-1.5 pt-4 border-t border-red-100 mb-6">
                       {scopeItems.slice(0, 3).map((item: string, sIdx: number) => (
                         <div key={sIdx} className="text-xs text-foreground/80 font-medium flex items-center gap-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />

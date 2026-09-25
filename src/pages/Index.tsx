@@ -72,7 +72,7 @@ const Index = () => {
                     animate={statsInView ? { opacity: 1, y: 0 } : {}} 
                     transition={{ duration: 0.5, delay: 0.08 * i }}
                     whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                    className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-orange-100 p-6 text-center shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 transition-all duration-300"
+                    className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-red-100 p-6 text-center shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 transition-all duration-300"
                   >
                     <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
                       <Icon size={26} className="text-primary group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
@@ -91,7 +91,7 @@ const Index = () => {
 
       {/* About Preview */}
       {isVisible("about_overview") && (
-        <section ref={aboutRef} className="py-16 md:py-24 bg-gradient-to-b from-white via-orange-50/20 to-white relative overflow-hidden">
+        <section ref={aboutRef} className="py-16 md:py-24 bg-gradient-to-b from-white via-red-50/20 to-white relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div 
@@ -125,7 +125,7 @@ const Index = () => {
                 
                 {/* Micro decorative accents */}
                 <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl -z-10" />
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-400/10 rounded-full blur-2xl -z-10" />
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-red-500/10 rounded-full blur-2xl -z-10" />
               </motion.div>
 
               <motion.div 
@@ -158,7 +158,7 @@ const Index = () => {
                     "Hydropower Civil Works & Headworks",
                     "Municipal Bulk Water & Sanitation",
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-orange-100/80 shadow-xs">
+                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-red-100/80 shadow-xs">
                       <CheckCircle2 size={18} className="text-primary shrink-0" />
                       <span>{item}</span>
                     </div>

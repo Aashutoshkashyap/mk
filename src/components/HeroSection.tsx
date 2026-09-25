@@ -26,7 +26,7 @@ const HeroSection = () => {
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-[8%] right-[8%] w-[45%] h-[60%] bg-primary/[0.04] rounded-full blur-[130px]" />
-        <div className="absolute bottom-[5%] left-[5%] w-[35%] h-[40%] bg-orange-400/[0.03] rounded-full blur-[110px]" />
+        <div className="absolute bottom-[5%] left-[5%] w-[35%] h-[40%] bg-red-500/[0.03] rounded-full blur-[110px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731608_1px,transparent_1px),linear-gradient(to_bottom,#f9731608_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none" />
       </div>
       
@@ -93,7 +93,7 @@ const HeroSection = () => {
               <PrimaryButton 
                 as={Link}
                 to={data?.secondary_cta_link || "/services"}
-                className="group py-4 px-10 rounded-2xl bg-orange-50 text-foreground hover:bg-orange-100 text-lg active:scale-95 transition-all duration-300 shadow-sm border-none"
+                className="group py-4 px-10 rounded-2xl bg-red-50 text-foreground hover:bg-red-50 text-lg active:scale-95 transition-all duration-300 shadow-sm border-none"
               >
                 <span>{data?.secondary_cta_text || "Engineering Verticals"}</span>
               </PrimaryButton>

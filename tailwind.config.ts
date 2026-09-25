@@ -60,6 +60,9 @@ export default {
           "navy-dark": "hsl(var(--brand-navy-dark))",
           blue: "hsl(var(--brand-blue))",
           orange: "hsl(var(--brand-orange))",
+          red: "hsl(var(--primary))",
+          stone: "hsl(var(--brand-stone))",
+          charcoal: "hsl(var(--brand-navy))",
           green: "hsl(var(--brand-green))",
         },
         sidebar: {

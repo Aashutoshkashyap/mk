@@ -145,7 +145,7 @@ const Safety = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-3xl bg-white border-2 border-orange-100 p-7 shadow-sm hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
+                className="rounded-3xl bg-white border-2 border-red-100 p-7 shadow-sm hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-5">
                   <p.icon size={26} strokeWidth={1.75} />
@@ -159,7 +159,7 @@ const Safety = () => {
       </section>
 
       {/* Heavy Machinery Fleet Showcase */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-orange-50/20 to-white relative">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/20 to-white relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-4 shadow-sm">
@@ -181,7 +181,7 @@ const Safety = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group rounded-3xl bg-white border-2 border-orange-100/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
+                className="group rounded-3xl bg-white border-2 border-red-100/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
               >
                 <div className="relative h-64 overflow-hidden bg-neutral-900">
                   <img
@@ -203,7 +203,7 @@ const Safety = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
                     {cat.description}
                   </p>
-                  <div className="space-y-2 pt-4 border-t border-orange-100">
+                  <div className="space-y-2 pt-4 border-t border-red-100">
                     {cat.specs.map((s, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-foreground">
                         <CheckCircle2 size={14} className="text-primary shrink-0" />

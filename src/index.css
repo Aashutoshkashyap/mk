@@ -6,49 +6,51 @@
 
 @layer base {
   :root {
+    /* SDC Color Scheme: Red #F5333F | Charcoal #24272A | Stone #888A8C */
     --background: 0 0% 100%;
-    --foreground: 220 20% 14%;
+    --foreground: 210 8% 16%;        /* Charcoal #24272A */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 14%;
+    --card-foreground: 210 8% 16%;   /* Charcoal */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 14%;
+    --popover-foreground: 210 8% 16%;
 
-    --primary: 24 96% 53%;
+    --primary: 357 90% 58%;          /* SDC Red #F5333F */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 35 25% 97%;
-    --secondary-foreground: 24 96% 45%;
+    --secondary: 210 5% 96%;         /* Near-white with stone tint */
+    --secondary-foreground: 210 8% 16%;
 
-    --muted: 30 15% 96%;
-    --muted-foreground: 215 16% 45%;
+    --muted: 210 5% 95%;
+    --muted-foreground: 210 2% 45%;  /* Stone-toned muted text */
 
-    --accent: 24 96% 53%;
+    --accent: 357 90% 58%;           /* SDC Red */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 24 15% 91%;
-    --input: 24 15% 91%;
-    --ring: 24 96% 53%;
+    --border: 210 5% 88%;            /* Stone-tinted border */
+    --input: 210 5% 88%;
+    --ring: 357 90% 58%;             /* SDC Red */
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 24 96% 53%;
+    --sidebar-foreground: 210 8% 16%;
+    --sidebar-primary: 357 90% 58%;  /* SDC Red */
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 24 96% 96%;
-    --sidebar-accent-foreground: 24 96% 45%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 24 96% 53%;
+    --sidebar-accent: 357 90% 96%;
+    --sidebar-accent-foreground: 357 90% 40%;
+    --sidebar-border: 210 5% 88%;
+    --sidebar-ring: 357 90% 58%;
 
-    --brand-navy: 220 25% 15%;
-    --brand-navy-dark: 220 30% 10%;
-    --brand-blue: 24 96% 53%;
-    --brand-orange: 24 96% 53%;
+    --brand-navy: 210 8% 16%;        /* Charcoal (replaces navy) */
+    --brand-navy-dark: 210 10% 10%;  /* Deep charcoal */
+    --brand-blue: 357 90% 58%;       /* SDC Red (aliased as brand-blue for compat) */
+    --brand-orange: 357 90% 58%;     /* SDC Red (replaces orange) */
+    --brand-stone: 210 2% 55%;       /* Stone #888A8C */
     --brand-green: 142 60% 40%;
   }
 

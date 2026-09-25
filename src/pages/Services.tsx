@@ -115,7 +115,7 @@ const Services = () => {
       {/* Hero Banner */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 text-white overflow-hidden">
         <div className="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-red-700/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(#f9731615_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none opacity-40" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
@@ -158,7 +158,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
   return (
     <div 
       ref={ref} 
-      className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center p-8 sm:p-10 rounded-3xl bg-white border-2 border-orange-100 shadow-sm hover:shadow-2xl hover:border-primary/40 transition-all duration-500"
+      className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center p-8 sm:p-10 rounded-3xl bg-white border-2 border-red-100 shadow-sm hover:shadow-2xl hover:border-primary/40 transition-all duration-500"
     >
       <motion.div 
         initial={{ opacity: 0, x: isEven ? -30 : 30 }} 
@@ -211,7 +211,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
               {subs.map((sub: any) => {
                 const SubIcon = getIcon(sub.icon_name) || CheckCircle2;
                 return (
-                  <div key={sub.id} className="flex items-center gap-2 rounded-xl bg-orange-50/70 border border-orange-100 px-3.5 py-2 text-xs text-foreground font-semibold">
+                  <div key={sub.id} className="flex items-center gap-2 rounded-xl bg-red-50/70 border border-red-100 px-3.5 py-2 text-xs text-foreground font-semibold">
                     <SubIcon size={14} className="text-primary shrink-0" />
                     <span className="truncate">{sub.label}</span>
                   </div>
@@ -231,7 +231,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
           </Link>
           <Link 
             to="/projects" 
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-orange-200 text-xs font-bold text-foreground hover:bg-orange-50 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-red-200 text-xs font-bold text-foreground hover:bg-red-50 transition-all duration-300"
           >
             <span>View Executed Projects</span>
           </Link>

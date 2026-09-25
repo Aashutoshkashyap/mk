@@ -21,7 +21,7 @@ const MarqueeRow = ({
           key={`${item.id}-${i}`}
           onMouseEnter={() => onHover(item.name)}
           onMouseLeave={onLeave}
-          className="flex-shrink-0 w-[240px] h-[110px] md:w-[290px] md:h-[130px] mx-3 rounded-2xl bg-white/90 backdrop-blur-md border border-orange-100 flex items-center justify-center p-6 shadow-sm hover:border-primary hover:bg-orange-50/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 cursor-default group"
+          className="flex-shrink-0 w-[240px] h-[110px] md:w-[290px] md:h-[130px] mx-3 rounded-2xl bg-white/90 backdrop-blur-md border border-red-100 flex items-center justify-center p-6 shadow-sm hover:border-primary hover:bg-red-50/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 cursor-default group"
         >
           {item.logo_url ? (
             <img

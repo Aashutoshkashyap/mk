@@ -64,7 +64,7 @@ const SmoothPreloader = ({ onComplete }: SmoothPreloaderProps) => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-orange-600 text-white flex items-center justify-center font-black text-2xl shadow-2xl shadow-primary/40 border border-white/20 mb-6"
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-red-700 text-white flex items-center justify-center font-black text-2xl shadow-2xl shadow-primary/40 border border-white/20 mb-6"
             >
               MK
             </motion.div>
@@ -99,7 +99,7 @@ const SmoothPreloader = ({ onComplete }: SmoothPreloaderProps) => {
               
               <div className="h-1.5 w-full bg-neutral-800 rounded-full overflow-hidden p-[1px]">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-primary to-orange-500 rounded-full"
+                  className="h-full bg-gradient-to-r from-primary to-red-600 rounded-full"
                   style={{ width: `${progress}%` }}
                   transition={{ ease: "easeOut" }}
                 />

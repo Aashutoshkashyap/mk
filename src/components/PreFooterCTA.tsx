@@ -19,7 +19,7 @@ const PreFooterCTA = () => {
   return (
     <section className="py-20 md:py-28 bg-white relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="relative rounded-3xl bg-gradient-to-r from-primary via-orange-600 to-amber-600 overflow-hidden shadow-2xl shadow-primary/25 border-none">
+        <div className="relative rounded-3xl bg-gradient-to-r from-primary via-red-700 to-red-800 overflow-hidden shadow-2xl shadow-primary/25 border-none">
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-black/10 blur-3xl pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />

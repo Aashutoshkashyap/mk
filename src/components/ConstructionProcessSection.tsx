@@ -42,7 +42,7 @@ const STEPS = [
 
 export const ConstructionProcessSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-b from-white via-orange-50/20 to-white relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/20 to-white relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Header */}
@@ -70,7 +70,7 @@ export const ConstructionProcessSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className={`rounded-3xl bg-white border-2 border-orange-100 p-8 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col ${
+                className={`rounded-3xl bg-white border-2 border-red-100 p-8 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col ${
                   isLast ? "md:col-span-2 lg:col-span-2" : ""
                 }`}
               >
@@ -78,7 +78,7 @@ export const ConstructionProcessSection = () => {
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                     <Icon size={26} strokeWidth={1.75} />
                   </div>
-                  <span className="font-display text-3xl font-black text-orange-200">
+                  <span className="font-display text-3xl font-black text-red-200">
                     {step.step}
                   </span>
                 </div>
@@ -90,11 +90,11 @@ export const ConstructionProcessSection = () => {
                   {step.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-orange-100">
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-red-100">
                   {step.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-200/60 text-[10px] font-bold text-foreground/80"
+                      className="px-2.5 py-1 rounded-lg bg-red-50 border border-red-200/60 text-[10px] font-bold text-foreground/80"
                     >
                       {tag}
                     </span>
@@ -110,7 +110,7 @@ export const ConstructionProcessSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="rounded-3xl bg-gradient-to-br from-primary to-orange-600 text-white p-8 shadow-xl shadow-primary/20 flex flex-col justify-between"
+            className="rounded-3xl bg-gradient-to-br from-primary to-red-700 text-white p-8 shadow-xl shadow-primary/20 flex flex-col justify-between"
           >
             <div>
               <span className="text-[10px] font-black uppercase tracking-widest text-white/80 bg-white/20 px-3 py-1 rounded-full">

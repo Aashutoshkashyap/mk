@@ -98,7 +98,7 @@ const BlogSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group flex flex-col h-full bg-white rounded-3xl border-2 border-orange-100/80 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5"
+              className="group flex flex-col h-full bg-white rounded-3xl border-2 border-red-100/80 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5"
             >
               <Link to={`/blog/${post.slug}`} className="block overflow-hidden h-52 relative">
                 <img 
@@ -124,7 +124,7 @@ const BlogSection = () => {
                 <p className="mt-3 text-sm text-muted-foreground line-clamp-3 flex-1 leading-relaxed">
                   {post.excerpt}
                 </p>
-                <div className="mt-5 pt-4 border-t border-orange-100/60 flex items-center justify-between">
+                <div className="mt-5 pt-4 border-t border-red-100/60 flex items-center justify-between">
                   <span className="text-xs font-bold text-primary group-hover:underline flex items-center gap-1">
                     Read Report <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                   </span>

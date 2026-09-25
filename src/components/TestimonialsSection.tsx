@@ -78,10 +78,10 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section id="testimonials" className="py-20 md:py-28 bg-gradient-to-b from-white via-orange-50/20 to-white relative overflow-hidden">
+    <section id="testimonials" className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/20 to-white relative overflow-hidden">
       {/* Background Subtle Ambience */}
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-0 w-80 h-80 bg-orange-400/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-80 h-80 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
@@ -116,14 +116,14 @@ const TestimonialsSection = () => {
         </div>
 
         {/* Featured Testimonial Hero Card */}
-        <div className="relative rounded-3xl bg-white border-2 border-orange-100 p-8 md:p-14 shadow-xl shadow-primary/5">
+        <div className="relative rounded-3xl bg-white border-2 border-red-100 p-8 md:p-14 shadow-xl shadow-primary/5">
           <Quote className="absolute top-8 right-8 text-primary/10 w-24 h-24 pointer-events-none" />
 
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             
             {/* Left: Author Profile */}
-            <div className="lg:col-span-4 flex flex-col items-center text-center lg:border-r lg:border-orange-100 lg:pr-8">
-              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-orange-100 shadow-xl mb-5 group">
+            <div className="lg:col-span-4 flex flex-col items-center text-center lg:border-r lg:border-red-100 lg:pr-8">
+              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-red-100 shadow-xl mb-5 group">
                 <img 
                   src={current.image_url || `https://i.pravatar.cc/150?u=${current.id}`} 
                   alt={current.name} 
@@ -141,7 +141,7 @@ const TestimonialsSection = () => {
               )}
 
               {/* Verified Project Badge */}
-              <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[11px] font-semibold text-foreground/80">
+              <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 border border-red-200/80 text-[11px] font-semibold text-foreground/80">
                 <CheckCircle2 size={13} className="text-primary shrink-0" />
                 <span className="truncate max-w-[200px]">{current.project || "Verified Construction Contract"}</span>
               </div>
@@ -150,7 +150,7 @@ const TestimonialsSection = () => {
             {/* Right: Detailed Testimonial */}
             <div className="lg:col-span-8 flex flex-col justify-between">
               <div>
-                <div className="flex gap-1 text-orange-400 mb-6">
+                <div className="flex gap-1 text-red-500 mb-6">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} size={18} fill="currentColor" />
                   ))}
@@ -172,14 +172,14 @@ const TestimonialsSection = () => {
               </div>
 
               {/* Navigation Controls */}
-              <div className="mt-8 pt-6 border-t border-orange-100 flex flex-wrap items-center justify-between gap-4">
+              <div className="mt-8 pt-6 border-t border-red-100 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex gap-2">
                   {displayTestimonials.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentIndex(idx)}
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-orange-200 hover:bg-orange-300"
+                        idx === currentIndex ? "w-8 bg-primary" : "w-2 bg-red-200 hover:bg-red-300"
                       }`}
                       aria-label={`Go to review ${idx + 1}`}
                     />
@@ -189,14 +189,14 @@ const TestimonialsSection = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handlePrev}
-                    className="w-10 h-10 rounded-full border border-orange-200 bg-white hover:bg-orange-50 flex items-center justify-center text-foreground hover:text-primary transition-all active:scale-95 shadow-xs"
+                    className="w-10 h-10 rounded-full border border-red-200 bg-white hover:bg-red-50 flex items-center justify-center text-foreground hover:text-primary transition-all active:scale-95 shadow-xs"
                     aria-label="Previous review"
                   >
                     <ChevronLeft size={18} />
                   </button>
                   <button
                     onClick={handleNext}
-                    className="w-10 h-10 rounded-full border border-orange-200 bg-white hover:bg-orange-50 flex items-center justify-center text-foreground hover:text-primary transition-all active:scale-95 shadow-xs"
+                    className="w-10 h-10 rounded-full border border-red-200 bg-white hover:bg-red-50 flex items-center justify-center text-foreground hover:text-primary transition-all active:scale-95 shadow-xs"
                     aria-label="Next review"
                   >
                     <ChevronRight size={18} />
@@ -221,15 +221,15 @@ const TestimonialsSection = () => {
               onClick={() => setCurrentIndex(idx)}
               className={`p-6 rounded-2xl border-2 transition-all cursor-pointer ${
                 idx === currentIndex 
-                  ? "border-primary bg-orange-50/50 shadow-md" 
-                  : "border-orange-100 bg-white hover:border-primary/40 hover:shadow-sm"
+                  ? "border-primary bg-red-50/50 shadow-md" 
+                  : "border-red-100 bg-white hover:border-primary/40 hover:shadow-sm"
               }`}
             >
               <div className="flex items-center gap-3 mb-3">
                 <img 
                   src={item.image_url || `https://i.pravatar.cc/150?u=${item.id}`} 
                   alt={item.name} 
-                  className="w-10 h-10 rounded-full object-cover border border-orange-200"
+                  className="w-10 h-10 rounded-full object-cover border border-red-200"
                 />
                 <div>
                   <div className="font-bold text-sm text-foreground">{item.name}</div>

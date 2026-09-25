@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, Clock, User, Eye, HardHat, Share2, ArrowRight } fr
 import { supabase } from "@/integrations/supabase/client";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { defaultConstructionArticles } from "@/lib/blogData";
+import { sanitizeDbRecord } from "@/lib/contentFilter";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -25,9 +26,10 @@ const BlogPost = () => {
     enabled: !!slug,
   });
 
-  // Fallback to static construction article if not in DB
+  // Fallback to static construction article if not in DB or if DB has legacy financial post
+  const validDbPost = sanitizeDbRecord(dbPost);
   const fallbackPost = defaultConstructionArticles.find((a) => a.slug === slug);
-  const post = dbPost || fallbackPost;
+  const post = validDbPost || fallbackPost;
 
   useEffect(() => {
     if (dbPost && slug) {

@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 import { defaultConstructionArticles } from "@/lib/blogData";
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 
 
 const CATEGORIES = [
@@ -34,7 +35,8 @@ const Blog = () => {
     },
   });
 
-  const allPosts = dbPosts.length > 0 ? dbPosts : defaultConstructionArticles;
+  const validPosts = filterOutLegacyFinancial(dbPosts);
+  const allPosts = validPosts.length > 0 ? validPosts : defaultConstructionArticles;
 
   const filteredPosts = allPosts.filter((post: any) => {
     const matchesCategory =

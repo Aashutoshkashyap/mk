@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Eye } from "lucide-react";
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 
 const defaultPosts = [
   {
@@ -53,7 +54,8 @@ const BlogSection = () => {
     },
   });
 
-  const displayPosts = posts.length > 0 ? posts : defaultPosts;
+  const validPosts = filterOutLegacyFinancial(posts);
+  const displayPosts = validPosts.length > 0 ? validPosts : defaultPosts;
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 overflow-hidden bg-white relative">

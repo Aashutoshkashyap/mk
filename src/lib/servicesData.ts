@@ -39,7 +39,7 @@ export const DEFAULT_CONSTRUCTION_SERVICES = [
     disciplineNumber: "03",
     description: "Hydraulic protection works for riverbank stabilization and flood mitigation in dynamic monsoon-fed river systems. Heavy gabion revetments, RCC spurs, boulder pitching, channelization, and guided flood dykes safeguarding agricultural basins and towns.",
     icon_name: "Waves",
-    image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&q=80&w=1200",
     scope: ["RCC Deflective Spurs", "Geo-Synthetic Revetments", "Embankment Dykes"],
     sub_services: [
       { id: "ss9", label: "Gabion & RCC Guided Spurs", icon_name: "Waves", sort_order: 1 },
@@ -54,7 +54,7 @@ export const DEFAULT_CONSTRUCTION_SERVICES = [
     disciplineNumber: "04",
     description: "Institutional, commercial, and administrative structures executed in strict compliance with the Nepal National Building Code (NBC 105:2020) with ductile seismic detailing, high-grade concrete frames, and full MEP coordination.",
     icon_name: "Building2",
-    image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
     scope: ["Seismic Moment Resisting Frames", "Basement Retention Piling", "Turnkey Architectural MEP"],
     sub_services: [
       { id: "ss13", label: "Ductile Structural Concrete Frames", icon_name: "Building2", sort_order: 1 },
@@ -69,7 +69,7 @@ export const DEFAULT_CONSTRUCTION_SERVICES = [
     disciplineNumber: "05",
     description: "Turnkey civil packages for run-of-river hydropower generation. Engineering weir diversion headworks, intake basins, gravel traps, underground tunnels, surge shafts, penstock foundations, and powerhouse civil structures.",
     icon_name: "Zap",
-    image_url: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&q=80&w=1200",
     scope: ["Drill & Blast Tunnels", "Ogee Weir & Sluice Concrete", "Powerhouse Caverns"],
     sub_services: [
       { id: "ss17", label: "Diversion Weirs & Intake Basins", icon_name: "Waves", sort_order: 1 },
@@ -84,7 +84,7 @@ export const DEFAULT_CONSTRUCTION_SERVICES = [
     disciplineNumber: "06",
     description: "Municipal water supply systems, bulk transmission pipelines, overhead water storage reservoirs, distribution pipeline networks, and urban sewerage infrastructure delivering potable water to urban and rural centers.",
     icon_name: "Droplets",
-    image_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200",
     scope: ["DI Bulk Mains Transmission", "Overhead RCC Reservoirs", "Water Treatment Civils"],
     sub_services: [
       { id: "ss21", label: "Bulk DI / HDPE Transmission Mains", icon_name: "Droplets", sort_order: 1 },

@@ -78,6 +78,13 @@
 }
 
 @layer base {
+  @font-face {
+    font-family: 'Thunderbolt';
+    src: local('Thunderbolt'), local('Thunderbolt-Bold'), local('Thunderbolt Bold'), local('Thunderbolt Regular');
+    font-weight: 700 900;
+    font-display: swap;
+  }
+
   * {
     @apply border-border;
   }
@@ -88,13 +95,14 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
+    font-family: "Thunderbolt", "Chakra Petch", "Syne", "Helvetica Now Display", "Helvetica", Arial, sans-serif;
+    @apply tracking-tight font-extrabold;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: "Helvetica Now Display", "Helvetica", Arial, sans-serif;
+    font-family: "Thunderbolt", "Chakra Petch", "Syne", "Helvetica Now Display", "Helvetica", Arial, sans-serif;
   }
 
   .font-body {

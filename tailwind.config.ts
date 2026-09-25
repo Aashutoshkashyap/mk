@@ -16,9 +16,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        primary: ['"Helvetica Now Display"', '"Helvetica Now Text"', 'Helvetica', 'Arial', 'sans-serif'],
+        primary: ['"Thunderbolt"', '"Chakra Petch"', '"Syne"', '"Helvetica Now Display"', 'Helvetica', 'Arial', 'sans-serif'],
         secondary: ['"Inter"', 'sans-serif'],
-        display: ['"Helvetica Now Display"', 'Helvetica', 'Arial', 'sans-serif'],
+        display: ['"Thunderbolt"', '"Chakra Petch"', '"Syne"', '"Helvetica Now Display"', 'Helvetica', 'Arial', 'sans-serif'],
         body: ['"Helvetica Now Text"', 'Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {

@@ -16,32 +16,16 @@ const AboutEditor = () => {
     },
   });
 
-  const defaultAbout = {
-    heading: "Engineering Nepal's Infrastructure Since 2018",
-    subheading: "Formerly known as M.K. Builders & Construction Company Private Limited",
-    description: "MK Construction Company Pvt. Ltd. (formerly M.K. Builders & Construction Company Private Limited) is a premier Class-A licensed contractor certified under ISO 9001:2015. Operating across 32 districts of Nepal, we specialize in high-capacity national highway packages, multi-span river bridges, flood mitigation river training, institutional buildings to Nepal Building Code (NBC), hydropower civil headworks, and municipal bulk water supply networks. Backed by an in-house heavy equipment fleet and over 850 engineers and technicians, we deliver complex infrastructure with total accountability.",
-    image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
-    vision_title: "Our Strategic Vision",
-    vision_text: "To be the most respected and technically capable infrastructure organization in Nepal, setting national benchmarks for quality, engineering discipline, and sustainable construction in every district we serve.",
-    mission_title: "Our Operating Mission",
-    mission_text: "To engineer enduring national assets through rigorous technical compliance, Zero-Harm safety standards, transparent public-sector partnerships, and continuous investment in heavy machinery and local engineering talent."
-  };
-
-  const [form, setForm] = useState(defaultAbout);
+  const [form, setForm] = useState({ heading: "", subheading: "", description: "", image_url: "", vision_title: "", vision_text: "", mission_title: "", mission_text: "" });
 
   const initialized = useRef(false);
   useEffect(() => {
     if (data && !initialized.current) {
       initialized.current = true;
       setForm({
-        heading: data.heading || defaultAbout.heading,
-        subheading: data.subheading || defaultAbout.subheading,
-        description: data.description || defaultAbout.description,
-        image_url: data.image_url || defaultAbout.image_url,
-        vision_title: data.vision_title || defaultAbout.vision_title,
-        vision_text: data.vision_text || defaultAbout.vision_text,
-        mission_title: data.mission_title || defaultAbout.mission_title,
-        mission_text: data.mission_text || defaultAbout.mission_text,
+        heading: data.heading || "", subheading: data.subheading || "", description: data.description || "",
+        image_url: data.image_url || "", vision_title: data.vision_title || "", vision_text: data.vision_text || "",
+        mission_title: data.mission_title || "", mission_text: data.mission_text || "",
       });
     }
   }, [data]);

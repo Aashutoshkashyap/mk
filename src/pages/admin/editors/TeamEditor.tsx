@@ -7,57 +7,6 @@ import iconMap from "@/lib/iconMap";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
-const defaultConstructionTeam = [
-  {
-    id: "tm1",
-    name: "Er. Madan K. Shrestha",
-    role: "Chairman & Managing Director",
-    experience: "28+ Yrs Exp",
-    bio: "Founding leader of MK Engineering and Construction. Oversees corporate strategy, mega-infrastructure execution, and multilateral agency partnerships with DoR, ADB, and World Bank across Nepal.",
-    image_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600",
-    team_sectors: [
-      { id: "ts1", label: "National Highways", icon_name: "Building2", sort_order: 1 },
-      { id: "ts2", label: "Major Bridges", icon_name: "ShieldCheck", sort_order: 2 },
-    ],
-  },
-  {
-    id: "tm2",
-    name: "Er. Rameshwor Adhikari",
-    role: "Executive Director & Head of Operations",
-    experience: "24+ Yrs Exp",
-    bio: "Directs turnkey field mobilization, captive heavy equipment fleet deployments, and river training hydraulic protection works across the Mid-Hills and Terai flood plains.",
-    image_url: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600",
-    team_sectors: [
-      { id: "ts3", label: "River Training", icon_name: "Compass", sort_order: 1 },
-      { id: "ts4", label: "Fleet Logistics", icon_name: "Truck", sort_order: 2 },
-    ],
-  },
-  {
-    id: "tm3",
-    name: "Er. Binod K. Thapa, M.Sc.",
-    role: "Chief Technical Officer & Head of Engineering",
-    experience: "21+ Yrs Exp",
-    bio: "Spearheads structural design coordination, seismic detailing per Nepal Building Code (NBC 105:2020), geotechnical foundation validation, and site QA/QC testing labs.",
-    image_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600",
-    team_sectors: [
-      { id: "ts5", label: "NBC Seismic Code", icon_name: "HardHat", sort_order: 1 },
-      { id: "ts6", label: "QA/QC Testing Labs", icon_name: "Award", sort_order: 2 },
-    ],
-  },
-  {
-    id: "tm4",
-    name: "Sunita Pradhan",
-    role: "Director of Contracts & Multilateral Procurement",
-    experience: "18+ Yrs Exp",
-    bio: "Manages public-sector procurement, FIDIC commercial contract administration, ADB/World Bank compliance frameworks, and tender documentation across all 6 service lines.",
-    image_url: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600",
-    team_sectors: [
-      { id: "ts7", label: "FIDIC Contracts", icon_name: "FileText", sort_order: 1 },
-      { id: "ts8", label: "Tender Bidding", icon_name: "CheckCircle2", sort_order: 2 },
-    ],
-  },
-];
-
 const TeamEditor = () => {
   const qc = useQueryClient();
   const { data: members = [], isLoading } = useQuery({
@@ -67,8 +16,6 @@ const TeamEditor = () => {
       return data || [];
     },
   });
-
-  const displayMembers = members.length > 0 ? members : defaultConstructionTeam;
 
   const addMutation = useMutation({
     mutationFn: async ({ len }: any) => {
@@ -81,7 +28,7 @@ const TeamEditor = () => {
   const updateOrderMutation = useMutation({
     mutationFn: async (items: any[]) => {
       const promises = items.map((item, index) => 
-        supabase.from("team_members").upsert({ ...item, sort_order: index })
+        supabase.from("team_members").update({ sort_order: index }).eq("id", item.id)
       );
       await Promise.all(promises);
     },
@@ -92,7 +39,7 @@ const TeamEditor = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-    const items = Array.from(displayMembers);
+    const items = Array.from(members);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
@@ -106,7 +53,7 @@ const TeamEditor = () => {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl font-extrabold text-primary">Team Members</h2>
-        <button onClick={() => addMutation.mutate({ len: displayMembers.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
+        <button onClick={() => addMutation.mutate({ len: members.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
           <Plus size={16} /> Add Member
         </button>
       </div>
@@ -114,7 +61,7 @@ const TeamEditor = () => {
         <Droppable droppableId="team-list">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-              {displayMembers.map((m: any, index: number) => (
+              {members.map((m: any, index: number) => (
                 <Draggable key={m.id} draggableId={m.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -143,11 +90,7 @@ const MemberCard = ({ member, dragHandleProps }: { member: any, dragHandleProps?
 
   const updateMutation = useMutation({
     mutationFn: async ({ form, id }: any) => {
-      const isCustomId = typeof id === "string" && id.startsWith("tm");
-      const { error } = await supabase.from("team_members").upsert({
-        ...(isCustomId ? {} : { id }),
-        ...form
-      });
+      const { error } = await supabase.from("team_members").update(form).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); toast.success("Member updated!"); },

@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import { Save, Plus, Trash2, Eye, EyeOff, Star, ChevronDown, ChevronUp, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
-import { defaultConstructionArticles } from "@/lib/blogData";
 
 const BlogEditor = () => {
   const qc = useQueryClient();
@@ -16,8 +15,6 @@ const BlogEditor = () => {
       return data || [];
     },
   });
-
-  const displayPosts = posts.length > 0 ? posts : defaultConstructionArticles;
 
   const addMutation = useMutation({
     mutationFn: async ({ slug }: any) => {
@@ -62,8 +59,8 @@ const BlogEditor = () => {
       </div>
 
       <div className="grid gap-4">
-        {displayPosts.map((post: any) => <BlogPostCard key={post.id} post={post} />)}
-        {displayPosts.length === 0 && (
+        {posts.map((post: any) => <BlogPostCard key={post.id} post={post} />)}
+        {posts.length === 0 && (
           <div className="text-center py-20 bg-secondary/20 rounded-3xl border border-dashed border-border text-muted-foreground">
             No blog posts found. Click "New Post" to start writing!
           </div>
@@ -92,11 +89,7 @@ const BlogPostCard = ({ post }: { post: any }) => {
         views: Number(form.views),
         published_at: form.published_at ? new Date(form.published_at).toISOString() : null,
       };
-      const isCustomId = typeof id === "string" && !id.includes("-");
-      const { error } = await supabase.from("blog_posts").upsert({
-        ...(isCustomId ? {} : { id }),
-        ...payload
-      });
+      const { error } = await supabase.from("blog_posts").update(payload).eq("id", id);
       if (error) {
         if (error.code === "23505") throw new Error("A post with this slug already exists.");
         throw error;

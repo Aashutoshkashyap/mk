@@ -16,24 +16,9 @@ const StatsEditor = () => {
     },
   });
 
-  const defaultStats = [
-    { id: '1', icon_name: 'Building2', value: '120+', label: 'Projects Delivered', sort_order: 0 },
-    { id: '2', icon_name: 'Award', value: '₨ 18B', label: 'Works Executed', sort_order: 1 },
-    { id: '3', icon_name: 'Users', value: '850+', label: 'Engineers & Crew', sort_order: 2 },
-    { id: '4', icon_name: 'MapPin', value: '32', label: 'Districts Reached', sort_order: 3 },
-  ];
-
-  const displayStats = stats.length > 0 ? stats : defaultStats;
-
   const updateMutation = useMutation({
     mutationFn: async (stat: any) => {
-      const { error } = await supabase.from("stats").upsert({
-        id: isNaN(Number(stat.id)) ? stat.id : undefined,
-        icon_name: stat.icon_name,
-        value: stat.value,
-        label: stat.label,
-        sort_order: stat.sort_order ?? 0
-      });
+      const { error } = await supabase.from("stats").update({ icon_name: stat.icon_name, value: stat.value, label: stat.label, sort_order: stat.sort_order }).eq("id", stat.id);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-stats"] }); toast.success("Stat updated!"); },
@@ -59,7 +44,7 @@ const StatsEditor = () => {
   const updateOrderMutation = useMutation({
     mutationFn: async (items: any[]) => {
       const promises = items.map((item, index) => 
-        supabase.from("stats").upsert({ ...item, sort_order: index })
+        supabase.from("stats").update({ sort_order: index }).eq("id", item.id)
       );
       await Promise.all(promises);
     },
@@ -70,7 +55,7 @@ const StatsEditor = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-    const items = Array.from(displayStats);
+    const items = Array.from(stats);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
@@ -84,7 +69,7 @@ const StatsEditor = () => {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl font-extrabold text-primary">Stats</h2>
-        <button onClick={() => addMutation.mutate({ len: displayStats.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
+        <button onClick={() => addMutation.mutate({ len: stats.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
           <Plus size={16} /> Add Stat
         </button>
       </div>
@@ -92,7 +77,7 @@ const StatsEditor = () => {
         <Droppable droppableId="stats-list">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-              {displayStats.map((stat: any, index: number) => (
+              {stats.map((stat: any, index: number) => (
                 <Draggable key={stat.id} draggableId={stat.id} index={index}>
                   {(provided, snapshot) => (
                     <div

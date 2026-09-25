@@ -15,25 +15,13 @@ const CTAEditor = () => {
     },
   });
 
-  const defaultCTA = {
-    heading: "Ready to Groundbreak Nepal's Next Landmark Infrastructure?",
-    description: "Partner with MK Engineering and Construction for Class-A general contracting, heavy civil engineering, and turnkey project delivery across Nepal.",
-    cta_text: "Request Project Estimate",
-    cta_link: "/contact"
-  };
-
-  const [form, setForm] = useState(defaultCTA);
+  const [form, setForm] = useState({ heading: "", description: "", cta_text: "", cta_link: "" });
 
   const initialized = useRef(false);
   useEffect(() => {
     if (data && !initialized.current) {
       initialized.current = true;
-      setForm({
-        heading: data.heading || defaultCTA.heading,
-        description: data.description || defaultCTA.description,
-        cta_text: data.cta_text || defaultCTA.cta_text,
-        cta_link: data.cta_link || defaultCTA.cta_link
-      });
+      setForm({ heading: data.heading || "", description: data.description || "", cta_text: data.cta_text || "", cta_link: data.cta_link || "" });
     }
   }, [data]);
 

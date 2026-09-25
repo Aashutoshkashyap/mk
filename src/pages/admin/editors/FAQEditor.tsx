@@ -5,33 +5,6 @@ import { Save, Plus, Trash2, HelpCircle, Check, GripVertical } from "lucide-reac
 import { toast } from "sonner";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
-const defaultFaqs = [
-  {
-    id: "faq-1",
-    question: "What classes of construction licenses does MK Construction hold?",
-    answer: "MK Engineering & Construction holds a Class-A General Contractor License from the Government of Nepal (Ministry of Physical Infrastructure and Transport) and is certified under ISO 9001:2015 and ISO 45001:2018.",
-    sort_order: 0
-  },
-  {
-    id: "faq-2",
-    question: "What are your primary engineering verticals?",
-    answer: "We specialize in 6 core engineering verticals: Roads & Highways, Long-Span Bridges, River Training & Flood Mitigation, Buildings & Institutional Complexes, Hydropower Civil Works, and Water Supply & Sanitation.",
-    sort_order: 1
-  },
-  {
-    id: "faq-3",
-    question: "How does MK handle procurement and international contract standards?",
-    answer: "We operate under FIDIC Pink and Red Book standards, ADB and World Bank procurement guidelines, and Public Procurement Act (PPA) of Nepal.",
-    sort_order: 2
-  },
-  {
-    id: "faq-4",
-    question: "Where are MK Construction projects located?",
-    answer: "We have executed infrastructure projects across 32 districts of Nepal, spanning the High Himalayas, Mid-Hills, and Terai plains.",
-    sort_order: 3
-  }
-];
-
 const FAQEditor = () => {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -44,8 +17,6 @@ const FAQEditor = () => {
       return data || [];
     },
   });
-
-  const displayFaqs = faqs.length > 0 ? faqs : defaultFaqs;
 
   const addMutation = useMutation({
     mutationFn: async ({ currentFaqs }: any) => {
@@ -66,17 +37,12 @@ const FAQEditor = () => {
 
   const updateMutation = useMutation({
     mutationFn: async (updatedFaq: any) => {
-      const isCustomId = typeof updatedFaq.id === "string" && updatedFaq.id.startsWith("faq");
-      const { error } = await supabase.from("faqs").upsert({
-        ...(isCustomId ? {} : { id: updatedFaq.id }),
-        question: updatedFaq.question,
-        answer: updatedFaq.answer,
-        sort_order: updatedFaq.sort_order ?? 0
-      });
+      const { error } = await supabase.from("faqs").update(updatedFaq).eq("id", updatedFaq.id);
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["faqs"] });
+      // Keep form open so user can make further edits and save again
       toast.success("FAQ saved!");
     },
     onError: () => toast.error("Failed to update FAQ")
@@ -97,7 +63,7 @@ const FAQEditor = () => {
   const updateOrderMutation = useMutation({
     mutationFn: async (items: any[]) => {
       const promises = items.map((item, index) => 
-        supabase.from("faqs").upsert({ ...item, sort_order: index })
+        supabase.from("faqs").update({ sort_order: index }).eq("id", item.id)
       );
       await Promise.all(promises);
     },
@@ -108,7 +74,7 @@ const FAQEditor = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-    const items = Array.from(displayFaqs);
+    const items = Array.from(faqs);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
@@ -135,7 +101,7 @@ const FAQEditor = () => {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold font-display text-primary">Frequently Asked Questions</h2>
         <button
-          onClick={() => addMutation.mutate({ currentFaqs: displayFaqs })}
+          onClick={() => addMutation.mutate({ currentFaqs: faqs })}
           className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all"
         >
           <Plus size={16} /> Add FAQ
@@ -146,7 +112,7 @@ const FAQEditor = () => {
         <Droppable droppableId="faqs-list">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-              {displayFaqs.map((f: any, index: number) => (
+              {faqs.map((f: any, index: number) => (
                 <Draggable key={f.id} draggableId={f.id} index={index}>
                   {(provided, snapshot) => (
                     <div

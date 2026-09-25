@@ -16,30 +16,28 @@ const HeroEditor = () => {
     },
   });
 
-  const defaultHero = {
-    title: "Pioneering Nepal's Critical Infrastructure & Modern Landmarks.",
-    description: "Tier-1 General Contracting and Civil Infrastructure engineering. From arterial national highway corridors and long-span river bridges to hydraulic river training and civic complexes, MK Engineering and Construction builds with uncompromised precision and Zero-Harm safety standards across Nepal.",
-    cta_text: "Explore Our Projects",
-    cta_link: "/projects",
-    secondary_cta_text: "Engineering Verticals",
-    secondary_cta_link: "/services",
-    image_url: "/images/hero.jpg"
-  };
-
-  const [form, setForm] = useState(defaultHero);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    cta_text: "",
+    cta_link: "",
+    secondary_cta_text: "",
+    secondary_cta_link: "",
+    image_url: ""
+  });
 
   const initialized = useRef(false);
   useEffect(() => {
     if (data && !initialized.current) {
       initialized.current = true;
       setForm({
-        title: data.title || defaultHero.title,
-        description: data.description || defaultHero.description,
-        cta_text: data.cta_text || defaultHero.cta_text,
-        cta_link: data.cta_link || defaultHero.cta_link,
-        secondary_cta_text: data.secondary_cta_text || defaultHero.secondary_cta_text,
-        secondary_cta_link: data.secondary_cta_link || defaultHero.secondary_cta_link,
-        image_url: (data as any).image_url || defaultHero.image_url
+        title: data.title || "",
+        description: data.description || "",
+        cta_text: data.cta_text || "",
+        cta_link: data.cta_link || "",
+        secondary_cta_text: data.secondary_cta_text || "",
+        secondary_cta_link: data.secondary_cta_link || "",
+        image_url: (data as any).image_url || ""
       });
     }
   }, [data]);

@@ -52,18 +52,6 @@ const PartnersEditor = () => {
     onError: (e: any) => toast.error(e.message)
   });
 
-  const defaultPartners = [
-    { id: 'p1', name: 'Metropolitan Transit Authority', logo_url: '', sort_order: 0 },
-    { id: 'p2', name: 'Apex Real Estate Consortium', logo_url: '', sort_order: 1 },
-    { id: 'p3', name: 'Holcim Infrastructure', logo_url: '', sort_order: 2 },
-    { id: 'p4', name: 'Caterpillar Heavy Systems', logo_url: '', sort_order: 3 },
-    { id: 'p5', name: 'Skanska Global Alliance', logo_url: '', sort_order: 4 },
-    { id: 'p6', name: 'Vanguard Logistics Hubs', logo_url: '', sort_order: 5 },
-    { id: 'p7', name: 'Trimble BIM Technologies', logo_url: '', sort_order: 6 },
-    { id: 'p8', name: 'National Highway Authority', logo_url: '', sort_order: 7 },
-    { id: 'p9', name: 'Balfour Civil Engineering', logo_url: '', sort_order: 8 },
-  ];
-
   const { data: partners = [], isLoading } = useQuery({
     queryKey: ["partners"],
     queryFn: async () => {
@@ -71,8 +59,6 @@ const PartnersEditor = () => {
       return data || [];
     },
   });
-
-  const displayPartners = partners.length > 0 ? partners : defaultPartners;
 
   const addPartner = useMutation({
     mutationFn: async ({ partnerData, len }: any = {}) => {
@@ -94,7 +80,7 @@ const PartnersEditor = () => {
       const newPartners = urls.map((url, index) => ({
         name: `New Partner ${new Date().toLocaleDateString()}`,
         logo_url: url,
-        sort_order: displayPartners.length + index
+        sort_order: partners.length + index
       }));
 
       const { error } = await supabase.from("partners").insert(newPartners);
@@ -111,7 +97,7 @@ const PartnersEditor = () => {
   const updateOrderMutation = useMutation({
     mutationFn: async (items: any[]) => {
       const promises = items.map((item, index) => 
-        supabase.from("partners").upsert({ ...item, sort_order: index })
+        supabase.from("partners").update({ sort_order: index }).eq("id", item.id)
       );
       await Promise.all(promises);
     },
@@ -122,7 +108,7 @@ const PartnersEditor = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-    const items = Array.from(displayPartners);
+    const items = Array.from(partners);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
@@ -238,7 +224,7 @@ const PartnersEditor = () => {
               ref={provided.innerRef} 
               className={view === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}
             >
-              {displayPartners.map((partner: any, index: number) => (
+              {partners.map((partner: any, index: number) => (
                 <Draggable key={partner.id} draggableId={partner.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -266,11 +252,7 @@ const PartnerCard = ({ partner, view, dragHandleProps }: { partner: any; view: "
 
   const updatePartner = useMutation({
     mutationFn: async ({ form, id }: any) => {
-      const isCustomId = typeof id === "string" && id.startsWith("p");
-      const { error } = await supabase.from("partners").upsert({
-        ...(isCustomId ? {} : { id }),
-        ...form
-      });
+      const { error } = await supabase.from("partners").update(form).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {

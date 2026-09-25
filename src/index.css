@@ -72,7 +72,7 @@
     --secondary-foreground: 210 15% 88%;
 
     --muted: 210 10% 16%;
-    --muted-foreground: 210 5% 55%;     /* Stone-toned muted */
+    --muted-foreground: 0 0% 0%;        /* Black text for gray/muted in darkmode */
 
     --accent: 357 90% 58%;              /* SDC Red accent */
     --accent-foreground: 0 0% 100%;
@@ -84,7 +84,18 @@
     --input: 210 10% 20%;
     --ring: 357 90% 58%;                /* SDC Red ring */
 
-    --brand-stone: 210 2% 55%;          /* Stone #888A8C unchanged */
+    --brand-stone: 0 0% 0%;             /* Black text */
+  }
+
+  .dark .text-\[\#888A8C\],
+  .dark .text-muted-foreground,
+  .dark .text-stone-400,
+  .dark .text-stone-500,
+  .dark .text-gray-400,
+  .dark .text-gray-500,
+  .dark .text-neutral-400,
+  .dark .text-neutral-500 {
+    color: #000000 !important;
   }
 }
 

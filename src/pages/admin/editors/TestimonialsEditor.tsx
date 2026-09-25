@@ -5,13 +5,69 @@ import { Save, Plus, Trash2, Quote, User, Layout } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 
+const defaultTestimonials = [
+  {
+    id: "t1",
+    name: "Er. Ramesh Adhikari",
+    role: "Senior Division Engineer, Project Directorate",
+    company: "Department of Roads (DoR), Nepal",
+    content: "MK Construction demonstrated exceptional engineering rigor on the Mid-Hill Highway upgrade. Managing rock excavation, deep retaining structures, and asphalt paving under tight pre-monsoon deadlines was executed flawlessly with their captive heavy equipment fleet.",
+    rating: 5,
+    project: "Mid-Hill Highway Pkg 7",
+    image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300",
+    sort_order: 0,
+  },
+  {
+    id: "t2",
+    name: "Sunil Shrestha",
+    role: "Director of Infrastructure Development",
+    company: "Provincial Ministry of Physical Infrastructure, Koshi",
+    content: "The Saptakoshi River Bridge foundation was one of the most technically challenging caisson-sinking assignments in the region. MK Construction's engineering team deployed precision hydraulic equipment, completing all 12 pier caissons ahead of the flood season.",
+    rating: 5,
+    project: "Saptakoshi River Bridge",
+    image_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300",
+    sort_order: 1,
+  },
+  {
+    id: "t3",
+    name: "Bikash Thapa",
+    role: "Project Manager, Hydraulic Works Division",
+    company: "Bagmati Basin Flood Mitigation Project",
+    content: "The 18-kilometer flood mitigation dyke and guided spurs built by MK Construction protected vulnerable settlements during the 2024 monsoon flood surge. Their quality control on gabions, geotextile layers, and RCC structures is exemplary.",
+    rating: 5,
+    project: "Bagmati River Training",
+    image_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300",
+    sort_order: 2,
+  },
+  {
+    id: "t4",
+    name: "Dipendra Sharma",
+    role: "Chief Technical Officer",
+    company: "Himalayan Power Developers Ltd.",
+    content: "For our run-of-river civil package, MK Construction self-performed the headworks weir and 3.8km tunnel excavation with zero safety incidents. Their zero-harm HSE governance and schedule transparency set a benchmark for hydropower contracting in Nepal.",
+    rating: 5,
+    project: "Upper Trishuli Civil Package",
+    image_url: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300",
+    sort_order: 3,
+  },
+  {
+    id: "t5",
+    name: "Er. Anita Gurung",
+    role: "Lead Structural Consultant",
+    company: "National Building Design Bureau",
+    content: "Working alongside MK Construction on seismic institutional facilities has been seamless. Their strict adherence to NBC 105:2020 and thorough QA/QC concrete testing guarantees uncompromised structural longevity.",
+    rating: 5,
+    project: "Provincial HQ Complex",
+    image_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300",
+    sort_order: 4,
+  },
+];
+
 const TestimonialsEditor = () => {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<any>(null);
   const [sectionMeta, setSectionMeta] = useState({ title: "", description: "", review_count: 2578, rating: 5.0 });
-  // Guard: only seed editForm when the user explicitly clicks Edit (editingId changes),
-  // NOT when testimonials refetch after a save — otherwise typed edits get wiped.
   const editFormSeeded = useRef<string | null>(null);
 
   const { data: testimonials = [], isLoading, error } = useQuery({
@@ -22,6 +78,8 @@ const TestimonialsEditor = () => {
       return data || [];
     },
   });
+
+  const displayTestimonials = testimonials.length > 0 ? testimonials : defaultTestimonials;
 
   const { data: fetchedSectionMeta }: any = useQuery({
     queryKey: ["testimonials-section-meta"],
@@ -36,8 +94,8 @@ const TestimonialsEditor = () => {
     if (fetchedSectionMeta && !metaInitialized.current) {
       metaInitialized.current = true;
       setSectionMeta({
-        title: fetchedSectionMeta.title || "",
-        description: fetchedSectionMeta.description || "",
+        title: fetchedSectionMeta.title || "Endorsements & Performance Feedback",
+        description: fetchedSectionMeta.description || "Trusted by government ministries, municipal departments, multilateral funding agencies, and tier-1 infrastructure developers across Nepal.",
         review_count: fetchedSectionMeta.review_count || 2578,
         rating: fetchedSectionMeta.rating || 5.0,
       });
@@ -74,7 +132,7 @@ const TestimonialsEditor = () => {
 
   const addMutation = useMutation({
     mutationFn: async () => {
-      const newOrder = testimonials.length > 0 ? Math.max(...testimonials.map(t => t.sort_order)) + 1 : 0;
+      const newOrder = displayTestimonials.length > 0 ? Math.max(...displayTestimonials.map((t: any) => t.sort_order ?? 0)) + 1 : 0;
       const { error, data } = await supabase.from("testimonials").insert([
         { name: "John Doe", role: "Manager", content: "Great service!", sort_order: newOrder }
       ]).select().single();
@@ -92,11 +150,14 @@ const TestimonialsEditor = () => {
   const updateMutation = useMutation({
     mutationFn: async (updated: any) => {
       const { id, created_at, ...cleanData } = updated;
-      const { error } = await supabase.from("testimonials").update(cleanData).eq("id", id);
+      const isCustomId = typeof id === "string" && id.startsWith("t");
+      const { error } = await supabase.from("testimonials").upsert({
+        ...(isCustomId ? {} : { id }),
+        ...cleanData
+      });
       if (error) throw error;
     },
     onSuccess: () => {
-      // Invalidate to refresh list, but do NOT close the form — user can keep editing & re-saving
       queryClient.invalidateQueries({ queryKey: ["testimonials"] });
       toast.success("Testimonial saved!");
     },
@@ -117,12 +178,8 @@ const TestimonialsEditor = () => {
 
   useEffect(() => {
     if (editingId) {
-      // Only seed the form when it's a NEW item being opened for edit.
-      // Skip re-seeding if this item's form was already seeded — this prevents
-      // the testimonials refetch (triggered by invalidateQueries after save) from
-      // overwriting the user's in-progress edits.
       if (editFormSeeded.current !== editingId) {
-        const t = testimonials.find(item => item.id === editingId);
+        const t = displayTestimonials.find((item: any) => item.id === editingId);
         if (t) {
           setEditForm({ ...t });
           editFormSeeded.current = editingId;
@@ -132,7 +189,7 @@ const TestimonialsEditor = () => {
       setEditForm(null);
       editFormSeeded.current = null;
     }
-  }, [editingId, testimonials]);
+  }, [editingId, displayTestimonials]);
 
   if (error) {
     return (
@@ -226,7 +283,7 @@ const TestimonialsEditor = () => {
         </div>
 
         <div className="space-y-4">
-          {testimonials.map((t) => (
+          {displayTestimonials.map((t) => (
             <div key={t.id} className="rounded-xl border border-border bg-card p-5 group transition-all hover:border-primary/20 hover:shadow-md">
               {editingId === t.id && editForm ? (
                 <div className="space-y-4">

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import iconMap from "@/lib/iconMap";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
 
 const ServicesEditor = () => {
   const qc = useQueryClient();
@@ -16,6 +17,8 @@ const ServicesEditor = () => {
       return data || [];
     },
   });
+
+  const displayServices = services.length > 0 ? services : DEFAULT_CONSTRUCTION_SERVICES;
 
   const formatError = (e: any) => {
     if (e.message?.includes("new row violates row level security policy") || e.code === "42501") {
@@ -36,7 +39,7 @@ const ServicesEditor = () => {
   const updateOrderMutation = useMutation({
     mutationFn: async (items: any[]) => {
       const promises = items.map((item, index) => 
-        supabase.from("services").update({ sort_order: index }).eq("id", item.id)
+        supabase.from("services").upsert({ ...item, sort_order: index })
       );
       await Promise.all(promises);
     },
@@ -47,7 +50,7 @@ const ServicesEditor = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-    const items = Array.from(services);
+    const items = Array.from(displayServices);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
@@ -61,7 +64,7 @@ const ServicesEditor = () => {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl font-extrabold text-primary">Services</h2>
-        <button onClick={() => addMutation.mutate({ len: services.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all">
+        <button onClick={() => addMutation.mutate({ len: displayServices.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all">
           <Plus size={16} /> Add Service
         </button>
       </div>
@@ -69,7 +72,7 @@ const ServicesEditor = () => {
         <Droppable droppableId="services-list">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-              {services.map((service: any, index: number) => (
+              {displayServices.map((service: any, index: number) => (
                 <Draggable key={service.id} draggableId={service.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -98,7 +101,11 @@ const ServiceCard = ({ service, formatError, dragHandleProps }: { service: any, 
 
   const updateMutation = useMutation({
     mutationFn: async ({ form, id }: any) => {
-      const { error } = await supabase.from("services").update(form).eq("id", id);
+      const isCustomId = typeof id === "string" && id.startsWith("s");
+      const { error } = await supabase.from("services").upsert({
+        ...(isCustomId ? {} : { id }),
+        ...form
+      });
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-services"] }); toast.success("Service updated!"); },

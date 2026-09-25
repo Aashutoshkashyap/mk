@@ -6,6 +6,13 @@ import { toast } from "sonner";
 import { iconNames } from "@/lib/iconMap";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
+const defaultCoreValues = [
+  { id: "v1", title: "Zero-Harm Safety First", description: "Uncompromising adherence to occupational safety standards and strict HSE protocols across all Himalayan and Terai jobsites.", icon_name: "ShieldCheck", sort_order: 0 },
+  { id: "v2", title: "Engineering Discipline", description: "Exacting adherence to Nepal Building Code (NBC), DoR standard specifications, and international FIDIC contractual guidelines.", icon_name: "Building2", sort_order: 1 },
+  { id: "v3", title: "Timely Delivery", description: "Strategic pre-monsoon milestones, automated scheduling, and captive heavy fleet mobilization to deliver projects within schedule.", icon_name: "Compass", sort_order: 2 },
+  { id: "v4", title: "Ethical Contracting", description: "Pioneering transparent procurement, corporate governance, community stewardship, and sustainable river basin protection.", icon_name: "Shield", sort_order: 3 },
+];
+
 const CoreValuesEditor = () => {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -18,6 +25,8 @@ const CoreValuesEditor = () => {
       return data || [];
     },
   });
+
+  const displayValues = values.length > 0 ? values : defaultCoreValues;
 
   const addMutation = useMutation({
     mutationFn: async ({ currentValues }: any) => {
@@ -38,12 +47,18 @@ const CoreValuesEditor = () => {
 
   const updateMutation = useMutation({
     mutationFn: async (updatedValue: any) => {
-      const { error } = await supabase.from("core_values").update(updatedValue).eq("id", updatedValue.id);
+      const isCustomId = typeof updatedValue.id === "string" && updatedValue.id.startsWith("v");
+      const { error } = await supabase.from("core_values").upsert({
+        ...(isCustomId ? {} : { id: updatedValue.id }),
+        title: updatedValue.title,
+        description: updatedValue.description,
+        icon_name: updatedValue.icon_name,
+        sort_order: updatedValue.sort_order ?? 0
+      });
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["core_values"] });
-      // Keep form open so user can make further edits and save again
       toast.success("Value saved!");
     },
     onError: () => toast.error("Failed to update value")
@@ -64,7 +79,7 @@ const CoreValuesEditor = () => {
   const updateOrderMutation = useMutation({
     mutationFn: async (items: any[]) => {
       const promises = items.map((item, index) => 
-        supabase.from("core_values").update({ sort_order: index }).eq("id", item.id)
+        supabase.from("core_values").upsert({ ...item, sort_order: index })
       );
       await Promise.all(promises);
     },
@@ -75,7 +90,7 @@ const CoreValuesEditor = () => {
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-    const items = Array.from(values);
+    const items = Array.from(displayValues);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
@@ -102,7 +117,7 @@ const CoreValuesEditor = () => {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold font-display text-primary">Core Values ("What Drives Us")</h2>
         <button
-          onClick={() => addMutation.mutate({ currentValues: values })}
+          onClick={() => addMutation.mutate({ currentValues: displayValues })}
           className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-all"
         >
           <Plus size={16} /> Add Value
@@ -113,7 +128,7 @@ const CoreValuesEditor = () => {
         <Droppable droppableId="core-values">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-              {values.map((v: any, index: number) => (
+              {displayValues.map((v: any, index: number) => (
                 <Draggable key={v.id} draggableId={v.id} index={index}>
                   {(provided, snapshot) => (
                     <div 

@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -29,38 +29,31 @@ const queryClient = new QueryClient({
   },
 });
 
-const APP_VERSION = "1.0.5"; // Increment this to force a global cache/storage clear
-
-const CacheClearer = () => {
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
   useEffect(() => {
-    const savedVersion = localStorage.getItem("app_version");
-    if (savedVersion !== APP_VERSION) {
-      console.log("App Version Mismatch. Clearing cache and storage...");
-      
-      // Clear TanStack Query Cache
-      queryClient.clear();
-      
-      // Clear LocalStorage (Warning: this logs out users)
-      localStorage.clear();
-      
-      // Set new version
-      localStorage.setItem("app_version", APP_VERSION);
-      
-      // Optional: force reload to ensure all static assets are fresh
-      window.location.reload();
-    }
-  }, []);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
   return null;
 };
 
+const PageFallback = () => (
+  <div className="min-h-[60vh] flex items-center justify-center bg-white">
+    <div className="flex flex-col items-center gap-3">
+      <div className="h-10 w-10 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+      <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Loading Page...</span>
+    </div>
+  </div>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <CacheClearer />
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-pulse h-12 w-12 rounded-full border-4 border-primary border-t-transparent animate-spin"></div></div>}>
+        <ScrollToTop />
+        <Suspense fallback={<PageFallback />}>
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Index />} />

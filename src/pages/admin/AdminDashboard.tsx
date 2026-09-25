@@ -60,8 +60,8 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-card border-r border-border flex flex-col shrink-0">
         <div className="p-5 border-b border-border">
-          <h2 className="font-display text-lg font-extrabold text-primary">MK BuildCraft</h2>
-          <p className="text-xs text-muted-foreground">Construction Admin Panel</p>
+          <h2 className="font-display text-lg font-extrabold text-primary">MK Engineering & Construction</h2>
+          <p className="text-xs text-muted-foreground">Admin Portal</p>
         </div>
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
           {tabs.map((tab) => (

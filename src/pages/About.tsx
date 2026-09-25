@@ -70,7 +70,7 @@ const About = () => {
               {about?.subheading || "Legacy of Master Builders"}
             </span>
             <h1 className="font-display text-4xl md:text-6xl font-extrabold text-white leading-tight">
-              About MK BuildCraft & Infrastructure
+              About MK Engineering and Construction
             </h1>
             <p className="mt-5 text-neutral-300 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
               A Tier-1 general contracting and civil infrastructure engineering firm dedicated to transforming visionary architectural concepts into landmark realities.
@@ -88,7 +88,7 @@ const About = () => {
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-orange-50 group">
                   <img 
                     src={about?.image_url || "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200"} 
-                    alt="MK Construction Headquarters" 
+                    alt="MK Engineering and Construction Headquarters" 
                     className="w-full h-[420px] object-cover group-hover:scale-105 transition-transform duration-700" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -105,7 +105,7 @@ const About = () => {
                   {about?.heading || "Engineering Monumental Landmarks Since 2000"}
                 </h2>
                 <p className="mt-5 text-muted-foreground leading-relaxed text-base">
-                  {about?.description || "MK BuildCraft is a premier general contractor and heavy civil engineering enterprise. Over the last 25 years, our multidisciplinary teams of licensed master builders, structural engineers, and BIM coordinators have safely erected over 350 complex developments. From deep caisson foundations and highway viaducts to 50-story commercial skyscrapers and high-bay distribution hubs, we maintain our own captive fleet of 1,200+ machinery units, guaranteeing schedule certainty and craft mastery."}
+                  {about?.description || "MK Engineering and Construction is a premier general contractor and heavy civil engineering enterprise. Over the last 25 years, our multidisciplinary teams of licensed master builders, structural engineers, and BIM coordinators have safely erected over 350 complex developments. From deep caisson foundations and highway viaducts to 50-story commercial skyscrapers and high-bay distribution hubs, we maintain our own captive fleet of 1,200+ machinery units, guaranteeing schedule certainty and craft mastery."}
                 </p>
                 <div className="mt-8 grid grid-cols-3 gap-4">
                   {[

@@ -99,7 +99,7 @@ const SettingsEditor = () => {
               value={form.company_name}
               onChange={(e) => setForm({ ...form, company_name: e.target.value })}
               className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-              placeholder="MK BuildCraft & Infrastructure"
+              placeholder="MK Engineering and Construction"
             />
           </div>
 

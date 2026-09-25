@@ -1,5 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import BentoServicesSection from "@/components/BentoServicesSection";
+import FeaturedProjectsSection from "@/components/FeaturedProjectsSection";
+import ConstructionProcessSection from "@/components/ConstructionProcessSection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
@@ -7,7 +9,6 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
-import PartnersSection from "@/components/PartnersSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
@@ -17,24 +18,24 @@ import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 const Index = () => {
   const aboutRef = useRef(null);
   const statsRef = useRef(null);
-  const aboutInView = useInView(aboutRef, { once: true, margin: "-100px" });
-  const statsInView = useInView(statsRef, { once: true, margin: "-80px" });
+  const aboutInView = useInView(aboutRef, { once: true, margin: "-60px" });
+  const statsInView = useInView(statsRef, { once: true, margin: "-60px" });
 
   const { data: stats = [] } = useQuery({
     queryKey: ["stats"],
-    queryFn: async () => { const { data } = await supabase.from("stats").select("*").order("sort_order"); return data || []; },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const { data: services = [] } = useQuery({
-    queryKey: ["services-home"],
-    queryFn: async () => { const { data } = await supabase.from("services").select("*").order("sort_order"); return data || []; },
+    queryFn: async () => {
+      const { data } = await supabase.from("stats").select("*").order("sort_order");
+      return data || [];
+    },
     staleTime: 1000 * 60 * 5,
   });
 
   const { data: about } = useQuery({
     queryKey: ["about-home"],
-    queryFn: async () => { const { data } = await supabase.from("about_section").select("*").single(); return data; },
+    queryFn: async () => {
+      const { data } = await supabase.from("about_section").select("*").maybeSingle();
+      return data;
+    },
     staleTime: 1000 * 60 * 5,
   });
 
@@ -55,7 +56,7 @@ const Index = () => {
 
       {/* Stats Strip with microanimations */}
       {isVisible("stats") && (
-        <section ref={statsRef} className="relative -mt-12 z-20 pb-12">
+        <section ref={statsRef} className="relative -mt-8 sm:-mt-12 z-20 pb-8 sm:pb-12">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {displayStats.map((stat: any, i: number) => {
@@ -63,7 +64,7 @@ const Index = () => {
                 return (
                   <motion.div 
                     key={stat.id} 
-                    initial={{ opacity: 0, y: 30 }} 
+                    initial={{ opacity: 0, y: 24 }} 
                     animate={statsInView ? { opacity: 1, y: 0 } : {}} 
                     transition={{ duration: 0.5, delay: 0.08 * i }}
                     whileHover={{ y: -6, transition: { duration: 0.2 } }}
@@ -86,19 +87,19 @@ const Index = () => {
 
       {/* About Preview */}
       {isVisible("about_overview") && (
-        <section ref={aboutRef} className="py-20 md:py-32 bg-gradient-to-b from-white via-orange-50/20 to-white relative overflow-hidden">
+        <section ref={aboutRef} className="py-16 md:py-24 bg-gradient-to-b from-white via-orange-50/20 to-white relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div 
-                initial={{ opacity: 0, x: -40 }} 
+                initial={{ opacity: 0, x: -30 }} 
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}} 
-                transition={{ duration: 0.7 }}
+                transition={{ duration: 0.6 }}
                 className="relative"
               >
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
                   <img 
                     src={about?.image_url || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1600"} 
-                    alt="Modern Civil Construction Project" 
+                    alt="MK Engineering and Construction Civil Infrastructure" 
                     className="w-full h-[450px] object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700 ease-out" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent rounded-2xl pointer-events-none" />
@@ -124,9 +125,9 @@ const Index = () => {
               </motion.div>
 
               <motion.div 
-                initial={{ opacity: 0, x: 40 }} 
+                initial={{ opacity: 0, x: 30 }} 
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}} 
-                transition={{ duration: 0.7, delay: 0.15 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
               >
                 <div className="flex flex-wrap gap-2.5 mb-6">
                   {["Structural Integrity", "LEED Certified", "Zero-Harm Safety", "BIM 5D Technology"].map((value) => (
@@ -141,7 +142,7 @@ const Index = () => {
                 </h2>
                 
                 <p className="mt-6 text-muted-foreground leading-relaxed text-base md:text-lg">
-                  {about?.description || "MK Construction & Infrastructure is a premier general contractor and civil engineering powerhouse. For over two decades, we have engineered iconic corporate towers, heavy highway infrastructure, high-bay industrial logistics hubs, and resilient residential communities. Backed by an extensive captive heavy machinery fleet, ISO 45001 safety compliance, and comprehensive 5D BIM virtual modeling, we deliver monumental scale with pinpoint precision, on time and on budget."}
+                  {about?.description || "MK Engineering and Construction is a premier general contractor and heavy civil engineering enterprise. For over two decades, we have engineered iconic corporate towers, heavy highway infrastructure, high-bay industrial logistics hubs, and resilient residential communities. Backed by an extensive captive heavy machinery fleet, ISO 45001 safety compliance, and comprehensive 5D BIM virtual modeling, we deliver monumental scale with pinpoint precision, on time and on budget."}
                 </p>
 
                 <div className="mt-8 grid sm:grid-cols-2 gap-3.5">
@@ -181,12 +182,25 @@ const Index = () => {
         </section>
       )}
 
+      {/* Bento Disciplines Section */}
       {isVisible("services") && <BentoServicesSection />}
 
-      {isVisible("partners") && <PartnersSection />}
+      {/* Featured Projects / Infrastructure Showcase on Homepage (as requested) */}
+      <FeaturedProjectsSection />
+
+      {/* 5-Stage Project Delivery Framework */}
+      <ConstructionProcessSection />
+
+      {/* Endorsements / Testimonials without giant gaps */}
       {isVisible("testimonials") && <TestimonialsSection />}
+
+      {/* Expanded FAQs */}
       {isVisible("faqs") && <FAQSection />}
+
+      {/* Technical Field Reports / Blog Preview */}
       {isVisible("blog") && <BlogSection />}
+
+      {/* Final Pre-Footer CTA */}
       {isVisible("cta") && <PreFooterCTA />}
     </>
   );

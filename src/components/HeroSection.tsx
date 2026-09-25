@@ -84,7 +84,7 @@ const HeroSection = () => {
                   ))}
                 </>
               ) : (
-                <>Elevate Your <span className="text-primary">Business <br/> Strategy & Growth.</span></>
+                <>Building Monumental <span className="text-primary">Infrastructure & <br/> Modern Landmarks.</span></>
               )}
             </motion.h1>
 
@@ -94,7 +94,7 @@ const HeroSection = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
-              {data?.description || "Expert consultation and strategic planning to help your business reach its full potential in a dynamic market."}
+              {data?.description || "Tier-1 General Contracting and Civil Infrastructure engineering. From iconic commercial skyscrapers to arterial highway viaducts and automated logistics hubs, we build with uncompromised precision and Zero-Harm safety standards."}
             </motion.p>
 
             <motion.div 

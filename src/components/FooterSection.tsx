@@ -22,8 +22,8 @@ const FooterSection = () => {
                 MK
               </div>
               <div>
-                <span className="font-display font-extrabold text-xl text-white tracking-tight">MK BuildCraft</span>
-                <div className="text-[10px] uppercase tracking-widest text-primary font-bold">Construction & Engineering</div>
+                <span className="font-display font-extrabold text-xl text-white tracking-tight">MK Engineering and Construction</span>
+                <div className="text-[10px] uppercase tracking-widest text-primary font-bold">General Contracting & Civil Engineering</div>
               </div>
             </div>
             <p className="mt-4 text-sm text-neutral-400 leading-relaxed">
@@ -106,7 +106,7 @@ const FooterSection = () => {
           </div>
         </div>
         <div className="mt-12 pt-6 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-400">
-          <p>© {new Date().getFullYear()} MK Construction & Infrastructure Group. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} MK Engineering and Construction. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <span className="text-primary font-bold">Safety • Integrity • Engineering Mastery</span>
           </div>

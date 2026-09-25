@@ -133,7 +133,7 @@ ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS section_visibility JSONB DEFA
 
 -- 2. Create the fixed singleton row
 INSERT INTO site_settings (id, company_name)
-VALUES ('00000000-0000-0000-0000-000000000000', 'MK BuildCraft')
+VALUES ('00000000-0000-0000-0000-000000000000', 'MK Engineering and Construction')
 ON CONFLICT (id) DO NOTHING;
 
 -- 3. Delete duplicates

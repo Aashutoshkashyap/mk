@@ -12,16 +12,7 @@ import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
 
 const Services = () => {
   const { isVisible } = useSectionVisibility();
-  const { data: services = [] } = useQuery({
-    queryKey: ["services-full"],
-    queryFn: async () => {
-      const { data } = await supabase.from("services").select("*, sub_services(*)").order("sort_order");
-      return data || [];
-    },
-  });
-
-  const validServices = filterOutLegacyFinancial(services);
-  const displayServices = validServices.length > 0 ? validServices : DEFAULT_CONSTRUCTION_SERVICES;
+  const displayServices = DEFAULT_CONSTRUCTION_SERVICES;
 
   return (
     <>

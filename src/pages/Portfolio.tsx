@@ -81,7 +81,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     budget: "₨ 980 Million",
     description: "Turnkey institutional civic complex built in strict compliance with the Nepal National Building Code (NBC 105:2020) seismic provisions. Includes ministry secretariat blocks, assembly hall, and underground parking.",
     highlights: ["Ductile Seismic Framing to NBC Standards", "Integrated Solar Photovoltaic Net-Zero System", "Complete Turnkey MEP Coordination & Finishings"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
     featured: true,
   },
   {

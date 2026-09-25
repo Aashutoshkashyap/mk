@@ -58,7 +58,7 @@ const defaultConstructionServices = [
     disciplineNumber: "04",
     description: "Institutional, commercial, and administrative structures executed in strict compliance with the Nepal National Building Code (NBC 105:2020) with ductile seismic detailing, high-grade concrete frames, and full MEP coordination.",
     icon_name: "Building2",
-    image_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
     sub_services: [
       { id: "ss13", label: "Ductile Structural Concrete Frames", icon_name: "Building2", sort_order: 1 },
       { id: "ss14", label: "Integrated MEP Infrastructure", icon_name: "Zap", sort_order: 2 },

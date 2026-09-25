@@ -17,8 +17,9 @@ const HeroSection = () => {
 
   const data = sanitizeDbRecord(rawData);
 
-  // Default construction engineering visual if no image is uploaded from CMS
-  const defaultConstructionImg = "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200";
+  // Default verified high-resolution construction engineering visual
+  const defaultConstructionImg = "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200";
+  const backupConstructionImg = "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1200";
 
   return (
     <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
@@ -131,11 +132,17 @@ const HeroSection = () => {
                 <div className="w-[95%] h-[95%] bg-white rounded-[4rem] shadow-2xl border-2 border-[#888A8C]/30 overflow-hidden flex items-center justify-center relative p-3">
                   <div className="w-full h-full rounded-[3.25rem] overflow-hidden relative">
                     <img 
-                      src={data?.image_url || defaultConstructionImg} 
+                      src={data?.image_url?.trim() ? data.image_url : defaultConstructionImg} 
                       alt="Construction and Infrastructure Engineering" 
+                      loading="eager"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       onError={(e) => {
-                        e.currentTarget.src = defaultConstructionImg;
+                        const target = e.currentTarget;
+                        if (target.src !== defaultConstructionImg) {
+                          target.src = defaultConstructionImg;
+                        } else if (target.src !== backupConstructionImg) {
+                          target.src = backupConstructionImg;
+                        }
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />

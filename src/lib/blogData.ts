@@ -50,7 +50,7 @@ export const defaultConstructionArticles = [
     category: "Sector Commentary",
     excerpt: "An engineering breakdown of how MK Construction translates Nepal Building Code (NBC 105:2020) seismic requirements into high-ductility shear walls and beam-column junction reinforcement.",
     content: "Nepal is situated in an active seismic subduction zone, making seismic engineering compliance not merely a legal mandate, but a critical life-safety imperative.\n\nUnder Nepal Building Code (NBC 105:2020), seismic coefficients and ductile detailing standards have been substantially heightened. On the Lumbini Provincial HQ Complex (₨ 980M), MK Construction integrated advanced response spectrum analysis into structural modeling, utilizing Fe500D thermo-mechanically treated rebar and closely spaced confinement ties at critical beam-column nodes.\n\nOur on-site QA/QC laboratory verifies 100% of rebar tensile elongation and concrete cube compressive strengths prior to formwork striking.",
-    thumbnail_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    thumbnail_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
     author: "Er. Binod K. Thapa, M.Sc.",
     published_at: "2026-08-12",
     read_time: "7 min read",

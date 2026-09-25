@@ -6,24 +6,24 @@
 
 @layer base {
   :root {
-    /* SDC Color Scheme: Red #F5333F | Charcoal #24272A | Stone #888A8C */
+    /* Pure Black Text Scheme */
     --background: 0 0% 100%;
-    --foreground: 210 8% 16%;        /* Charcoal #24272A */
+    --foreground: 0 0% 0%;            /* Pure Black #000000 */
 
     --card: 0 0% 100%;
-    --card-foreground: 210 8% 16%;   /* Charcoal */
+    --card-foreground: 0 0% 0%;       /* Pure Black #000000 */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 8% 16%;
+    --popover-foreground: 0 0% 0%;    /* Pure Black #000000 */
 
     --primary: 357 90% 58%;          /* SDC Red #F5333F */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 5% 96%;         /* Near-white with stone tint */
-    --secondary-foreground: 210 8% 16%;
+    --secondary-foreground: 0 0% 0%; /* Pure Black */
 
     --muted: 210 5% 95%;
-    --muted-foreground: 210 2% 45%;  /* Stone-toned muted text */
+    --muted-foreground: 0 0% 0%;     /* Pure Black #000000 */
 
     --accent: 357 90% 58%;           /* SDC Red */
     --accent-foreground: 0 0% 100%;
@@ -38,7 +38,7 @@
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 210 8% 16%;
+    --sidebar-foreground: 0 0% 0%;   /* Pure Black */
     --sidebar-primary: 357 90% 58%;  /* SDC Red */
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 357 90% 96%;
@@ -46,45 +46,46 @@
     --sidebar-border: 210 5% 88%;
     --sidebar-ring: 357 90% 58%;
 
-    --brand-navy: 210 8% 16%;        /* Charcoal (replaces navy) */
-    --brand-navy-dark: 210 10% 10%;  /* Deep charcoal */
-    --brand-blue: 357 90% 58%;       /* SDC Red (aliased as brand-blue for compat) */
-    --brand-orange: 357 90% 58%;     /* SDC Red (replaces orange) */
-    --brand-stone: 210 2% 55%;       /* Stone #888A8C */
+    --brand-navy: 0 0% 0%;           /* Pure Black */
+    --brand-navy-dark: 0 0% 0%;      /* Pure Black */
+    --brand-blue: 357 90% 58%;       /* SDC Red */
+    --brand-orange: 357 90% 58%;     /* SDC Red */
+    --brand-stone: 0 0% 0%;          /* Pure Black */
     --brand-green: 142 60% 40%;
   }
 
   .dark {
-    /* Deep charcoal backgrounds matching MK brand */
-    --background: 210 10% 8%;           /* Deep #11131A charcoal */
-    --foreground: 210 15% 94%;          /* Near-white text */
+    --background: 210 10% 8%;
+    --foreground: 0 0% 0%;            /* Pure Black #000000 */
 
-    --card: 210 10% 11%;                /* Slightly lighter charcoal cards */
-    --card-foreground: 210 15% 94%;
+    --card: 210 10% 11%;
+    --card-foreground: 0 0% 0%;       /* Pure Black #000000 */
 
     --popover: 210 10% 11%;
-    --popover-foreground: 210 15% 94%;
+    --popover-foreground: 0 0% 0%;    /* Pure Black #000000 */
 
-    --primary: 357 90% 58%;             /* SDC Red stays #F5333F */
+    --primary: 357 90% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 10% 16%;           /* Dark charcoal secondary */
-    --secondary-foreground: 210 15% 88%;
+    --secondary: 210 10% 16%;
+    --secondary-foreground: 0 0% 0%;  /* Pure Black */
 
     --muted: 210 10% 16%;
-    --muted-foreground: 210 5% 55%;     /* Stone-toned muted */
+    --muted-foreground: 0 0% 0%;      /* Pure Black #000000 */
 
-    --accent: 357 90% 58%;              /* SDC Red accent */
+    --accent: 357 90% 58%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 210 10% 20%;              /* Subtle dark border */
+    --border: 210 10% 20%;
     --input: 210 10% 20%;
-    --ring: 357 90% 58%;                /* SDC Red ring */
+    --ring: 357 90% 58%;
 
-    --brand-stone: 210 2% 55%;          /* Stone #888A8C unchanged */
+    --brand-navy: 0 0% 0%;
+    --brand-navy-dark: 0 0% 0%;
+    --brand-stone: 0 0% 0%;
   }
 }
 
@@ -110,11 +111,20 @@
   body {
     @apply bg-transparent text-foreground font-body antialiased;
     font-family: "Helvetica Now Text", "Helvetica", Arial, sans-serif;
+    color: #000000;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: "Thunderbolt 76 Regular", "Thunderbolt 76", "Thunderbolt", "Chakra Petch", "Syne", "Helvetica Now Display", "Helvetica", Arial, sans-serif;
     @apply tracking-tight font-extrabold;
+    color: #000000;
+  }
+
+  .text-muted-foreground,
+  .text-foreground,
+  .text-\[\#24272A\],
+  .text-\[\#888A8C\] {
+    color: #000000 !important;
   }
 }
 

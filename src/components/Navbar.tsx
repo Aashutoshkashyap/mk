@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, HardHat, ArrowRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -117,8 +117,20 @@ const Navbar = () => {
             </div>
           </nav>
 
-          {/* Mobile Toggle */}
-          <div className="flex items-center">
+          {/* Contact Button & Mobile Toggle */}
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-4 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold bg-[#888A8C] hover:bg-[#77797B] text-white shadow-md shadow-black/10 active:scale-95 transition-all duration-300"
+              >
+                <HardHat size={16} className="text-white shrink-0" />
+                <span>Contact Us</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* Mobile Toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="lg:hidden p-2 rounded-xl bg-white/90 border border-[#888A8C]/30 backdrop-blur-md text-foreground transition-all hover:bg-[#888A8C]/10 flex items-center justify-center shrink-0 shadow-sm"

@@ -156,7 +156,7 @@ const BlogPost = () => {
                 </p>
                 {/* Secondary image if present */}
                 {i === 1 && post.image_1_url && (
-                  <div className="my-8 rounded-2xl overflow-hidden border border-red-100 shadow-md">
+                  <div className="my-8 rounded-2xl overflow-hidden border border-[#888A8C]/30 shadow-md">
                     <img src={post.image_1_url} alt="Engineering schematic" className="w-full" loading="lazy" />
                   </div>
                 )}
@@ -165,7 +165,7 @@ const BlogPost = () => {
           </motion.div>
 
           {/* Author Box & Scope Callout */}
-          <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-red-50 to-red-50/50 border-2 border-red-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-red-50 to-red-50/50 border-2 border-[#888A8C]/30 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary/25 shrink-0">
                 MK

@@ -238,7 +238,7 @@ const Portfolio = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary font-bold text-xs uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-[#888A8C] text-[#888A8C] font-bold text-xs uppercase tracking-widest mb-6">
               <HardHat size={15} /> Class-A Licensed Infrastructure Contractor
             </div>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
@@ -280,117 +280,117 @@ const Portfolio = () => {
       {/* Main Portfolio Grid */}
       <section className="py-16 md:py-24 bg-white relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          {/* Category Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">
-            {CATEGORIES.map((tab) => {
-              const active = selectedCategory === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setSelectedCategory(tab.id)}
-                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 whitespace-nowrap ${
-                    active
-                      ? "bg-primary text-white shadow-lg shadow-primary/30 scale-105"
-                      : "bg-red-50 text-foreground/80 hover:bg-red-50 hover:text-primary border border-red-100"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+            {/* Category Filter Tabs */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">
+              {CATEGORIES.map((tab) => {
+                const active = selectedCategory === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setSelectedCategory(tab.id)}
+                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 whitespace-nowrap ${
+                      active
+                        ? "bg-[#888A8C] text-white shadow-lg shadow-black/10 scale-105"
+                        : "bg-transparent text-foreground/80 hover:bg-[#888A8C]/10 hover:text-[#24272A] border border-[#888A8C]/30"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
 
-          {/* Projects Grid */}
-          <motion.div 
-            layout
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            <AnimatePresence>
-              {filteredProjects.map((project, i) => (
-                <motion.div
-                  layout
-                  key={project.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="group rounded-3xl bg-white border-2 border-red-100 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 flex flex-col"
-                >
-                  {/* Image Container with Zoom & Badge */}
-                  <div className="relative h-60 overflow-hidden bg-neutral-900">
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    
-                    <span className="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md">
-                      {project.categoryLabel}
-                    </span>
-
-                    <span className="absolute bottom-4 left-4 flex items-center gap-1.5 text-xs text-white/90 font-medium">
-                      <MapPin size={13} className="text-primary shrink-0" />
-                      {project.location}
-                    </span>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-7 flex flex-col flex-1">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground mb-3 font-semibold">
-                      <span className="truncate max-w-[180px]">Client: {project.client.split(',')[0]}</span>
-                      <span className="text-primary font-bold shrink-0">{project.completionYear}</span>
-                    </div>
-
-                    <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-snug mb-3">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-6 flex-1">
-                      {project.description}
-                    </p>
-
-                    {/* Spec Highlights Pill */}
-                    <div className="pt-4 border-t border-red-100 flex items-center justify-between text-xs">
-                      <div>
-                        <span className="text-muted-foreground block text-[10px] uppercase font-bold">Scope / Scale</span>
-                        <span className="font-bold text-foreground truncate max-w-[140px] block">{project.scaleMetric}</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-muted-foreground block text-[10px] uppercase font-bold">Contract Value</span>
-                        <span className="font-bold text-primary">{project.budget}</span>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="mt-6 w-full py-3 rounded-2xl bg-red-50 hover:bg-primary hover:text-white text-primary text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                    >
-                      <span>View Specifications</span>
-                      <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Project Detail Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 shadow-2xl relative border-2 border-primary/20"
+            {/* Projects Grid */}
+            <motion.div 
+              layout
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
+              <AnimatePresence>
+                {filteredProjects.map((project, i) => (
+                  <motion.div
+                    layout
+                    key={project.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                    className="group rounded-3xl bg-white border-2 border-[#888A8C]/30 overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#888A8C]/60 transition-all duration-500 hover:-translate-y-2 flex flex-col"
+                  >
+                    {/* Image Container with Zoom & Badge */}
+                    <div className="relative h-60 overflow-hidden bg-neutral-900">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      
+                      <span className="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md">
+                        {project.categoryLabel}
+                      </span>
+
+                      <span className="absolute bottom-4 left-4 flex items-center gap-1.5 text-xs text-white/90 font-medium">
+                        <MapPin size={13} className="text-white shrink-0" />
+                        {project.location}
+                      </span>
+                    </div>
+
+                    {/* Card Content */}
+                    <div className="p-7 flex flex-col flex-1">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-3 font-semibold">
+                        <span className="truncate max-w-[180px]">Client: {project.client.split(',')[0]}</span>
+                        <span className="text-[#888A8C] font-bold shrink-0">{project.completionYear}</span>
+                      </div>
+
+                      <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-snug mb-3">
+                        {project.title}
+                      </h3>
+
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-6 flex-1">
+                        {project.description}
+                      </p>
+
+                      {/* Spec Highlights Pill */}
+                      <div className="pt-4 border-t border-[#888A8C]/20 flex items-center justify-between text-xs">
+                        <div>
+                          <span className="text-muted-foreground block text-[10px] uppercase font-bold">Scope / Scale</span>
+                          <span className="font-bold text-foreground truncate max-w-[140px] block">{project.scaleMetric}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-muted-foreground block text-[10px] uppercase font-bold">Contract Value</span>
+                          <span className="font-bold text-[#888A8C]">{project.budget}</span>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="mt-6 w-full py-3 rounded-2xl bg-transparent hover:bg-[#888A8C] hover:text-white text-[#888A8C] border border-[#888A8C]/40 text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                      >
+                        <span>View Specifications</span>
+                        <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Project Detail Modal */}
+        <AnimatePresence>
+          {selectedProject && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 shadow-2xl relative border-2 border-[#888A8C]/30"
+              >
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-red-50 hover:bg-red-50 text-foreground transition-all"
+                className="absolute top-6 right-6 p-2 rounded-full bg-transparent hover:bg-[#888A8C]/10 text-foreground transition-all"
                 aria-label="Close modal"
               >
                 <X size={20} />
@@ -422,7 +422,7 @@ const Portfolio = () => {
                 {selectedProject.description}
               </p>
 
-              <div className="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-red-50/70 border border-red-100 mb-6">
+              <div className="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-neutral-50/60 border border-[#888A8C]/30 mb-6">
                 <div>
                   <div className="text-[10px] uppercase font-bold text-muted-foreground">Contracting Client</div>
                   <div className="text-sm font-bold text-foreground">{selectedProject.client}</div>
@@ -453,10 +453,10 @@ const Portfolio = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-red-100">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#888A8C]/30">
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="px-5 py-2.5 rounded-full border border-red-200 text-xs font-bold text-muted-foreground hover:bg-red-50 transition-all"
+                  className="px-5 py-2.5 rounded-full border border-[#888A8C]/30 text-xs font-bold text-muted-foreground hover:bg-[#888A8C]/10 transition-all"
                 >
                   Close
                 </button>

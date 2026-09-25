@@ -67,12 +67,12 @@ const About = () => {
       {/* Hero Banner */}
       <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 text-white overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/20 blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-red-700/10 blur-3xl" />
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#888A8C]/20 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-primary/10 blur-3xl" />
         </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/20 px-4 py-1.5 rounded-full border border-primary/30 inline-block mb-4">
+            <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-4 py-1.5 rounded-full border border-[#888A8C] inline-block mb-4">
               Class-A Licensed Contractor · Government of Nepal
             </span>
             <h1 className="font-display text-4xl md:text-6xl font-extrabold text-white leading-tight">
@@ -91,7 +91,7 @@ const About = () => {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-red-50 group">
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#888A8C]/30 group">
                   <img 
                     src={about?.image_url || "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200"} 
                     alt="MK Construction Company Headquarters" 
@@ -106,7 +106,7 @@ const About = () => {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: 30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }}>
-                <span className="text-xs font-bold tracking-widest uppercase text-primary">Class-A Licensed Contractor</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C]">Class-A Licensed Contractor</span>
                 <h2 className="mt-2 font-display text-3xl md:text-4xl font-extrabold text-foreground leading-tight">
                   {about?.heading || "Engineering Nepal's Infrastructure Since 2018"}
                 </h2>
@@ -123,8 +123,8 @@ const About = () => {
                     { label: "850+", sub: "Engineers & Crew" },
                     { label: "32", sub: "Districts" },
                   ].map((item, i) => (
-                    <div key={i} className="text-center p-3 rounded-2xl bg-red-50/70 border border-red-100 hover:border-primary/40 transition-colors">
-                      <div className="font-display text-xl font-extrabold text-primary">{item.label}</div>
+                    <div key={i} className="text-center p-3 rounded-2xl bg-neutral-50 border border-[#888A8C]/30 hover:border-[#888A8C]/60 transition-colors">
+                      <div className="font-display text-xl font-extrabold text-[#24272A]">{item.label}</div>
                       <div className="text-[11px] font-semibold text-muted-foreground mt-0.5">{item.sub}</div>
                     </div>
                   ))}
@@ -137,12 +137,12 @@ const About = () => {
 
       {/* Vision & Mission */}
       {isVisible("vision_mission") && (
-        <section ref={visionRef} className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/20 to-white">
+        <section ref={visionRef} className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid md:grid-cols-2 gap-8">
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="rounded-3xl bg-white border-2 border-red-100 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-                  <Eye size={28} className="text-primary" strokeWidth={1.75} />
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-[#888A8C]/60 transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-6">
+                  <Eye size={28} className="text-[#888A8C]" strokeWidth={1.75} />
                 </div>
                 <h3 className="font-display text-2xl font-bold text-foreground mb-4">
                   {about?.vision_title || "Our Strategic Vision"}
@@ -152,9 +152,9 @@ const About = () => {
                 </p>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }} className="rounded-3xl bg-white border-2 border-red-100 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-                  <Target size={28} className="text-primary" strokeWidth={1.75} />
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }} className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-[#888A8C]/60 transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-6">
+                  <Target size={28} className="text-[#888A8C]" strokeWidth={1.75} />
                 </div>
                 <h3 className="font-display text-2xl font-bold text-foreground mb-4">
                   {about?.mission_title || "Our Operating Mission"}
@@ -173,7 +173,7 @@ const About = () => {
         <section ref={valuesRef} className="py-20 md:py-28 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={valuesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-14">
-              <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-3">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-3">
                 Uncompromising Principles
               </span>
               <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">Our Core Values</h2>
@@ -188,9 +188,9 @@ const About = () => {
                     initial={{ opacity: 0, y: 30 }} 
                     animate={valuesInView ? { opacity: 1, y: 0 } : {}} 
                     transition={{ duration: 0.5, delay: 0.08 * i }}
-                    className="rounded-3xl bg-white border-2 border-red-100 p-7 text-center hover:border-primary hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300"
+                    className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-7 text-center hover:border-[#888A8C]/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
-                    <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
+                    <div className="w-14 h-14 mx-auto rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-4 text-[#888A8C]">
                       <Icon size={26} strokeWidth={1.75} />
                     </div>
                     <h3 className="font-display text-lg font-bold text-foreground mb-2">{v.title}</h3>
@@ -205,10 +205,10 @@ const About = () => {
 
       {/* Construction Site Gallery */}
       {isVisible("gallery") && (
-        <section ref={galleryRef} className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/20 to-white">
+        <section ref={galleryRef} className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={galleryInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-14">
-              <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-3">
+              <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-3">
                 Field Visuals
               </span>
               <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
@@ -223,7 +223,7 @@ const About = () => {
                   initial={{ opacity: 0, scale: 0.92 }} 
                   animate={galleryInView ? { opacity: 1, scale: 1 } : {}} 
                   transition={{ duration: 0.4, delay: 0.05 * i }} 
-                  className="rounded-2xl overflow-hidden aspect-[4/3] group relative bg-neutral-900 border-2 border-red-100"
+                  className="rounded-2xl overflow-hidden aspect-[4/3] group relative bg-neutral-900 border-2 border-[#888A8C]/30"
                 >
                   <img 
                     src={img.image_url} 

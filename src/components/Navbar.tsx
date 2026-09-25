@@ -4,8 +4,6 @@ import { Menu, X, HardHat, ArrowRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { PrimaryButton } from "./ui/PrimaryButton";
-import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -66,8 +64,6 @@ const Navbar = () => {
     setMobileOpen(false);
   };
 
-  const showFullHeader = lastScrollY < 100;
-
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
@@ -101,7 +97,7 @@ const Navbar = () => {
 
           {/* Centered Navigation Capsule (Desktop) */}
           <nav className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-4">
-            <div className="flex items-center glass-nav rounded-full px-2 py-1.5 border border-red-200/60 shadow-lg shadow-red-600/5 bg-white/95 backdrop-blur-xl">
+            <div className="flex items-center glass-nav rounded-full px-2 py-1.5 border border-[#888A8C]/40 shadow-lg shadow-black/5 bg-white/95 backdrop-blur-xl">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -111,8 +107,8 @@ const Navbar = () => {
                     onClick={() => handleNavClick(link.href)}
                     className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-300 whitespace-nowrap ${
                       active
-                        ? "text-white bg-primary shadow-md shadow-primary/25"
-                        : "text-foreground/75 hover:text-primary hover:bg-red-50/80"
+                        ? "text-white bg-[#888A8C] shadow-md shadow-black/10"
+                        : "text-foreground/75 hover:text-[#24272A] hover:bg-[#888A8C]/15"
                     }`}
                   >
                     {link.label}
@@ -122,30 +118,26 @@ const Navbar = () => {
             </div>
           </nav>
 
-          {/* Action Button & Mobile Toggle Container */}
+          {/* Contact Button & Mobile Toggle Container */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center">
-              <PrimaryButton
-                as={Link}
+              <Link
                 to="/contact"
-                containerClassName="h-10 md:h-11 min-w-0 md:min-w-[140px]"
-                className="px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 active:scale-95 transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold bg-[#888A8C] hover:bg-[#77797B] text-white shadow-md shadow-black/10 active:scale-95 transition-all duration-300"
               >
-                <span className="flex items-center gap-2 font-bold">
-                  <HardHat size={16} className="text-white shrink-0" />
-                  <span>Contact Us</span>
-                  <ArrowRight size={13} />
-                </span>
-              </PrimaryButton>
+                <HardHat size={16} className="text-white shrink-0" />
+                <span>Contact Us</span>
+                <ArrowRight size={13} />
+              </Link>
             </div>
 
             {/* Mobile Toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/90 border border-red-100 backdrop-blur-md text-foreground transition-all hover:bg-red-50 flex items-center justify-center shrink-0 shadow-sm"
+              className="lg:hidden p-2 rounded-xl bg-white/90 border border-[#888A8C]/30 backdrop-blur-md text-foreground transition-all hover:bg-[#888A8C]/10 flex items-center justify-center shrink-0 shadow-sm"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={22} className="text-primary" /> : <Menu size={22} />}
+              {mobileOpen ? <X size={22} className="text-[#888A8C]" /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -157,7 +149,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="bg-white/95 backdrop-blur-2xl mt-2 rounded-3xl border-2 border-red-100 p-5 flex flex-col gap-1 shadow-2xl lg:hidden"
+              className="bg-white/95 backdrop-blur-2xl mt-2 rounded-3xl border-2 border-[#888A8C]/30 p-5 flex flex-col gap-1 shadow-2xl lg:hidden"
             >
               {navLinks.map((link) => (
                 <Link
@@ -166,8 +158,8 @@ const Navbar = () => {
                   onClick={() => handleNavClick(link.href)}
                   className={`px-4 py-3 text-sm font-bold rounded-2xl transition-colors ${
                     isActive(link.href)
-                      ? "text-white bg-primary shadow-sm"
-                      : "text-foreground hover:bg-red-50"
+                      ? "text-white bg-[#888A8C] shadow-sm"
+                      : "text-foreground hover:bg-[#888A8C]/10"
                   }`}
                 >
                   {link.label}
@@ -176,7 +168,7 @@ const Navbar = () => {
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="mt-3 rounded-2xl bg-primary px-5 py-3.5 text-sm font-bold text-white text-center shadow-lg shadow-primary/25 flex items-center justify-center gap-2"
+                className="mt-3 rounded-2xl bg-[#888A8C] px-5 py-3.5 text-sm font-bold text-white text-center shadow-lg shadow-black/10 flex items-center justify-center gap-2"
               >
                 <HardHat size={16} /> Request Free Site Estimate
               </Link>

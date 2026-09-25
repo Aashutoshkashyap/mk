@@ -1,71 +1,70 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Truck, Compass, Building2, Droplets, Waves, Zap } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
-import { PrimaryButton } from "./ui/PrimaryButton";
+import { Building2, ArrowRight } from "lucide-react";
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 
-// The exact 6 engineering verticals from mk-construction-website.md
-export const DEFAULT_NEPAL_SERVICES = [
-  { 
-    id: 's1', 
-    title: 'Roads & Highways', 
-    description: 'National highways, district roads, rural feeder networks, and urban arterials across complex mountain and plains topography. Full-depth asphalt, DBST, gravel, and rigid concrete pavement with integrated slope stabilization and drainage culverts.', 
-    icon_name: 'Truck', 
-    image_url: 'https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200',
-    scope: ['Earthwork & Subgrade', 'Pavement Layers (DBST/Asphalt)', 'Culverts & Drainage', 'Retaining Structures'],
+const DEFAULT_NEPAL_SERVICES = [
+  {
+    id: "s-roads",
+    title: "Highways & Expressways",
+    icon_name: "Truck",
+    description: "Turnkey execution of national highway alignments, hill road geometric improvements, rigid and asphalt concrete pavements, slope stabilization, and high-capacity drainage.",
+    scope: ["Asphalt Concrete Paving", "Cut & Fill Mass Hauling", "Bio-Engineering & Slopes"],
+    image_url: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200",
   },
-  { 
-    id: 's2', 
-    title: 'Bridges & Structures', 
-    description: 'Steel-truss, RCC, and pre-stressed long-span river crossings engineered for Nepal’s torrential monsoon rivers. Spanning 20m to 200m+ with deep caisson well-foundations, heavy pier fabrication, and seismic elastomeric bearings.', 
-    icon_name: 'Compass', 
-    image_url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200',
-    scope: ['Pier & Abutment Wells', 'Girder Fabrication & Launching', 'Deck Slab & Approaches', 'Bearings & Expansion Joints'],
+  {
+    id: "s-bridges",
+    title: "Bridges & River Crossings",
+    icon_name: "Compass",
+    description: "Deep well caisson foundations, cast-in-situ bored piles, pre-stressed girder superstructures, and steel truss bridges across perennial Himalayan rivers.",
+    scope: ["Pneumatic Caisson Sinking", "Post-Tensioned Girders", "River Bed Scour Protection"],
+    image_url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200",
   },
-  { 
-    id: 's3', 
-    title: 'River Training & Flood Mitigation', 
-    description: 'Hydraulic protection works for riverbank stabilization and flood mitigation in dynamic river systems. Heavy gabion revetments, RCC spurs, boulder pitching, channelization, and guided flood dykes safeguarding communities.', 
-    icon_name: 'Waves', 
-    image_url: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200',
-    scope: ['Gabion & RCC Spurs', 'Embankment Construction', 'Toe Protection & Armor Rock', 'River Channelization'],
+  {
+    id: "s-river",
+    title: "River Training & Flood Defense",
+    icon_name: "Waves",
+    description: "Large-scale hydraulic river training works, continuous RCC floodwalls, boulder rip-rap armor, launching aprons, and guided spurs along major river basins.",
+    scope: ["RCC Deflective Spurs", "Geo-Synthetic Revetments", "Embankment Dykes"],
+    image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
   },
-  { 
-    id: 's4', 
-    title: 'Buildings & Institutional Complexes', 
-    description: 'Institutional, commercial, and administrative structures executed in strict compliance with the Nepal National Building Code (NBC) with ductile seismic detailing, high-grade concrete frames, and full MEP coordination.', 
-    icon_name: 'Building2', 
-    image_url: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200',
-    scope: ['Ductile RCC Frames', 'MEP Infrastructure Coordination', 'Finishes & Architectural Joinery', 'Site Infrastructure Development'],
+  {
+    id: "s-buildings",
+    title: "Institutional & Civic Buildings",
+    icon_name: "Building2",
+    description: "Complete general contracting for government secretariats, educational complexes, and commercial towers built in strict accordance with Nepal National Building Code (NBC 105:2020).",
+    scope: ["Seismic Moment Resisting Frames", "Basement Retention Piling", "Turnkey Architectural MEP"],
+    image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
   },
-  { 
-    id: 's5', 
-    title: 'Hydropower Civil Works', 
-    description: 'Turnkey civil packages for run-of-river hydropower generation. Engineering weir diversion headworks, intake basins, gravel traps, underground tunnels, surge shafts, penstock foundations, and powerhouse civil structures.', 
-    icon_name: 'Zap', 
-    image_url: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=1200',
-    scope: ['Diversion Headworks & Weirs', 'Tunnel & Adit Excavation', 'Penstock Alignment & Thrust Blocks', 'Powerhouse Civil Package'],
+  {
+    id: "s-hydro",
+    title: "Hydropower Civil Works",
+    icon_name: "Zap",
+    description: "Heavy civil infrastructure for run-of-river schemes including diversion weirs, intake headworks, gravel traps, headrace tunnel excavation, surge tanks, and powerhouse substructures.",
+    scope: ["Drill & Blast Tunnels", "Ogee Weir & Sluice Concrete", "Powerhouse Caverns"],
+    image_url: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=1200",
   },
-  { 
-    id: 's6', 
-    title: 'Water & Sanitation Infrastructure', 
-    description: 'Municipal water supply systems, bulk transmission pipelines, overhead water storage reservoirs, distribution pipeline networks, and urban sewerage infrastructure delivering potable water.', 
-    icon_name: 'Droplets', 
-    image_url: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200',
-    scope: ['Bulk Transmission Mains', 'RCC Storage Reservoirs', 'Distribution Pipe Networks', 'Water Treatment Plants'],
+  {
+    id: "s-water",
+    title: "Bulk Water & Sanitation",
+    icon_name: "Droplets",
+    description: "Municipal water supply transmission lines, large-capacity RCC overhead service reservoirs, water treatment plant civil structures, and stormwater drainage systems.",
+    scope: ["DI Bulk Mains Transmission", "Overhead RCC Reservoirs", "Water Treatment Civils"],
+    image_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
   },
 ];
 
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
-
-const BentoServicesSection = () => {
-  const { data: dbServices = [], isLoading } = useQuery({
+export const BentoServicesSection = () => {
+  const { data: dbServices = [] } = useQuery({
     queryKey: ["services-home"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("services").select("*").order("sort_order");
-      if (error) return [];
+      const { data } = await supabase
+        .from("services")
+        .select("*")
+        .order("sort_order");
       return data || [];
     },
   });
@@ -74,12 +73,12 @@ const BentoServicesSection = () => {
   const services = validDbServices.length > 0 ? validDbServices : DEFAULT_NEPAL_SERVICES;
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/15 to-white relative overflow-hidden">
+    <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-red-500/10 rounded-full blur-[120px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(#f9731612_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#888A8C]/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#888A8C]/10 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#888a8c12_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -89,7 +88,7 @@ const BentoServicesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-4 shadow-sm">
+          <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-4 shadow-xs">
             Core Engineering Disciplines
           </span>
           <h2 className="mt-3 font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
@@ -112,9 +111,9 @@ const BentoServicesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="group relative overflow-hidden rounded-3xl bg-white border-2 border-red-100/90 shadow-sm hover:shadow-2xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
+                className="group relative overflow-hidden rounded-3xl bg-white border-2 border-[#888A8C]/30 shadow-sm hover:shadow-2xl hover:border-[#888A8C]/60 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
               >
-                {/* Visual Image Banner with Provision for Uploaded Image */}
+                {/* Visual Image Banner */}
                 <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
                   <img 
                     src={service.image_url || 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200'} 
@@ -133,8 +132,8 @@ const BentoServicesSection = () => {
                   </span>
 
                   {/* Icon Box */}
-                  <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/95 backdrop-blur-md shadow-lg border border-white/60 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-                    <Icon size={22} className="text-primary group-hover:text-white transition-colors" />
+                  <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/95 backdrop-blur-md shadow-lg border border-white/60 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-[#888A8C] group-hover:text-white">
+                    <Icon size={22} className="text-[#888A8C] group-hover:text-white transition-colors" />
                   </div>
                 </div>
 
@@ -150,10 +149,10 @@ const BentoServicesSection = () => {
 
                   {/* Scope of works pills if available */}
                   {scopeItems && scopeItems.length > 0 && (
-                    <div className="space-y-1.5 pt-4 border-t border-red-100 mb-6">
+                    <div className="space-y-1.5 pt-4 border-t border-[#888A8C]/20 mb-6">
                       {scopeItems.slice(0, 3).map((item: string, sIdx: number) => (
                         <div key={sIdx} className="text-xs text-foreground/80 font-medium flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#888A8C] shrink-0" />
                           <span className="truncate">{item}</span>
                         </div>
                       ))}
@@ -162,7 +161,7 @@ const BentoServicesSection = () => {
                   
                   <Link 
                     to="/services" 
-                    className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary group/link active:scale-95 transition-all mt-auto"
+                    className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#888A8C] hover:text-[#24272A] group/link active:scale-95 transition-all mt-auto"
                   >
                     <span>View Technical Scope</span>
                     <ArrowRight size={13} className="group-hover/link:translate-x-1 transition-transform" />
@@ -174,17 +173,13 @@ const BentoServicesSection = () => {
         </div>
         
         <div className="mt-14 text-center">
-          <PrimaryButton 
-            as={Link} 
+          <Link 
             to="/services" 
-            className="px-8 py-3.5 shadow-xl shadow-primary/20"
-            borderRadius="100px"
-            containerClassName="h-12 min-w-[220px]"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#888A8C] hover:bg-[#77797B] text-white text-xs sm:text-sm font-bold shadow-xl shadow-black/10 hover:shadow-2xl active:scale-95 transition-all"
           >
-            <span className="flex items-center gap-2 text-xs sm:text-sm font-bold">
-              Explore All 6 Engineering Verticals <ArrowRight size={16} />
-            </span>
-          </PrimaryButton>
+            <span>Explore All 6 Engineering Verticals</span>
+            <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </section>

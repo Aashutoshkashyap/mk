@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 
 const defaultConstructionServices = [
   {
@@ -95,8 +96,6 @@ const defaultConstructionServices = [
   },
 ];
 
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
-
 const Services = () => {
   const { isVisible } = useSectionVisibility();
   const { data: services = [] } = useQuery({
@@ -114,13 +113,13 @@ const Services = () => {
     <>
       {/* Hero Banner */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 text-white overflow-hidden">
-        <div className="absolute top-10 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-red-700/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#f9731615_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none opacity-40" />
+        <div className="absolute top-10 right-10 w-96 h-96 bg-[#888A8C]/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#888a8c12_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none opacity-40" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/20 px-5 py-2 rounded-full border border-primary/30 inline-block mb-4 shadow-sm">
+            <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-4 shadow-xs">
               Engineering Disciplines & Scope of Works
             </span>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
@@ -158,7 +157,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
   return (
     <div 
       ref={ref} 
-      className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center p-8 sm:p-10 rounded-3xl bg-white border-2 border-red-100 shadow-sm hover:shadow-2xl hover:border-primary/40 transition-all duration-500"
+      className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center p-8 sm:p-10 rounded-3xl bg-white border-2 border-[#888A8C]/30 shadow-sm hover:shadow-2xl hover:border-[#888A8C]/60 transition-all duration-500"
     >
       <motion.div 
         initial={{ opacity: 0, x: isEven ? -30 : 30 }} 
@@ -178,7 +177,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent rounded-2xl pointer-events-none" />
           <div className="absolute top-5 left-5 w-14 h-14 rounded-2xl bg-white/95 backdrop-blur flex items-center justify-center shadow-lg border border-white/60">
-            <Icon size={26} className="text-primary" />
+            <Icon size={26} className="text-[#888A8C]" />
           </div>
           <span className="absolute bottom-4 right-4 bg-primary text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
             Vertical 0{index + 1}
@@ -192,7 +191,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
         transition={{ duration: 0.6, delay: 0.15 }} 
         className={!isEven ? "md:order-1" : ""}
       >
-        <div className="inline-block text-xs font-black uppercase tracking-widest text-primary bg-primary/10 px-3.5 py-1 rounded-full mb-3">
+        <div className="inline-block text-xs font-black uppercase tracking-widest text-[#888A8C] bg-transparent px-3.5 py-1 rounded-full border border-[#888A8C] mb-3">
           Sector 0{index + 1}
         </div>
         <h2 className="font-display text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
@@ -211,8 +210,8 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
               {subs.map((sub: any) => {
                 const SubIcon = getIcon(sub.icon_name) || CheckCircle2;
                 return (
-                  <div key={sub.id} className="flex items-center gap-2 rounded-xl bg-red-50/70 border border-red-100 px-3.5 py-2 text-xs text-foreground font-semibold">
-                    <SubIcon size={14} className="text-primary shrink-0" />
+                  <div key={sub.id} className="flex items-center gap-2 rounded-xl bg-neutral-50 border border-[#888A8C]/30 px-3.5 py-2 text-xs text-foreground font-semibold">
+                    <SubIcon size={14} className="text-[#888A8C] shrink-0" />
                     <span className="truncate">{sub.label}</span>
                   </div>
                 );
@@ -224,14 +223,14 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
         <div className="pt-2 flex flex-wrap items-center gap-3">
           <Link 
             to="/contact" 
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white text-xs font-bold shadow-md shadow-primary/25 hover:bg-primary/95 active:scale-95 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#888A8C] text-white text-xs font-bold shadow-md hover:bg-[#77797B] active:scale-95 transition-all duration-300"
           >
             <span>Request Tender Specification</span>
             <ArrowRight size={14} />
           </Link>
           <Link 
             to="/projects" 
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-red-200 text-xs font-bold text-foreground hover:bg-red-50 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#888A8C]/30 text-xs font-bold text-foreground hover:bg-[#888A8C]/10 transition-all duration-300"
           >
             <span>View Executed Projects</span>
           </Link>

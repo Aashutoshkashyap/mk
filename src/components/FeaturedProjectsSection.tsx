@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Building2, Truck, Waves, Compass, Droplets, Zap, MapPin, ArrowRight, CheckCircle2, HardHat, Ruler } from "lucide-react";
+import { MapPin, ArrowRight, CheckCircle2, HardHat } from "lucide-react";
 
 export const NEPAL_FEATURED_PROJECTS = [
   {
@@ -108,7 +108,7 @@ export const FeaturedProjectsSection = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-4 shadow-xs">
+            <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-4 shadow-xs">
               National Infrastructure Portfolio
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
@@ -121,7 +121,7 @@ export const FeaturedProjectsSection = () => {
 
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-all group shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#888A8C] hover:text-[#24272A] transition-all group shrink-0"
           >
             <span>View All Projects in Full Portfolio</span>
             <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
@@ -138,8 +138,8 @@ export const FeaturedProjectsSection = () => {
                 onClick={() => setSelectedCategory(tab.id)}
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                   active
-                    ? "bg-primary text-white shadow-md shadow-primary/30"
-                    : "bg-red-50 text-foreground/80 hover:bg-red-50 hover:text-primary border border-red-100"
+                    ? "bg-[#888A8C] text-white shadow-md shadow-black/10"
+                    : "bg-transparent text-foreground/80 hover:bg-[#888A8C]/10 hover:text-[#24272A] border border-[#888A8C]/30"
                 }`}
               >
                 {tab.label}
@@ -159,7 +159,7 @@ export const FeaturedProjectsSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="group rounded-3xl bg-white border-2 border-red-100 overflow-hidden shadow-sm hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
+                className="group rounded-3xl bg-white border-2 border-[#888A8C]/30 overflow-hidden shadow-sm hover:border-[#888A8C]/60 hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 flex flex-col"
               >
                 {/* Image */}
                 <div className="relative h-64 sm:h-72 overflow-hidden bg-neutral-900">
@@ -180,7 +180,7 @@ export const FeaturedProjectsSection = () => {
                   </span>
 
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <div className="flex items-center gap-2 text-xs text-red-200 mb-1">
+                    <div className="flex items-center gap-2 text-xs text-neutral-300 mb-1">
                       <MapPin size={13} /> {project.location} · {project.completionYear}
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-white leading-snug">
@@ -195,22 +195,22 @@ export const FeaturedProjectsSection = () => {
                     {project.description}
                   </p>
 
-                  <div className="space-y-2 pt-4 border-t border-red-100 mb-6">
+                  <div className="space-y-2 pt-4 border-t border-[#888A8C]/20 mb-6">
                     {project.highlights.map((h, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs font-semibold text-foreground">
-                        <CheckCircle2 size={14} className="text-primary shrink-0" />
+                        <CheckCircle2 size={14} className="text-[#888A8C] shrink-0" />
                         <span>{h}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between border-t border-red-50">
+                  <div className="pt-2 flex items-center justify-between border-t border-[#888A8C]/15">
                     <span className="text-xs text-muted-foreground font-semibold">
                       Sector: <strong className="text-foreground">{project.sector}</strong>
                     </span>
                     <Link
                       to="/projects"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#888A8C] hover:text-[#24272A] group-hover:underline"
                     >
                       <span>Full Specifications</span>
                       <ArrowRight size={13} />
@@ -222,11 +222,11 @@ export const FeaturedProjectsSection = () => {
           </AnimatePresence>
         </div>
 
-        {/* View All Projects Action Bar */}
+        {/* View All Projects Action Bar with Stone Button */}
         <div className="mt-12 text-center">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-white text-sm font-bold shadow-xl shadow-primary/25 hover:bg-primary/90 hover:shadow-2xl hover:shadow-primary/35 transition-all active:scale-95"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#888A8C] text-white text-sm font-bold shadow-xl shadow-black/10 hover:bg-[#77797B] hover:shadow-2xl transition-all active:scale-95"
           >
             <HardHat size={18} />
             <span>Explore All 120+ Infrastructure Projects</span>

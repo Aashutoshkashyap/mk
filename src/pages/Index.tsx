@@ -72,10 +72,10 @@ const Index = () => {
                     animate={statsInView ? { opacity: 1, y: 0 } : {}} 
                     transition={{ duration: 0.5, delay: 0.08 * i }}
                     whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                    className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-red-100 p-6 text-center shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/15 hover:border-primary/40 transition-all duration-300"
+                    className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-[#888A8C]/30 p-6 text-center shadow-xl shadow-black/5 hover:shadow-2xl hover:border-[#888A8C]/60 transition-all duration-300"
                   >
-                    <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                      <Icon size={26} className="text-primary group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
+                    <div className="w-14 h-14 mx-auto rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-[#888A8C] group-hover:text-white transition-all duration-300">
+                      <Icon size={26} className="text-[#888A8C] group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
                     </div>
                     <div className="font-display text-3xl md:text-4xl font-extrabold text-foreground tracking-tight group-hover:text-primary transition-colors">
                       {stat.value}
@@ -91,7 +91,7 @@ const Index = () => {
 
       {/* About Preview */}
       {isVisible("about_overview") && (
-        <section ref={aboutRef} className="py-16 md:py-24 bg-gradient-to-b from-white via-red-50/20 to-white relative overflow-hidden">
+        <section ref={aboutRef} className="py-16 md:py-24 bg-gradient-to-b from-white via-neutral-50/50 to-white relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div 
@@ -100,7 +100,7 @@ const Index = () => {
                 transition={{ duration: 0.6 }}
                 className="relative"
               >
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#888A8C]/30 group">
                   <img 
                     src={about?.image_url || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1600"} 
                     alt="MK Engineering and Construction Civil Infrastructure" 
@@ -111,9 +111,9 @@ const Index = () => {
                   {/* Floating Experience Badge */}
                   <motion.div 
                     whileHover={{ scale: 1.05 }}
-                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md border border-white/60 p-4 rounded-2xl shadow-xl flex items-center gap-4"
+                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md border border-[#888A8C]/30 p-4 rounded-2xl shadow-xl flex items-center gap-4"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary/30">
+                    <div className="w-12 h-12 rounded-xl bg-[#888A8C] text-white flex items-center justify-center font-black text-xl shadow-lg shadow-black/15">
                       25+
                     </div>
                     <div>
@@ -124,8 +124,8 @@ const Index = () => {
                 </div>
                 
                 {/* Micro decorative accents */}
-                <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl -z-10" />
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-red-500/10 rounded-full blur-2xl -z-10" />
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-[#888A8C]/10 rounded-full blur-2xl -z-10" />
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#888A8C]/10 rounded-full blur-2xl -z-10" />
               </motion.div>
 
               <motion.div 
@@ -133,9 +133,10 @@ const Index = () => {
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}} 
                 transition={{ duration: 0.6, delay: 0.15 }}
               >
+                {/* Transparent Capsules with Stone Borders */}
                 <div className="flex flex-wrap gap-2.5 mb-6">
                   {["Structural Integrity", "LEED Certified", "Zero-Harm Safety", "BIM 5D Technology"].map((value) => (
-                    <span key={value} className="text-[10px] font-black tracking-widest uppercase text-primary bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 inline-block shadow-sm">
+                    <span key={value} className="text-[10px] font-black tracking-widest uppercase text-[#888A8C] bg-transparent px-4 py-1.5 rounded-full border border-[#888A8C] inline-block shadow-xs">
                       {value}
                     </span>
                   ))}
@@ -158,24 +159,25 @@ const Index = () => {
                     "Hydropower Civil Works & Headworks",
                     "Municipal Bulk Water & Sanitation",
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-red-100/80 shadow-xs">
-                      <CheckCircle2 size={18} className="text-primary shrink-0" />
+                    <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-[#888A8C]/30 shadow-xs">
+                      <CheckCircle2 size={18} className="text-[#888A8C] shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="mt-10 flex flex-wrap items-center gap-4">
+                  {/* Explore Company Profile Button with Stone Color */}
                   <Link 
                     to="/about" 
-                    className="inline-flex items-center gap-2.5 rounded-full bg-primary px-7 py-3.5 text-sm font-bold text-white hover:bg-primary/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+                    className="inline-flex items-center gap-2.5 rounded-full bg-[#888A8C] px-7 py-3.5 text-sm font-bold text-white hover:bg-[#77797B] shadow-lg shadow-black/10 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
                   >
                     Explore Company Profile <ArrowRight size={16} />
                   </Link>
 
                   <Link 
                     to="/projects" 
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-primary/25 px-6 py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-all duration-300"
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-[#888A8C]/40 px-6 py-3.5 text-sm font-bold text-foreground hover:bg-[#888A8C]/10 transition-all duration-300"
                   >
                     View Our Projects
                   </Link>
@@ -189,22 +191,22 @@ const Index = () => {
       {/* Bento Disciplines Section */}
       {isVisible("services") && <BentoServicesSection />}
 
-      {/* Featured Projects / Infrastructure Showcase on Homepage (as requested) */}
+      {/* Featured Projects / Infrastructure Showcase on Homepage */}
       <FeaturedProjectsSection />
 
       {/* 5-Stage Project Delivery Framework */}
       <ConstructionProcessSection />
 
-      {/* Endorsements / Testimonials without giant gaps */}
+      {/* Endorsements / Testimonials */}
       {isVisible("testimonials") && <TestimonialsSection />}
 
-      {/* Expanded FAQs */}
-      {isVisible("faqs") && <FAQSection />}
-
-      {/* Technical Field Reports / Blog Preview */}
+      {/* Corporate Insights & News */}
       {isVisible("blog") && <BlogSection />}
 
-      {/* Final Pre-Footer CTA */}
+      {/* FAQ Technical Accordion */}
+      {isVisible("faqs") && <FAQSection />}
+
+      {/* Pre-Footer Global CTA */}
       {isVisible("cta") && <PreFooterCTA />}
     </>
   );

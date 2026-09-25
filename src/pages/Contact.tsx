@@ -104,7 +104,7 @@ const Contact = () => {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary font-bold text-xs uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-[#888A8C] text-[#888A8C] font-bold text-xs uppercase tracking-widest mb-6">
               <HardHat size={15} /> Estimating & Technical Inquiries
             </div>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
@@ -131,7 +131,7 @@ const Contact = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.08 * i }}
-                  className="rounded-3xl bg-white border-2 border-red-100 p-7 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                  className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-7 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 text-primary">
                     <Icon size={26} strokeWidth={1.75} />
@@ -145,7 +145,7 @@ const Contact = () => {
                   </div>
                   <a 
                     href={info.actionHref}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline transition-all mt-auto pt-4 border-t border-red-100"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline transition-all mt-auto pt-4 border-t border-[#888A8C]/30"
                   >
                     {info.actionLabel} →
                   </a>
@@ -166,7 +166,7 @@ const Contact = () => {
             transition={{ duration: 0.6 }} 
             className="text-center mb-12"
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-3 shadow-xs">
+            <span className="text-xs font-bold tracking-widest uppercase text-primary bg-transparent px-5 py-2 rounded-full border border-[#888A8C] text-[#888A8C] inline-block mb-3 shadow-xs">
               Project Specification & RFP Form
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
@@ -183,7 +183,7 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }} 
             onSubmit={handleSubmit}
-            className="rounded-3xl bg-white border-2 border-red-100 p-8 md:p-12 shadow-xl shadow-primary/5 space-y-6"
+            className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-8 md:p-12 shadow-xl shadow-primary/5 space-y-6"
           >
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
@@ -195,7 +195,7 @@ const Contact = () => {
                   required 
                   value={form.name} 
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
                   placeholder="e.g. Er. Anup Sharma" 
                 />
               </div>
@@ -209,7 +209,7 @@ const Contact = () => {
                   required 
                   value={form.email} 
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
                   placeholder="e.g. a.sharma@agency.gov.np" 
                 />
               </div>
@@ -225,7 +225,7 @@ const Contact = () => {
                   required
                   value={form.phone} 
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
                   placeholder="+977 98XXXXXXXX" 
                 />
               </div>
@@ -238,7 +238,7 @@ const Contact = () => {
                   type="text" 
                   value={form.organization} 
                   onChange={(e) => setForm({ ...form, organization: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
                   placeholder="e.g. Department of Roads / NEA / Municipal Office" 
                 />
               </div>
@@ -252,7 +252,7 @@ const Contact = () => {
                 <select
                   value={form.projectType}
                   onChange={(e) => setForm({ ...form, projectType: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 >
                   <option value="Roads & Highways">Roads & Highways</option>
                   <option value="Bridges & Structures">Bridges & Structures</option>
@@ -272,7 +272,7 @@ const Contact = () => {
                   type="text" 
                   value={form.location} 
                   onChange={(e) => setForm({ ...form, location: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
                   placeholder="e.g. Karnali Province, Dailekh District" 
                 />
               </div>
@@ -287,7 +287,7 @@ const Contact = () => {
                 rows={5} 
                 value={form.message} 
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full rounded-2xl border-2 border-red-100 bg-red-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" 
+                className="w-full rounded-2xl border-2 border-[#888A8C]/30 bg-neutral-50/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" 
                 placeholder="Please outline gross square footage, current design milestone (conceptual, 50% DD, 100% CD), expected groundbreaking date, and any special geotechnical or architectural requirements..." 
               />
             </div>
@@ -316,7 +316,7 @@ const Contact = () => {
       {/* Map & Facility Coordinates */}
       <section id="map" className="py-16 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="rounded-3xl overflow-hidden border-2 border-red-100 shadow-xl relative">
+          <div className="rounded-3xl overflow-hidden border-2 border-[#888A8C]/30 shadow-xl relative">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100939.98555098464!2d-122.50764017997845!3d37.75781500366657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
               width="100%" 

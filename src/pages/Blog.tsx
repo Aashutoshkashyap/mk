@@ -62,7 +62,7 @@ const Blog = () => {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary font-bold text-xs uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-[#888A8C] text-[#888A8C] font-bold text-xs uppercase tracking-widest mb-6">
               <HardHat size={15} /> Company Milestones · Tender Wins · Sector Commentary
             </div>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
@@ -77,7 +77,7 @@ const Blog = () => {
       </section>
 
       {/* Filter and Search Bar */}
-      <section className="py-10 bg-white border-b border-red-100">
+      <section className="py-10 bg-white border-b border-[#888A8C]/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Category tabs */}
@@ -88,8 +88,8 @@ const Blog = () => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                     selectedCategory === cat
-                      ? "bg-primary text-white shadow-md shadow-primary/25"
-                      : "bg-red-50 text-foreground/80 hover:bg-red-50 hover:text-primary border border-red-100"
+                      ? "bg-[#888A8C] text-white shadow-md shadow-black/10"
+                      : "bg-transparent text-foreground/80 hover:bg-[#888A8C]/10 hover:text-[#24272A] border border-[#888A8C]/30"
                   }`}
                 >
                   {cat}
@@ -105,7 +105,7 @@ const Blog = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search technical reports..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-full border-2 border-red-100 bg-red-50/40 text-xs font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-full border-2 border-[#888A8C]/30 bg-neutral-50/60 text-xs font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
               />
             </div>
           </div>
@@ -121,7 +121,7 @@ const Blog = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="rounded-3xl bg-white border-2 border-red-100 overflow-hidden shadow-xl shadow-primary/5 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 mb-16"
+              className="rounded-3xl bg-white border-2 border-[#888A8C]/30 overflow-hidden shadow-xl shadow-primary/5 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 mb-16"
             >
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <Link to={`/blog/${featured.slug}`} className="h-72 md:h-full relative overflow-hidden group block">
@@ -183,7 +183,7 @@ const Blog = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="group flex flex-col bg-white rounded-3xl border-2 border-red-100 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5"
+                className="group flex flex-col bg-white rounded-3xl border-2 border-[#888A8C]/30 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5"
               >
                 <Link to={`/blog/${post.slug}`} className="block h-52 relative overflow-hidden">
                   <img
@@ -219,7 +219,7 @@ const Blog = () => {
                     {post.excerpt}
                   </p>
 
-                  <div className="pt-4 border-t border-red-100 flex items-center justify-between">
+                  <div className="pt-4 border-t border-[#888A8C]/30 flex items-center justify-between">
                     <span className="text-xs font-semibold text-foreground/80 flex items-center gap-1">
                       <User size={13} className="text-primary" /> {post.author ? post.author.split(",")[0] : "MK Engineering"}
                     </span>
@@ -236,7 +236,7 @@ const Blog = () => {
           </div>
 
           {filteredPosts.length === 0 && (
-            <div className="text-center py-20 bg-red-50/50 rounded-3xl border border-red-100">
+            <div className="text-center py-20 bg-neutral-50/60 rounded-3xl border border-[#888A8C]/30">
               <HardHat size={48} className="mx-auto text-primary/40 mb-4" />
               <h3 className="font-display text-xl font-bold text-foreground">No reports match your filter</h3>
               <p className="text-sm text-muted-foreground mt-2">Try clearing your search query or selecting "All Disciplines".</p>

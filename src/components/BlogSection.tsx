@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar, Eye } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 
 const defaultPosts = [
@@ -68,8 +68,8 @@ const BlogSection = () => {
             className="max-w-2xl"
           >
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-1 bg-primary rounded-full" />
-              <span className="text-[10px] font-black tracking-widest uppercase text-primary">Company News & Insights</span>
+              <div className="w-10 h-1 bg-[#888A8C] rounded-full" />
+              <span className="text-[10px] font-black tracking-widest uppercase text-[#888A8C]">Company News & Insights</span>
             </div>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground leading-tight tracking-tight">
               News & Infrastructure Insights
@@ -82,8 +82,8 @@ const BlogSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Link 
-              to="/news" 
-              className="group inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-all duration-300"
+              to="/blog" 
+              className="group inline-flex items-center gap-2 text-sm font-bold text-[#888A8C] hover:text-[#24272A] transition-all duration-300"
             >
               <span>Explore All News & Insights</span> 
               <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
@@ -98,7 +98,7 @@ const BlogSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group flex flex-col h-full bg-white rounded-3xl border-2 border-red-100/80 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1.5"
+              className="group flex flex-col h-full bg-white rounded-3xl border-2 border-[#888A8C]/30 overflow-hidden hover:border-[#888A8C]/60 hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5"
             >
               <Link to={`/blog/${post.slug}`} className="block overflow-hidden h-52 relative">
                 <img 
@@ -114,7 +114,7 @@ const BlogSection = () => {
               <div className="p-6 flex flex-col flex-1">
                 <div className="flex items-center justify-between text-[11px] font-bold text-muted-foreground uppercase mb-3">
                   <span className="flex items-center gap-1.5">
-                    <Calendar size={13} className="text-primary" />
+                    <Calendar size={13} className="text-[#888A8C]" />
                     {post.published_at ? new Date(post.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Recent"}
                   </span>
                 </div>
@@ -124,8 +124,8 @@ const BlogSection = () => {
                 <p className="mt-3 text-sm text-muted-foreground line-clamp-3 flex-1 leading-relaxed">
                   {post.excerpt}
                 </p>
-                <div className="mt-5 pt-4 border-t border-red-100/60 flex items-center justify-between">
-                  <span className="text-xs font-bold text-primary group-hover:underline flex items-center gap-1">
+                <div className="mt-5 pt-4 border-t border-[#888A8C]/20 flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#888A8C] hover:text-[#24272A] group-hover:underline flex items-center gap-1">
                     Read Report <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>

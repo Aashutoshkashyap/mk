@@ -113,7 +113,7 @@ const Team = () => {
                       initial={{ opacity: 0, y: 40 }} 
                       animate={teamInView ? { opacity: 1, y: 0 } : {}} 
                       transition={{ duration: 0.6, delay: 0.12 * i }}
-                      className="group rounded-3xl bg-white border-2 border-red-100 overflow-hidden hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500 flex flex-col"
+                      className="group rounded-3xl bg-white border-2 border-[#888A8C]/30 overflow-hidden hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500 flex flex-col"
                     >
                       <div className="relative h-80 overflow-hidden bg-neutral-900">
                         <img 
@@ -134,11 +134,11 @@ const Team = () => {
                           </span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-6 leading-relaxed flex-1">{member.bio}</p>
-                        <div className="grid grid-cols-2 gap-2 pt-4 border-t border-red-100">
+                        <div className="grid grid-cols-2 gap-2 pt-4 border-t border-[#888A8C]/30">
                           {sectors.map((sector: any) => {
                             const SectorIcon = getIcon(sector.icon_name);
                             return (
-                              <div key={sector.id} className="flex items-center gap-2 rounded-xl bg-red-50/70 border border-red-100/80 px-3 py-2 text-xs font-semibold text-foreground">
+                              <div key={sector.id} className="flex items-center gap-2 rounded-xl bg-neutral-50/60 border border-[#888A8C]/30/80 px-3 py-2 text-xs font-semibold text-foreground">
                                 <SectorIcon size={14} className="text-primary shrink-0" strokeWidth={1.75} />
                                 <span className="truncate">{sector.label}</span>
                               </div>

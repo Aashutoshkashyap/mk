@@ -104,7 +104,7 @@ export const ImageUpload = ({
                 <button
                   type="button"
                   onClick={handleRemove}
-                  className="p-2 rounded-full bg-red-500/80 hover:bg-red-500 text-white transition-colors"
+                  className="p-2 rounded-full bg-transparent0/80 hover:bg-[#888A8C]/100 text-white transition-colors"
                   title="Remove image"
                 >
                   <X size={18} />

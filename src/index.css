@@ -56,22 +56,22 @@
 
   .dark {
     --background: 210 10% 8%;
-    --foreground: 0 0% 0%;            /* Pure Black #000000 */
+    --foreground: 0 0% 100%;          /* White in dark mode */
 
     --card: 210 10% 11%;
-    --card-foreground: 0 0% 0%;       /* Pure Black #000000 */
+    --card-foreground: 0 0% 100%;     /* White in dark mode */
 
     --popover: 210 10% 11%;
-    --popover-foreground: 0 0% 0%;    /* Pure Black #000000 */
+    --popover-foreground: 0 0% 100%;  /* White in dark mode */
 
     --primary: 357 90% 58%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 10% 16%;
-    --secondary-foreground: 0 0% 0%;  /* Pure Black */
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 10% 16%;
-    --muted-foreground: 0 0% 0%;      /* Pure Black #000000 */
+    --muted-foreground: 0 0% 100%;    /* Pure white description text */
 
     --accent: 357 90% 58%;
     --accent-foreground: 0 0% 100%;
@@ -83,9 +83,9 @@
     --input: 210 10% 20%;
     --ring: 357 90% 58%;
 
-    --brand-navy: 0 0% 0%;
-    --brand-navy-dark: 0 0% 0%;
-    --brand-stone: 0 0% 0%;
+    --brand-navy: 0 0% 100%;
+    --brand-navy-dark: 0 0% 95%;
+    --brand-stone: 0 0% 90%;
   }
 }
 
@@ -124,7 +124,48 @@
   .text-foreground,
   .text-\[\#24272A\],
   .text-\[\#888A8C\] {
-    color: #000000 !important;
+    color: #000000;
+  }
+
+  /* Dark Theme: Headings, Descriptions, and Body text in Pure White */
+  .dark,
+  .dark body {
+    color: #ffffff !important;
+  }
+
+  .dark h1, 
+  .dark h2, 
+  .dark h3, 
+  .dark h4, 
+  .dark h5, 
+  .dark h6,
+  .dark .font-display,
+  .dark [class*="font-display"] {
+    color: #ffffff !important;
+  }
+
+  .dark p,
+  .dark .text-muted-foreground,
+  .dark .text-foreground,
+  .dark .text-\[\#24272A\],
+  .dark .text-\[\#888A8C\],
+  .dark .text-neutral-300,
+  .dark .text-neutral-400,
+  .dark .text-neutral-500,
+  .dark .text-neutral-600,
+  .dark .text-stone-300,
+  .dark .text-stone-400,
+  .dark .text-stone-500,
+  .dark .text-stone-600,
+  .dark .text-gray-300,
+  .dark .text-gray-400,
+  .dark .text-gray-500,
+  .dark .text-gray-600,
+  .dark .text-slate-300,
+  .dark .text-slate-400,
+  .dark .text-slate-500,
+  .dark .text-slate-600 {
+    color: #ffffff !important;
   }
 
   /* Pill / Badge styling in dark theme: white font color */
@@ -142,7 +183,7 @@
 
   .dark .rounded-full[class*="border"],
   .dark [class*="rounded-full"][class*="border"] {
-    border-color: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
   }
 }
 

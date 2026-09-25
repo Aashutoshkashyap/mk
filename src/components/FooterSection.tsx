@@ -22,33 +22,44 @@ const FooterSection = () => {
                 MK
               </div>
               <div>
-                <span className="font-display font-extrabold text-xl text-white tracking-tight">MK Engineering and Construction</span>
-                <div className="text-[10px] uppercase tracking-widest text-primary font-bold">General Contracting & Civil Engineering</div>
+                <span className="font-display font-extrabold text-lg text-white tracking-tight leading-tight block">
+                  MK Construction
+                </span>
+                <div className="text-[10px] uppercase tracking-widest text-primary font-bold">
+                  Company Pvt. Ltd.
+                </div>
               </div>
             </div>
             <p className="mt-4 text-sm text-neutral-400 leading-relaxed">
-              Tier-1 General Contracting and Civil Infrastructure engineering group. Transforming complex architectural visions into monumental landmarks through sustainable engineering, self-owned heavy machinery, and Zero-Harm safety standards.
+              A Class-A licensed Nepali infrastructure contractor delivering national highways, bridges, river training, NBC-standard buildings, hydropower civil works, and water & sanitation projects across Nepal.
             </p>
-            <div className="mt-4 flex items-center gap-2 text-xs text-neutral-400">
-              <span className="w-2 h-2 rounded-full bg-primary" />
-              <span>OSHA & ISO 45001 / 9001 Certified</span>
+            <div className="mt-4 flex flex-col gap-1.5 text-xs text-neutral-400">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span>Class-A Licensed Contractor · GoN</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span>ISO 9001:2015 QMS Certified</span>
+              </div>
             </div>
           </div>
           <div>
             <h4 className="font-display font-bold text-white mb-4 flex items-center gap-2">
               <span className="w-1.5 h-3 bg-primary rounded-sm" />
-              Company
+              Navigation
             </h4>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               {[
                 { label: "Home", to: "/" },
                 { label: "About Us", to: "/about" },
-                { label: "Our Services", to: "/services" },
-                { label: "Projects & Portfolio", to: "/portfolio" },
-                { label: "Fleet & Safety Standards", to: "/safety" },
-                { label: "Leadership Team", to: "/team" },
-                { label: "Field Reports & Insights", to: "/blog" },
-                { label: "Request a Quote", to: "/contact" },
+                { label: "Services", to: "/services" },
+                { label: "Projects", to: "/projects" },
+                { label: "Capabilities", to: "/capabilities" },
+                { label: "Leadership", to: "/leadership" },
+                { label: "News & Insights", to: "/news" },
+                { label: "Careers", to: "/careers" },
+                { label: "Contact Us", to: "/contact" },
               ].map((link) => (
                 <Link
                   key={link.to}
@@ -63,16 +74,16 @@ const FooterSection = () => {
           <div>
             <h4 className="font-display font-bold text-white mb-4 flex items-center gap-2">
               <span className="w-1.5 h-3 bg-primary rounded-sm" />
-              Specialized Disciplines
+              Service Verticals
             </h4>
             <div className="flex flex-col gap-2.5">
               {[
-                "Commercial High-Rise Towers",
-                "Highways, Viaducts & Bridges",
-                "Industrial Logistics Hubs",
-                "BIM 5D Virtual Design",
-                "Deep Geotechnical Foundations",
-                "LEED Sustainable Retrofits",
+                "Roads & Highways",
+                "Bridges & Structures",
+                "River Training & Spurs",
+                "Buildings (NBC Standards)",
+                "Hydropower Civil Works",
+                "Water & Sanitation Systems",
               ].map((s) => (
                 <Link
                   key={s}
@@ -87,28 +98,28 @@ const FooterSection = () => {
           <div>
             <h4 className="font-display font-bold text-white mb-4 flex items-center gap-2">
               <span className="w-1.5 h-3 bg-primary rounded-sm" />
-              Headquarters
+              Head Office
             </h4>
             <div className="flex flex-col gap-3.5">
               <div className="flex items-start gap-3 text-sm text-neutral-400">
                 <MapPin size={16} className="text-primary shrink-0 mt-0.5" />
-                <span>MK Engineering Tower, 450 Grand Avenue<br />Infrastructure District, Metro Center</span>
+                <span>Kathmandu, Nepal<br />Operating across 32 Districts</span>
               </div>
               <div className="flex items-start gap-3 text-sm text-neutral-400">
                 <Mail size={16} className="text-primary shrink-0 mt-0.5" />
-                <span>tenders@mkconstruction.com<br />projects@mkconstruction.com</span>
+                <span>info@mkconstruction.com.np<br />tenders@mkconstruction.com.np</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-neutral-400">
                 <Phone size={16} className="text-primary shrink-0" />
-                <span>+1 (800) 555-BUILD / +1 (800) 555-2845</span>
+                <span>+977 1 4542380 / +977 9851087492</span>
               </div>
             </div>
           </div>
         </div>
         <div className="mt-12 pt-6 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-400">
-          <p>© {new Date().getFullYear()} MK Engineering and Construction. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} MK Construction Company Pvt. Ltd. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="text-primary font-bold">Safety • Integrity • Engineering Mastery</span>
+            <span className="text-primary font-bold">Class-A Licensed Contractor · Engineering Nepal's Infrastructure</span>
           </div>
         </div>
       </div>

@@ -11,10 +11,11 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Safety & Fleet", href: "/safety" },
-  { label: "Team", href: "/team" },
-  { label: "Insights", href: "/blog" },
+  { label: "Projects", href: "/projects" },
+  { label: "Capabilities", href: "/capabilities" },
+  { label: "Leadership", href: "/leadership" },
+  { label: "News", href: "/news" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -83,33 +84,25 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between gap-4 h-20">
           {/* Logo on the left */}
-          <motion.div
-            animate={{ 
-              opacity: showFullHeader ? 1 : 0,
-              x: showFullHeader ? 0 : -20,
-              scale: showFullHeader ? 1 : 0.95
-            }}
-            transition={{ duration: 0.3 }}
-            className={cn("flex-shrink-0 flex items-center", !showFullHeader && "pointer-events-none")}
-          >
+          <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="transition-transform hover:scale-105 flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-orange-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary/30 border border-white/20">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-primary to-orange-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-primary/30 border border-white/20">
                 MK
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-extrabold text-lg sm:text-xl text-foreground tracking-tight leading-none">
-                  MK <span className="text-primary">Engineering</span>
+                <span className="font-display font-extrabold text-base sm:text-lg text-foreground tracking-tight leading-none">
+                  MK <span className="text-primary">Construction</span>
                 </span>
                 <span className="text-[9px] uppercase tracking-widest text-muted-foreground font-bold mt-1">
-                  and Construction
+                  Company Pvt. Ltd.
                 </span>
               </div>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Centered Navigation Capsule (Desktop) */}
-          <nav className="flex-1 flex justify-center max-w-3xl">
-            <div className="hidden lg:flex items-center glass-nav rounded-full px-2 py-1.5 border border-orange-200/60 shadow-lg shadow-orange-500/5 bg-white/90 backdrop-blur-xl">
+          <nav className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-4">
+            <div className="flex items-center glass-nav rounded-full px-2 py-1.5 border border-orange-200/60 shadow-lg shadow-orange-500/5 bg-white/95 backdrop-blur-xl">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -117,7 +110,7 @@ const Navbar = () => {
                     key={link.href}
                     to={link.href}
                     onClick={() => handleNavClick(link.href)}
-                    className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-300 ${
+                    className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-300 whitespace-nowrap ${
                       active
                         ? "text-white bg-primary shadow-md shadow-primary/25"
                         : "text-foreground/75 hover:text-primary hover:bg-orange-50/80"
@@ -132,29 +125,20 @@ const Navbar = () => {
 
           {/* Action Button & Mobile Toggle Container */}
           <div className="flex items-center gap-3">
-            <motion.div 
-              animate={{ 
-                opacity: showFullHeader ? 1 : 0,
-                x: showFullHeader ? 0 : 20,
-                scale: showFullHeader ? 1 : 0.95
-              }}
-              transition={{ duration: 0.3 }}
-              className={cn("flex items-center", !showFullHeader && "pointer-events-none")}
-            >
+            <div className="hidden sm:flex items-center">
               <PrimaryButton
                 as={Link}
                 to="/contact"
-                containerClassName="h-10 md:h-11 min-w-0 md:min-w-[150px]"
-                className="px-5 py-2 md:py-2.5 rounded-xl text-xs md:text-sm shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 active:scale-95 transition-all"
+                containerClassName="h-10 md:h-11 min-w-0 md:min-w-[140px]"
+                className="px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 active:scale-95 transition-all"
               >
                 <span className="flex items-center gap-2 font-bold">
                   <HardHat size={16} className="text-white shrink-0" />
-                  <span className="hidden sm:inline">Get a Quote</span>
-                  <span className="sm:hidden">Estimate</span>
-                  <ArrowRight size={13} className="hidden sm:inline" />
+                  <span>Contact Us</span>
+                  <ArrowRight size={13} />
                 </span>
               </PrimaryButton>
-            </motion.div>
+            </div>
 
             {/* Mobile Toggle */}
             <button

@@ -1,113 +1,142 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Building2, Truck, Factory, ShieldCheck, MapPin, Calendar, ArrowRight, Ruler, CheckCircle2, HardHat } from "lucide-react";
+import { Building2, Truck, Waves, Compass, Droplets, Zap, MapPin, ArrowRight, CheckCircle2, HardHat, Ruler } from "lucide-react";
 
-export const FEATURED_HOMEPAGE_PROJECTS = [
+export const NEPAL_FEATURED_PROJECTS = [
   {
-    id: "apex-tower",
-    title: "Apex Horizon Commercial Super-Tower",
-    category: "commercial",
-    categoryLabel: "Commercial High-Rise",
-    location: "Financial District, Metro Corridor",
-    completionYear: "2025",
-    squareFootage: "1,250,000 sq.ft",
-    budget: "$185M",
-    description: "A 48-story LEED Platinum corporate tower engineered with post-tensioned core walls, high-damping seismic isolators, and double-glazed architectural glass curtain wall.",
-    highlights: ["48 Stories with 3 Sub-Level Basements", "Zero Lost-Time Injuries Across 1.2M Man-Hours", "Integrated 1.5MW Rooftop Solar Envelope"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    id: "saptakoshi-bridge",
+    title: "Saptakoshi River Bridge & Approach Road",
+    category: "bridges",
+    categoryLabel: "Bridges & Structures",
+    location: "Province 1 (Koshi)",
+    sector: "Bridge Crossing",
+    completionYear: "2024",
+    contractValue: "₨ 2.4 Billion",
+    description: "Multi-span pre-stressed concrete girder bridge crossing the torrential Saptakoshi river with deep pneumatic caisson foundations, hydraulic scour protection, and 4 km access highway approaches.",
+    highlights: ["12 Spans with Deep Caisson Well-Foundations", "High-Flow Monsoon Scour Armor Protection", "Delivered for Department of Roads"],
+    imageUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: "metro-viaduct",
-    title: "Metropolitan Arterial Elevated Highway & Viaduct",
-    category: "civil",
-    categoryLabel: "Civil Infrastructure",
-    location: "Northern Transit Corridor",
-    completionYear: "2024",
-    squareFootage: "14.2 km Dual Viaduct",
-    budget: "$240M",
-    description: "Heavy civil infrastructure comprising 14.2 km of continuous pre-cast segmental box girders, seismic elastomeric bearings, and deep bored pile foundations.",
-    highlights: ["120 Pre-Cast Spans Erected via Launching Gantry", "Continuous Real-Time Drone LiDAR Monitoring", "Completed 60 Days Ahead of Commission Schedule"],
+    id: "mid-hill-highway",
+    title: "Mid-Hill Highway Pkg 7 Upgrade",
+    category: "roads",
+    categoryLabel: "Roads & Highways",
+    location: "Karnali Province",
+    sector: "National Highway",
+    completionYear: "2023",
+    contractValue: "₨ 1.9 Billion",
+    description: "42 km high-altitude highway expansion through steep mountain terrain. Executed heavy rock excavation, reinforced breast and retaining walls, bio-engineering slope stabilization, and double-coat DBST pavement.",
+    highlights: ["42 km Mountain Highway Corridor", "Extensive Gabion & RCC Retaining Walls", "All-Weather Connectivity for Mountain Communities"],
     imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: "vanguard-logistics",
-    title: "Vanguard Automated High-Bay Logistics Fulfillment Hub",
-    category: "industrial",
-    categoryLabel: "Industrial & Logistics",
-    location: "Interstate Freight Park",
-    completionYear: "2025",
-    squareFootage: "650,000 sq.ft",
-    budget: "$78M",
-    description: "Turnkey design-build of a 36-meter high-bay automated warehouse featuring super-flat jointless floor slabs (FM2 tolerance) and 48 automated dock levellers.",
-    highlights: ["Super-Flat Industrial Laser-Screed Slabs", "Heavy-Duty Pre-Engineered Steel Framing", "Accommodates 45,000 Automated Pallet Positions"],
-    imageUrl: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
+    id: "bagmati-river-training",
+    title: "Bagmati River Training & Embankment Works",
+    category: "river",
+    categoryLabel: "River Training",
+    location: "Bagmati Province",
+    sector: "Hydraulic Flood Mitigation",
+    completionYear: "2024",
+    contractValue: "₨ 1.2 Billion",
+    description: "Critical flood mitigation infrastructure along 18 km of the Bagmati river corridor. Executed continuous RCC flood retaining walls, armored rip-rap boulder pitching, and guided flow spurs.",
+    highlights: ["18 km Flood Protection Dyke & Spurs", "Mitigates Severe Monsoon Flood Surge", "Executed with In-House Heavy Fleet"],
+    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: "eco-campus",
-    title: "Cascade Bio-Research Innovation Campus",
-    category: "commercial",
-    categoryLabel: "Commercial & Research",
-    location: "Innovation Tech Corridor",
-    completionYear: "2024",
-    squareFootage: "420,000 sq.ft",
-    budget: "$112M",
-    description: "Mass-timber hybrid construction with low-carbon geopolymer concrete foundations, rainwater harvesting, and high-efficiency geothermal HVAC systems.",
-    highlights: ["LEED Platinum & WELL Certified Gold", "70% Embodied Carbon Reduction via Geopolymer", "Engineered Cross-Laminated Timber (CLT) Core"],
+    id: "provincial-hq-complex",
+    title: "Provincial Government Administrative HQ",
+    category: "buildings",
+    categoryLabel: "Buildings & Institutional",
+    location: "Lumbini Province",
+    sector: "Administrative Complex",
+    completionYear: "2025",
+    contractValue: "₨ 980 Million",
+    description: "Turnkey institutional civic complex built in strict compliance with the Nepal National Building Code (NBC) seismic provisions. Includes ministry secretariat blocks, assembly hall, and underground parking.",
+    highlights: ["Ductile Seismic Framing to NBC 105:2020", "Solar Integrated Net-Zero Envelope", "Turnkey Mechanical & Electrical Fit-Out"],
     imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "upper-trishuli-civil",
+    title: "Upper Trishuli Run-of-River Civil Package",
+    category: "hydropower",
+    categoryLabel: "Hydropower Civil",
+    location: "Bagmati Province",
+    sector: "Hydropower Civil",
+    completionYear: "2024",
+    contractValue: "₨ 3.1 Billion",
+    description: "Civil execution of concrete diversion weir, de-sanding gravel basin, 3.8 km headrace tunnel excavation, surge tank, and underground powerhouse foundations.",
+    highlights: ["3.8 km Drill-and-Blast Headrace Tunnel", "Heavy Reinforced Powerhouse Substructure", "Engineered for Nepal Electricity Authority"],
+    imageUrl: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "pokhara-water-supply",
+    title: "Pokhara Regional Bulk Water Transmission",
+    category: "water",
+    categoryLabel: "Water & Sanitation",
+    location: "Gandaki Province",
+    sector: "Water Supply & Reservoirs",
+    completionYear: "2025",
+    contractValue: "₨ 1.5 Billion",
+    description: "Laying 65 km of ductile iron (DI) bulk water transmission mains, construction of 4 overhead RCC service reservoirs, and municipal distribution network.",
+    highlights: ["65 km Bulk Transmission Pipeline", "4 RCC Water Reservoirs Built", "Clean Potable Water for 120,000 Residents"],
+    imageUrl: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
   },
 ];
 
 const CATEGORIES = [
   { id: "all", label: "All Projects" },
-  { id: "commercial", label: "Commercial High-Rise" },
-  { id: "civil", label: "Civil Infrastructure" },
-  { id: "industrial", label: "Industrial Logistics" },
+  { id: "roads", label: "Roads & Highways" },
+  { id: "bridges", label: "Bridges" },
+  { id: "river", label: "River Training" },
+  { id: "buildings", label: "Buildings" },
+  { id: "hydropower", label: "Hydropower" },
+  { id: "water", label: "Water & Sanitation" },
 ];
 
 export const FeaturedProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const filteredProjects = selectedCategory === "all"
-    ? FEATURED_HOMEPAGE_PROJECTS
-    : FEATURED_HOMEPAGE_PROJECTS.filter((p) => p.category === selectedCategory);
+    ? NEPAL_FEATURED_PROJECTS
+    : NEPAL_FEATURED_PROJECTS.filter((p) => p.category === selectedCategory);
 
   return (
     <section className="py-20 md:py-28 bg-white relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-4 shadow-xs">
-              Landmark Construction Portfolio
+              National Infrastructure Portfolio
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
-              Featured Built Landmarks & Infrastructure
+              Featured Works Across Nepal
             </h2>
             <p className="mt-3 text-muted-foreground text-base max-w-xl">
-              From commercial high-rise towers to arterial highway viaducts and high-bay distribution hubs.
+              Major roads, long-span river crossings, hydraulic flood defense, civic institutions, and hydropower packages delivered to Class-A standards.
             </p>
           </div>
 
           <Link
-            to="/portfolio"
+            to="/projects"
             className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-all group shrink-0"
           >
-            <span>Explore Complete Portfolio</span>
+            <span>View All Projects in Full Portfolio</span>
             <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
           </Link>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-12">
+        <div className="flex flex-wrap items-center gap-2 mb-10 overflow-x-auto pb-2">
           {CATEGORIES.map((tab) => {
             const active = selectedCategory === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setSelectedCategory(tab.id)}
-                className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                   active
                     ? "bg-primary text-white shadow-md shadow-primary/30"
                     : "bg-orange-50 text-foreground/80 hover:bg-orange-100 hover:text-primary border border-orange-100"
@@ -140,19 +169,19 @@ export const FeaturedProjectsSection = () => {
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                   
                   {/* Badges on image */}
                   <span className="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md">
                     {project.categoryLabel}
                   </span>
                   <span className="absolute top-4 right-4 bg-white/95 backdrop-blur-md text-foreground text-xs font-extrabold px-3.5 py-1.5 rounded-full shadow-md border border-white/60">
-                    {project.budget}
+                    {project.contractValue}
                   </span>
 
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <div className="flex items-center gap-2 text-xs text-orange-200 mb-1">
-                      <MapPin size={13} /> {project.location}
+                      <MapPin size={13} /> {project.location} · {project.completionYear}
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-white leading-snug">
                       {project.title}
@@ -175,15 +204,15 @@ export const FeaturedProjectsSection = () => {
                     ))}
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground font-semibold flex items-center gap-1.5">
-                      <Ruler size={14} className="text-primary" /> {project.squareFootage}
+                  <div className="pt-2 flex items-center justify-between border-t border-orange-50">
+                    <span className="text-xs text-muted-foreground font-semibold">
+                      Sector: <strong className="text-foreground">{project.sector}</strong>
                     </span>
                     <Link
-                      to="/portfolio"
+                      to="/projects"
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:underline"
                     >
-                      <span>Full Case Study</span>
+                      <span>Full Specifications</span>
                       <ArrowRight size={13} />
                     </Link>
                   </div>
@@ -196,11 +225,11 @@ export const FeaturedProjectsSection = () => {
         {/* View All Projects Action Bar */}
         <div className="mt-12 text-center">
           <Link
-            to="/portfolio"
+            to="/projects"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-white text-sm font-bold shadow-xl shadow-primary/25 hover:bg-primary/90 hover:shadow-2xl hover:shadow-primary/35 transition-all active:scale-95"
           >
             <HardHat size={18} />
-            <span>Discover All Landmark Projects in Portfolio</span>
+            <span>Explore All 120+ Infrastructure Projects</span>
             <ArrowRight size={16} />
           </Link>
         </div>

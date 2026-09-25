@@ -10,102 +10,100 @@ import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 export const defaultConstructionArticles = [
   {
     id: "b1",
-    slug: "seismic-resilient-high-rise-engineering",
-    title: "Seismic-Resilient Architecture: Innovations in High-Rise Structural Damping",
-    category: "Structural Engineering",
-    excerpt: "Exploring how tuned mass dampers and post-tensioned steel core walls allow modern commercial towers to withstand severe lateral earthquake accelerations without structural compromise.",
-    content: "Modern high-rise commercial structures face unprecedented engineering demands: increasing architectural heights coupled with stringent seismic and aerodynamic performance criteria.\n\nAt MK Engineering and Construction, our structural engineering division integrates advanced seismic damping assemblies directly into the tower core during slipform casting. By implementing tuned liquid column dampers (TLCD) and viscoelastic shear braces, horizontal drift ratios are reduced by up to 45% during intense seismic events.\n\nIn our recent 48-story Apex Horizon project, 5D finite element modeling predicted resonance nodes before physical groundbreaking. The resulting structure achieves full compliance with Seismic Performance Category E while preserving open floor plates and maximizing rentable tenant area.",
+    slug: "saptakoshi-river-bridge-deep-well-pier-milestone",
+    title: "Saptakoshi River Bridge: Deep-Well Foundation Pier Milestone Completed Ahead of Monsoon",
+    category: "Project Milestones",
+    excerpt: "Our heavy bridge engineering division successfully completed all deep-well pier caissons for the Saptakoshi River crossing, beating the critical monsoon flood window by three weeks.",
+    content: "Constructing multi-span bridges across Nepal's major perennially flooded rivers requires immaculate seasonal timing and deep hydraulic engineering expertise.\n\nOn the Saptakoshi River Bridge contract (Province 1 · ₨ 2.4B), MK Construction deployed pneumatic well-sinking rigs and bentonite-stabilized excavation techniques to anchor 18 bridge piers into bedrock beneath 22 meters of shifting alluvial silt. Working in round-the-clock winter shifts, our crew placed over 14,000 cubic meters of high-density M35 structural concrete.\n\nAll deep pier caps are now secured above the maximum anticipated 100-year flood line, allowing superstructure pre-stressed girder launching to proceed smoothly without risk of seasonal inundation.",
     thumbnail_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
-    author: "Marcus Vance, PE, SE",
-    published_at: "2026-08-15",
-    read_time: "6 min read",
+    author: "Er. Rameshwor Adhikari",
+    published_at: "2026-09-18",
+    read_time: "5 min read",
     views: 1420,
     is_featured: true,
   },
   {
     id: "b2",
-    slug: "5d-bim-drone-topography-construction",
-    title: "How 5D BIM and Drone Topography Cut Heavy Infrastructure Delays by 35%",
-    category: "Virtual Design (VDC)",
-    excerpt: "A deep-dive into how reality-capture drone photogrammetry and algorithmic schedule clash detection safeguard mega-project delivery schedules and eliminate rework.",
-    content: "On multi-year heavy civil infrastructure projects, spatial deviations of even a few centimeters can ripple across months of subcontractor scheduling.\n\nBy integrating autonomous RTK drone survey flights with our centralized 5D BIM environment, our field teams capture sub-centimeter volumetric point clouds every 48 hours. Earthwork excavation volumes, rebar cage alignments, and pre-cast concrete beam seatings are verified automatically against the structural digital twin.\n\nOn the Metropolitan Arterial Viaduct, algorithmic clash detection identified 142 mechanical and structural interferences prior to concrete pouring, generating verified savings exceeding $3.8M in avoided field rework.",
-    thumbnail_url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
-    author: "Elena Rostova, LEED AP",
-    published_at: "2026-09-02",
-    read_time: "5 min read",
+    slug: "mk-construction-awarded-mid-hill-highway-pkg-7",
+    title: "MK Construction Awarded Mid-Hill Highway Package 7 Asphalt Paving Contract (₨ 1.9B)",
+    category: "Tender Wins",
+    excerpt: "The Department of Roads has officially awarded MK Construction Company Pvt. Ltd. the turnkey 48-kilometer double-lane asphalt concrete and slope stabilization contract in Karnali Province.",
+    content: "The Ministry of Physical Infrastructure and Transport, Department of Roads (DoR), has formally executed the contract agreement with MK Construction Company Pvt. Ltd. for Mid-Hill Highway Package 7 in Karnali Province.\n\nThe ₨ 1.9B works package encompasses widening the existing alignment to double-lane standards, deep rock cutting in steep mountainous terrain, bio-engineering slope stabilization, reinforced concrete box culverts, and 48 kilometers of asphalt concrete surfacing.\n\nMobilization of our captive CAT excavators, motor graders, and mobile aggregate crushing plants is underway at the site depot.",
+    thumbnail_url: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
+    author: "Sunita Pradhan",
+    published_at: "2026-09-08",
+    read_time: "4 min read",
     views: 980,
     is_featured: false,
   },
   {
     id: "b3",
-    slug: "decarbonizing-concrete-leed-infrastructure",
-    title: "The Decarbonization of Mega-Structures: Low-Carbon Geopolymer Cements",
-    category: "Sustainable Materials",
-    excerpt: "Replacing traditional Portland cement with industrial slag and fly-ash geopolymer binders to lower embodied carbon while accelerating high early compressive strength.",
-    content: "Concrete accounts for roughly 8% of worldwide greenhouse gas emissions, making binder innovation the primary lever for delivering true net-zero commercial infrastructure.\n\nMK Engineering and Construction's materials laboratory has developed site-ready geopolymer formulations replacing up to 70% of Ordinary Portland Cement with granulated blast-furnace slag (GGBS) and pulverized fly ash. These formulations not only reduce embodied carbon by 65%, but also deliver superior sulfate and chloride resistance for sub-grade foundations.\n\nApplied across the Cascade Bio-Research Campus, the structure attained LEED Platinum status while achieving 6,000 PSI compressive strength at 14 days, outpacing traditional hydration curves.",
-    thumbnail_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
-    author: "Dr. Alistair Chen, PhD",
-    published_at: "2026-09-20",
-    read_time: "7 min read",
+    slug: "bagmati-river-training-12km-embankment-completion",
+    title: "Bagmati River Training: 12-Kilometer Flood Mitigation Embankment & Spur Defense Commissioned",
+    category: "Project Milestones",
+    excerpt: "Deploying high-density gabion mattresses and reinforced concrete spurs, our hydraulic teams successfully fortified 12 kilometers of vulnerable river basin to safeguard surrounding settlements.",
+    content: "Monsoon floods regularly devastate agricultural riverbanks and urban settlements across the Terai and inner valleys. On the Bagmati River Training project (₨ 1.2B), MK Construction engineered an integrated flood defense system designed to withstand high hydraulic discharge.\n\nThe project incorporates 12 kilometers of earthen embankment armored with geotextile filter layers, wire-mesh gabion revetments, and RCC deflective spurs that redirect river flow away from vulnerable banks.\n\nIndependent quality testing by the Department of Water Resources confirmed zero scour degradation after initial high-flow stress trials.",
+    thumbnail_url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200",
+    author: "Er. Rameshwor Adhikari",
+    published_at: "2026-08-25",
+    read_time: "6 min read",
     views: 1150,
     is_featured: false,
   },
   {
     id: "b4",
-    slug: "deep-caisson-shoring-urban-foundations",
-    title: "Deep Caisson Shoring: Navigating High Water Tables in Urban Foundations",
-    category: "Geotechnical Engineering",
-    excerpt: "Secant pile walls, slurry diaphragm systems, and jet grouting methodologies engineered for subterranean excavations in saturated alluvial soils.",
-    content: "Subterranean construction in high-density urban environments presents severe challenges: adjacent heritage structures, vibrating subway tunnels, and pressurized groundwater aquifers.\n\nTo construct 4-story deep basements without inducing ground subsidence, MK employs continuous overlapping secant pile walls combined with pre-stressed ground tiebacks. Real-time piezometer arrays and inclinometers stream continuous telemetry to our geotechnical monitoring dashboard.\n\nThis precision engineering ensures neighboring foundations remain undisturbed while dewatering discharge is treated and redirected in full compliance with municipal environmental codes.",
-    thumbnail_url: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=1200",
-    author: "Marcus Vance, PE, SE",
-    published_at: "2026-07-28",
-    read_time: "8 min read",
+    slug: "seismic-resilient-building-nbc-105-2020",
+    title: "Implementing NBC 105:2020: Advanced Ductile Detailing for Seismic-Resistant Institutional Buildings",
+    category: "Sector Commentary",
+    excerpt: "An engineering breakdown of how MK Construction translates Nepal Building Code (NBC 105:2020) seismic requirements into high-ductility shear walls and beam-column junction reinforcement.",
+    content: "Nepal is situated in an active seismic subduction zone, making seismic engineering compliance not merely a legal mandate, but a critical life-safety imperative.\n\nUnder Nepal Building Code (NBC 105:2020), seismic coefficients and ductile detailing standards have been substantially heightened. On the Lumbini Provincial HQ Complex (₨ 980M), MK Construction integrated advanced response spectrum analysis into structural modeling, utilizing Fe500D thermo-mechanically treated rebar and closely spaced confinement ties at critical beam-column nodes.\n\nOur on-site QA/QC laboratory verifies 100% of rebar tensile elongation and concrete cube compressive strengths prior to formwork striking.",
+    thumbnail_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+    author: "Er. Binod K. Thapa, M.Sc.",
+    published_at: "2026-08-12",
+    read_time: "7 min read",
     views: 890,
     is_featured: false,
   },
   {
     id: "b5",
-    slug: "zero-harm-safety-heavy-equipment-fleet",
-    title: "Zero-Harm Jobsite Governance: Telemetry & Safety Systems in Heavy Fleet",
-    category: "Health & Safety",
-    excerpt: "How automated radar blind-spot telemetry, smart crane load monitors, and mandatory stop-work culture ensure zero lost-time injuries across millions of man-hours.",
-    content: "In heavy civil engineering, safety is not an operational afterthought—it is the foundational prerequisite of high productivity.\n\nOur captive fleet of 1,200 heavy equipment units is outfitted with 360-degree ultrasonic proximity sensors, operator fatigue cameras, and digital load moment indicators that automatically restrict crane swings during adverse wind shears.\n\nCombined with daily Job Safety Analysis (JSA) briefings and unconditional stop-work authority for every crew member, MK has logged over 2.4 million consecutive safe man-hours with a 0.00 lost-time incident rate.",
-    thumbnail_url: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
-    author: "David K. O'Connor, CSP",
-    published_at: "2026-08-10",
-    read_time: "5 min read",
+    slug: "fleet-expansion-mobile-batching-crushers",
+    title: "MK Construction Expands Captive Heavy Fleet with 3 Mobile Batching Plants and 12-Ton Tandem Rollers",
+    category: "Company Announcements",
+    excerpt: "Strengthening our self-performance capabilities across western Nepal, MK Construction has inducted new mobile computerized wet-mix batching plants and GPS-telemetry compaction rollers.",
+    content: "To guarantee schedule certainty and eliminate dependency on third-party suppliers in remote project zones, MK Construction Company Pvt. Ltd. has completed a capital investment expanding our heavy machinery fleet.\n\nThe new additions include three mobile computerized concrete batching plants capable of 120 m³/hr output, four Hamm 12-ton tandem vibratory rollers with continuous density sensors, and six multi-axle tippers.\n\nThis fleet expansion boosts our active equipment inventory to over 500 operational units across 32 districts.",
+    thumbnail_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
+    author: "Er. M.K. Shrestha, PE",
+    published_at: "2026-07-29",
+    read_time: "4 min read",
     views: 740,
     is_featured: false,
   },
   {
     id: "b6",
-    slug: "superflat-floor-tolerances-logistics-robotics",
-    title: "Super-Flat Floor Tolerances: Laser Screed Engineering for High-Bay Automation",
-    category: "Industrial Engineering",
-    excerpt: "Executing FM2 and Superflat concrete slab specifications to empower high-speed automated guided vehicles (AGVs) and 40-meter automated warehouse racking.",
-    content: "The exponential growth of robotic logistics hubs has transformed industrial concrete flooring from a simple wearing surface into a high-precision structural component.\n\nWhen Automated Guided Vehicles (AGVs) and narrow-aisle turret trucks travel at high speeds between 40-meter racks, floor deviations of mere millimeters cause unacceptable mast sway and robotic sensor stalls.\n\nMK deploys multi-axis 3D laser-guided screeds and specialized dry-shake metallic hardeners to pour continuous, jointless slabs meeting stringent FM1/FM2 tolerances and high abrasion resistance standards.",
-    thumbnail_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200",
-    author: "David K. O'Connor, CSP",
-    published_at: "2026-09-12",
-    read_time: "6 min read",
+    slug: "run-of-river-hydropower-civil-works-challenges",
+    title: "Civil Engineering in Steep Himalayan Topography: Excavating Tunnels & Surge Tanks for Hydropower",
+    category: "Sector Commentary",
+    excerpt: "Insights into rock mass classification (RMR/Q-system), NATM tunneling support, and torrential water diversion strategies executed across high-gradient Nepali river valleys.",
+    content: "Developing run-of-river hydropower civil infrastructure in the Himalayas demands mastery over fragile geology, high hydraulic heads, and flash-flood risks.\n\nOn the Upper Trishuli Run-of-River civil package (₨ 3.1B), MK Construction's tunneling teams executed drill-and-blast excavation supported by fiber-reinforced shotcrete, lattice girders, and self-drilling rock anchors.\n\nBy continuously monitoring rock convergence with optical 3D targets, our engineers adjusted primary support classes dynamically, achieving zero collapse incidents across 3.4 kilometers of headrace tunnel.",
+    thumbnail_url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
+    author: "Er. Binod K. Thapa, M.Sc.",
+    published_at: "2026-07-15",
+    read_time: "8 min read",
     views: 810,
     is_featured: false,
   },
 ];
 
 const CATEGORIES = [
-  "All Disciplines",
-  "Structural Engineering",
-  "Virtual Design (VDC)",
-  "Sustainable Materials",
-  "Geotechnical Engineering",
-  "Health & Safety",
-  "Industrial Engineering",
+  "All Updates",
+  "Project Milestones",
+  "Tender Wins",
+  "Company Announcements",
+  "Sector Commentary",
 ];
 
 const Blog = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All Disciplines");
+  const [selectedCategory, setSelectedCategory] = useState("All Updates");
   const [searchQuery, setSearchQuery] = useState("");
   const { isVisible } = useSectionVisibility();
 
@@ -125,7 +123,7 @@ const Blog = () => {
 
   const filteredPosts = allPosts.filter((post: any) => {
     const matchesCategory =
-      selectedCategory === "All Disciplines" || post.category === selectedCategory;
+      selectedCategory === "All Updates" || post.category === selectedCategory;
     const matchesSearch =
       searchQuery.trim() === "" ||
       post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -148,14 +146,14 @@ const Blog = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary font-bold text-xs uppercase tracking-widest mb-6">
-              <HardHat size={15} /> Technical Bulletins & Field Reports
+              <HardHat size={15} /> Company Milestones · Tender Wins · Sector Commentary
             </div>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              Engineering Insights & <br className="hidden sm:inline" />
-              <span className="text-primary">Construction Knowledge</span>
+              News & Insights — <br className="hidden sm:inline" />
+              <span className="text-primary">MK Construction Company</span>
             </h1>
             <p className="mt-6 text-neutral-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-              Explore in-depth engineering case studies, 5D BIM methodologies, low-carbon geopolymer advances, and field-tested safety protocols from our master builders.
+              Stay informed on our latest bridge breakthroughs, national highway paving packages, flood mitigation completions, and engineering updates across Nepal.
             </p>
           </motion.div>
         </div>

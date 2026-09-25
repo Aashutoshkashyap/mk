@@ -8,30 +8,30 @@ import { ArrowRight, Calendar, Eye } from "lucide-react";
 const defaultPosts = [
   {
     id: "b1",
-    slug: "seismic-resilient-high-rise-engineering",
-    title: "Seismic-Resilient Architecture: Innovations in High-Rise Structural Damping",
-    category: "Structural Engineering",
-    excerpt: "Exploring how tuned mass dampers and post-tensioned steel core walls allow modern commercial towers to withstand severe lateral earthquake accelerations without structural compromise.",
+    slug: "saptakoshi-river-bridge-deep-well-pier-milestone",
+    title: "Saptakoshi River Bridge: Deep-Well Pier Milestone Completed Ahead of Monsoon",
+    category: "Project Milestones",
+    excerpt: "Our heavy bridge engineering division completed all 18 deep-well pier caissons for the Saptakoshi River crossing, beating the critical monsoon flood window.",
     thumbnail_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800",
-    published_at: "2026-08-15",
+    published_at: "2026-09-18",
   },
   {
     id: "b2",
-    slug: "5d-bim-drone-topography-construction",
-    title: "How 5D BIM and Drone Topography Cut Heavy Infrastructure Delays by 35%",
-    category: "Virtual Design (VDC)",
-    excerpt: "A deep-dive into how reality-capture drone photogrammetry and algorithmic schedule clash detection safeguard mega-project delivery schedules and eliminate rework.",
-    thumbnail_url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
-    published_at: "2026-09-02",
+    slug: "mk-construction-awarded-mid-hill-highway-pkg-7",
+    title: "MK Construction Awarded Mid-Hill Highway Package 7 Paving Contract (₨ 1.9B)",
+    category: "Tender Wins",
+    excerpt: "The Department of Roads has awarded MK Construction Company Pvt. Ltd. the turnkey 48km asphalt concrete and slope stabilization contract in Karnali.",
+    thumbnail_url: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=800",
+    published_at: "2026-09-08",
   },
   {
     id: "b3",
-    slug: "decarbonizing-concrete-leed-infrastructure",
-    title: "The Decarbonization of Mega-Structures: Low-Carbon Geopolymer Cements",
-    category: "Sustainable Materials",
-    excerpt: "Replacing traditional Portland cement with industrial slag and fly-ash geopolymer binders to lower embodied carbon while accelerating high early compressive strength.",
+    slug: "bagmati-river-training-12km-embankment-completion",
+    title: "Bagmati River Training: 12-Kilometer Flood Mitigation Embankment Commissioned",
+    category: "Project Milestones",
+    excerpt: "Deploying high-density gabions and RCC deflective spurs, our hydraulic teams fortified 12 kilometers of vulnerable river basin to safeguard surrounding towns.",
     thumbnail_url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800",
-    published_at: "2026-09-20",
+    published_at: "2026-08-25",
   },
 ];
 
@@ -67,10 +67,10 @@ const BlogSection = () => {
           >
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-1 bg-primary rounded-full" />
-              <span className="text-[10px] font-black tracking-widest uppercase text-primary">Technical Bulletins & Case Studies</span>
+              <span className="text-[10px] font-black tracking-widest uppercase text-primary">Company News & Insights</span>
             </div>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground leading-tight tracking-tight">
-              Engineering Insights & Field Reports
+              News & Infrastructure Insights
             </h2>
           </motion.div>
           
@@ -80,10 +80,10 @@ const BlogSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Link 
-              to="/blog" 
+              to="/news" 
               className="group inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-all duration-300"
             >
-              <span>Explore All Field Reports</span> 
+              <span>Explore All News & Insights</span> 
               <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
             </Link>
           </motion.div>

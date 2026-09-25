@@ -42,10 +42,10 @@ const Index = () => {
   const { isVisible } = useSectionVisibility();
 
   const defaultStats = [
-    { id: '1', icon_name: 'Building2', value: '350+', label: 'Projects Completed' },
-    { id: '2', icon_name: 'Award', value: '25+ Yrs', label: 'Engineering Excellence' },
-    { id: '3', icon_name: 'Truck', value: '1,200+', label: 'Heavy Equipment Fleet' },
-    { id: '4', icon_name: 'ShieldCheck', value: '99.8%', label: 'Zero-Harm Safety Rate' },
+    { id: '1', icon_name: 'Building2', value: '120+', label: 'Projects Delivered' },
+    { id: '2', icon_name: 'Award', value: '₨ 18B', label: 'Works Executed' },
+    { id: '3', icon_name: 'Users', value: '850+', label: 'Engineers & Crew' },
+    { id: '4', icon_name: 'MapPin', value: '32', label: 'Districts Reached' },
   ];
 
   const displayStats = stats.length > 0 ? stats : defaultStats;
@@ -138,21 +138,21 @@ const Index = () => {
                 </div>
                 
                 <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground leading-[1.15] tracking-tight">
-                  {about?.heading || "Setting the Benchmark in Commercial & Civil Heavy Construction"}
+                  {about?.heading || "Engineering Nepal's Infrastructure With Technical Excellence & Reliability"}
                 </h2>
                 
                 <p className="mt-6 text-muted-foreground leading-relaxed text-base md:text-lg">
-                  {about?.description || "MK Engineering and Construction is a premier general contractor and heavy civil engineering enterprise. For over two decades, we have engineered iconic corporate towers, heavy highway infrastructure, high-bay industrial logistics hubs, and resilient residential communities. Backed by an extensive captive heavy machinery fleet, ISO 45001 safety compliance, and comprehensive 5D BIM virtual modeling, we deliver monumental scale with pinpoint precision, on time and on budget."}
+                  {about?.description || "MK Construction Company Pvt. Ltd. (formerly M.K. Builders & Construction Company Private Limited) is a Class-A licensed contractor delivering major national highways, long-span river crossings, hydraulic river training, and civil engineering infrastructure across 32 districts of Nepal. Supported by an extensive in-house heavy equipment fleet and over 850 engineers and technicians, we guarantee schedule certainty, structural durability, and Zero-Harm safety standards."}
                 </p>
 
                 <div className="mt-8 grid sm:grid-cols-2 gap-3.5">
                   {[
-                    "Commercial High-Rise & Campuses",
-                    "Highways, Bridges & Culverts",
-                    "Deep Foundations & Geotechnical",
-                    "LEED Platinum Green Buildings",
-                    "Pre-Engineered Metal Structures",
-                    "Turnkey EPC & Project Controls",
+                    "National Highways & Rural Feeder Roads",
+                    "Steel, RCC & Pre-Stressed Bridges",
+                    "River Training & Flood Mitigation Spurs",
+                    "Nepal Building Code (NBC) Structures",
+                    "Hydropower Civil Works & Headworks",
+                    "Municipal Bulk Water & Sanitation",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-orange-100/80 shadow-xs">
                       <CheckCircle2 size={18} className="text-primary shrink-0" />
@@ -170,10 +170,10 @@ const Index = () => {
                   </Link>
 
                   <Link 
-                    to="/portfolio" 
+                    to="/projects" 
                     className="inline-flex items-center gap-2 rounded-full border-2 border-primary/25 px-6 py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-all duration-300"
                   >
-                    View Our Portfolio
+                    View Our Projects
                   </Link>
                 </div>
               </motion.div>

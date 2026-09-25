@@ -8,55 +8,69 @@ import PreFooterCTA from "@/components/PreFooterCTA";
 
 const FLEET_CATEGORIES = [
   {
-    title: "Heavy Lifting & Tower Cranes",
-    count: "42 Units",
-    description: "High-capacity luffing jib and flat-top tower cranes capable of up to 32-ton single picks, high-frequency radar anti-collision telemetry, and variable wind anemometer telemetry.",
-    specs: ["Liebherr 550 EC-H & Potain MDT Series", "Max Hook Height: 240 meters", "Active Anti-Collision Dynamic Braking"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=900",
-  },
-  {
-    title: "Earthmoving & Deep Trench Excavation",
-    count: "128 Units",
-    description: "GPS-guided hydraulic excavators, long-reach dredging booms, articulated rock dump trucks, and high-traction bulldozers equipped with real-time 3D grade control sensors.",
-    specs: ["CAT 349 & Komatsu PC800 Excavators", "Integrated Trimble 3D GPS Grade Control", "Tier-4 Final Low-Emission Diesel Engines"],
+    title: "Excavators, Dozers & Earthmoving",
+    count: "140+ Units",
+    description: "Heavy hydraulic excavators (CAT, Komatsu), long-reach slope stabilization booms, and crawler bulldozers equipped with GPS grade control for high-altitude hill cutting and Terai earthwork.",
+    specs: ["Komatsu PC200–PC800 & CAT 349 Excavators", "CAT D6 & D8 Track-Type Bulldozers", "Hydraulic Rock Breakers & Long-Reach Booms"],
     imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=900",
   },
   {
-    title: "Concrete Pouring & Batching Fleet",
-    count: "65 Units",
-    description: "Truck-mounted concrete boom pumps reaching up to 63 meters, captive mobile computerized batching plants, and volumetric transit mixers guaranteeing uninterrupted mega-pour cycles.",
-    specs: ["Putzmeister 63m & Schwing 58m Boom Pumps", "Mobile Batching Capacity: 180 m³/hour", "Automated Slump & Temperature Telemetry"],
+    title: "Motor Graders & Heavy Compaction",
+    count: "65+ Units",
+    description: "Precision motor graders with automatic laser leveling, vibrating tandem road rollers, and padfoot soil compactors delivering sub-base density exceeding DoR norms.",
+    specs: ["CAT 140K & Komatsu GD555 Motor Graders", "Hamm & Bomag 12-Ton Tandem Vibratory Rollers", "Padfoot Earthwork Compactors with Real-Time Density"],
+    imageUrl: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=900",
+  },
+  {
+    title: "Batching Plants & Aggregate Crushers",
+    count: "38 Units",
+    description: "Captive computerized ready-mix batching plants and primary/secondary aggregate crushing units ensuring an uninterrupted supply of certified aggregates and high-spec concrete.",
+    specs: ["Mobile Wet-Mix Batching Plants (120–180 m³/hr)", "3-Stage Mobile Jaw & Cone Crushing Plants", "Chilled Water Concrete Cooling Systems"],
     imageUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=900",
   },
   {
-    title: "Slipform & Heavy Paving Machinery",
-    count: "34 Units",
-    description: "High-precision concrete slipform pavers, asphalt milling machines, tandem vibratory rollers, and laser screeds producing ultra-flat industrial floor tolerances (FM2/Superflat).",
-    specs: ["Wirtgen SP 64 Slipform Pavers", "Somero Laser Screeds with 3D Profiler", "Dual-Frequency Compaction Sensor Tech"],
-    imageUrl: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=900",
+    title: "Asphalt Pavers & Specialized Road Fleet",
+    count: "45 Units",
+    description: "Sensor-guided asphalt pavers, bitumen distributors, mechanical chip spreaders, and cold milling machines for national highways and regional transit corridors.",
+    specs: ["Vögele Super 1800-3 Asphalt Pavers", "Hydrostatic Bitumen Pressure Distributors", "Pneumatic Tire Rollers for Surface Sealing"],
+    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=900",
+  },
+  {
+    title: "Heavy Tippers, Transit Mixers & Tankers",
+    count: "180+ Units",
+    description: "Multi-axle tipper trucks, high-capacity transit mixers, and bulk water/fuel tankers maintaining rapid continuous aggregate transport to remote jobsites across Nepal.",
+    specs: ["Tata Prima & BharatBenz Multi-Axle Tippers", "Transit Mixers with Automated Slump Control", "Off-Road 6x4 Diesel & Water Bowser Fleet"],
+    imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=900",
+  },
+  {
+    title: "Lifting Cranes & Piling Rigs",
+    count: "28 Units",
+    description: "Lattice crawler cranes, rough-terrain hydraulic mobile cranes, and hydraulic rotary piling rigs for deep bridge pier caissons and heavy steel girder erection.",
+    specs: ["50T–120T Crawler & Rough-Terrain Cranes", "Bauer Rotary Hydraulic Piling Rigs", "Pre-Stressing Jacks & Grouting Pumps"],
+    imageUrl: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=900",
   },
 ];
 
-const SAFETY_PILLARS = [
+const CAPABILITY_PILLARS = [
   {
     icon: ShieldCheck,
-    title: "Zero-Harm Culture",
-    desc: "Every worker, engineer, and contractor holds the unconditional authority to halt work immediately upon identifying any unmitigated hazard.",
+    title: "In-House QA/QC Site Labs",
+    desc: "Fully equipped on-site material testing laboratories conducting aggregate gradation, concrete cube compression, CBR, bitumen penetration, and rebar yield testing.",
   },
   {
     icon: HardHat,
-    title: "Daily JSA & Tool-Box Briefs",
-    desc: "Every shift commences with mandatory Job Safety Analysis (JSA) risk assessments, crane rigging inspections, and PPE certifications.",
+    title: "Zero-Harm HSE Culture",
+    desc: "Strict occupational health and safety protocols with daily tool-box talks, job hazard analyses, and unconditional stop-work authority on all project sites.",
   },
   {
     icon: Award,
-    title: "ISO 45001 & OSHA Accredited",
-    desc: "Internationally audited occupational health and safety systems with computerized incident tracking and automated compliance audits.",
+    title: "Survey & Engineering Rigor",
+    desc: "High-precision RTK GPS and electronic total station survey crews paired with Civil 3D design coordination for flawless alignment and profile setting.",
   },
   {
     icon: Activity,
-    title: "Real-Time Drone Hazard AI",
-    desc: "Autonomous drone site scans analyze edge protection, scaffolding tie-backs, and heavy equipment blind-spots daily.",
+    title: "850+ Multi-Skilled Workforce",
+    desc: "A cohesive team of chartered structural engineers, bridge specialists, geotechnical advisors, licensed plant operators, and master craftsmen.",
   },
 ];
 
@@ -75,56 +89,56 @@ const Safety = () => {
             transition={{ duration: 0.7 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary font-bold text-xs uppercase tracking-widest mb-6">
-              <ShieldCheck size={16} /> ISO 45001 & 9001 Certified Operations
+              <ShieldCheck size={16} /> Plant Fleet · In-House QC Labs · Zero-Harm Safety
             </div>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              Safety First Ethos & <br className="hidden sm:inline" />
-              <span className="text-primary">Captive Heavy Machinery Fleet</span>
+              Contractor Capabilities & <br className="hidden sm:inline" />
+              <span className="text-primary">Plant & Equipment Fleet</span>
             </h1>
             <p className="mt-6 text-neutral-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-              Our unyielding Zero-Harm safety protocols and fully owned multi-million-dollar heavy machinery fleet ensure total control over quality, safety, and construction milestones.
+              MK Construction Company Pvt. Ltd. operates one of Nepal's most comprehensive captive heavy equipment fleets, paired with certified in-house material testing laboratories and rigorous HSE governance.
             </p>
           </motion.div>
 
           {/* Key Stats */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-neutral-800">
             <div>
-              <div className="font-display text-3xl font-extrabold text-primary">0.00</div>
-              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">Lost Time Injury Rate</div>
+              <div className="font-display text-3xl font-extrabold text-primary">500+</div>
+              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">Captive Plant Units</div>
             </div>
             <div>
-              <div className="font-display text-3xl font-extrabold text-white">1,200+</div>
-              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">Captive Fleet Assets</div>
+              <div className="font-display text-3xl font-extrabold text-white">850+</div>
+              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">Engineers & Crew</div>
             </div>
             <div>
-              <div className="font-display text-3xl font-extrabold text-primary">2.4M</div>
-              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">Safe Man-Hours Logged</div>
+              <div className="font-display text-3xl font-extrabold text-primary">ISO 9001</div>
+              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">QMS Certified</div>
             </div>
             <div>
-              <div className="font-display text-3xl font-extrabold text-white">100%</div>
-              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">OSHA Compliance Score</div>
+              <div className="font-display text-3xl font-extrabold text-white">32</div>
+              <div className="text-xs text-neutral-400 mt-1 uppercase tracking-wider font-semibold">Districts Mobilized</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Safety Pillars Section */}
+      {/* Capabilities & Quality Assurance Pillars */}
       <section className="py-20 md:py-28 bg-white relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-5 py-2 rounded-full border border-primary/20 inline-block mb-4 shadow-sm">
-              Our Core Discipline
+              Engineering Infrastructure Rigor
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight">
-              The Zero-Harm Safety Framework
+              In-House Labs, Systems & Safety Governance
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-              Every jobsite is engineered with multi-layered protective protocols, active telemetry, and continuous peer audits to guarantee every team member returns home safely.
+              From advance topographical surveys to rigorous compressive testing and Zero-Harm safety standards, our operational framework guarantees precision delivery.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {SAFETY_PILLARS.map((p, i) => (
+            {CAPABILITY_PILLARS.map((p, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}

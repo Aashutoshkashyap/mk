@@ -14,6 +14,7 @@ const Safety = lazy(() => import("./pages/Safety"));
 const Team = lazy(() => import("./pages/Team"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Careers = lazy(() => import("./pages/Careers"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
@@ -56,15 +57,21 @@ const App = () => (
         <Suspense fallback={<PageFallback />}>
           <Routes>
             <Route element={<Layout />}>
+              {/* Core 9 Pages as specified in markdown */}
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
-              <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/projects" element={<Portfolio />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/capabilities" element={<Safety />} />
               <Route path="/safety" element={<Safety />} />
+              <Route path="/leadership" element={<Team />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/news" element={<Blog />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/news/:slug" element={<BlogPost />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/careers" element={<Careers />} />
               <Route path="/contact" element={<Contact />} />
             </Route>
             <Route path="/admin/login" element={<AdminLogin />} />

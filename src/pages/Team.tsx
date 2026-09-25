@@ -10,38 +10,50 @@ import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 const defaultConstructionTeam = [
   {
     id: "tm1",
-    name: "Marcus Vance, PE, SE",
-    role: "Chief Structural Engineer & COO",
-    experience: "24+ Yrs Exp",
-    bio: "Specializes in deep caisson foundation design, seismic damping, and high-rise structural steel framing for monumental commercial towers exceeding 50 stories.",
+    name: "Er. M.K. Shrestha, PE",
+    role: "Chairman & Managing Director",
+    experience: "28+ Yrs Exp",
+    bio: "Founding leader of MK Construction Company Pvt. Ltd. Oversees corporate strategy, mega-infrastructure execution, and multilateral agency partnership with DoR, ADB, and World Bank across Nepal.",
     image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
-      { id: "ts1", label: "High-Rise Steel", icon_name: "Building2", sort_order: 1 },
-      { id: "ts2", label: "Seismic Damping", icon_name: "ShieldCheck", sort_order: 2 },
+      { id: "ts1", label: "National Highways", icon_name: "Building2", sort_order: 1 },
+      { id: "ts2", label: "Major Bridges", icon_name: "ShieldCheck", sort_order: 2 },
     ],
   },
   {
     id: "tm2",
-    name: "Elena Rostova, LEED AP",
-    role: "VP of Virtual Design & 5D BIM",
-    experience: "18+ Yrs Exp",
-    bio: "Directs pre-construction digital twins, drone LiDAR topography, 4D schedule sequencing, and automated multi-trade clash resolution across all project portfolios.",
-    image_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
+    name: "Er. Rameshwor Adhikari",
+    role: "Executive Director & Head of Operations",
+    experience: "24+ Yrs Exp",
+    bio: "Directs turnkey field mobilization, captive heavy equipment fleet deployments, and river training hydraulic protection works across the Mid-Hills and Terai flood plains.",
+    image_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
-      { id: "ts3", label: "5D BIM Modeling", icon_name: "Compass", sort_order: 1 },
-      { id: "ts4", label: "LEED Platinum", icon_name: "Award", sort_order: 2 },
+      { id: "ts3", label: "River Training", icon_name: "Compass", sort_order: 1 },
+      { id: "ts4", label: "Fleet Logistics", icon_name: "Truck", sort_order: 2 },
     ],
   },
   {
     id: "tm3",
-    name: "David K. O'Connor, CSP",
-    role: "Director of Field Safety & Heavy Operations",
-    experience: "26+ Yrs Exp",
-    bio: "Manages corporate-wide ISO 45001 safety governance, complex crane tandem-lift rigging engineering, and our 1,200-unit captive heavy equipment fleet.",
-    image_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+    name: "Er. Binod K. Thapa, M.Sc.",
+    role: "Chief Technical Officer & Head of Engineering",
+    experience: "21+ Yrs Exp",
+    bio: "Spearheads structural design coordination, seismic detailing per Nepal Building Code (NBC 105:2020), geotechnical foundation validation, and site QA/QC testing labs.",
+    image_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=600",
     team_sectors: [
-      { id: "ts5", label: "Zero-Harm Safety", icon_name: "HardHat", sort_order: 1 },
-      { id: "ts6", label: "Heavy Fleet Ops", icon_name: "Truck", sort_order: 2 },
+      { id: "ts5", label: "NBC Seismic Code", icon_name: "HardHat", sort_order: 1 },
+      { id: "ts6", label: "QA/QC Testing Labs", icon_name: "Award", sort_order: 2 },
+    ],
+  },
+  {
+    id: "tm4",
+    name: "Sunita Pradhan",
+    role: "Director of Contracts & Multilateral Procurement",
+    experience: "18+ Yrs Exp",
+    bio: "Manages public-sector procurement, FIDIC commercial contract administration, ADB/World Bank compliance frameworks, and tender documentation across all 6 service lines.",
+    image_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
+    team_sectors: [
+      { id: "ts7", label: "FIDIC Contracts", icon_name: "FileText", sort_order: 1 },
+      { id: "ts8", label: "Tender Bidding", icon_name: "CheckCircle2", sort_order: 2 },
     ],
   },
 ];
@@ -78,10 +90,10 @@ const Team = () => {
                   Executive Engineering Leadership
                 </span>
                 <h1 className="font-display text-4xl md:text-6xl font-extrabold text-white leading-tight">
-                  Our Construction Leadership
+                  MK Construction Leadership
                 </h1>
                 <p className="mt-5 text-neutral-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-                  Decades of combined master-builder experience steering heavy civil, commercial high-rise, and industrial mega-projects with unyielding safety and precision.
+                  Decades of combined engineering leadership steering national highways, river training works, bridges, and infrastructure megaprojects across Nepal.
                 </p>
               </motion.div>
             </div>
@@ -89,7 +101,7 @@ const Team = () => {
 
           <section ref={teamRef} className="py-20 md:py-28 bg-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {displayMembers.map((member: any, i: number) => {
                   const sectors = (member.team_sectors || []).sort((a: any, b: any) => a.sort_order - b.sort_order);
                   return (

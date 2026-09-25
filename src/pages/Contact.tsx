@@ -11,35 +11,35 @@ import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 const contactCards = [
   {
     icon: HardHat,
-    title: "Tender & Estimating Dept",
-    details: ["tenders@mkconstruction.com", "bids@mkconstruction.com"],
-    subtitle: "RFP Submissions & Estimating",
-    actionLabel: "Email Estimators",
-    actionHref: "mailto:tenders@mkconstruction.com",
+    title: "Tender & Bidding Department",
+    details: ["tenders@mkconstruction.com.np", "info@mkconstruction.com.np"],
+    subtitle: "Public Tenders, RFPs & Bids",
+    actionLabel: "Email Tenders",
+    actionHref: "mailto:tenders@mkconstruction.com.np",
   },
   {
     icon: Building2,
-    title: "Corporate Headquarters",
-    details: ["MK Engineering Tower, 450 Grand Ave", "Metro Infrastructure District, Suite 1200"],
-    subtitle: "Executive Offices & BIM Studio",
+    title: "Central Head Office",
+    details: ["Kathmandu, Nepal", "Class-A Licensed Contractor · GoN"],
+    subtitle: "Executive Secretariat & Technical Bureau",
     actionLabel: "View Location",
     actionHref: "#map",
   },
   {
     icon: Phone,
     title: "Direct Phone Lines",
-    details: ["+1 (800) 555-BUILD (Toll Free)", "+1 (800) 555-2845 (Tenders)"],
-    subtitle: "Mon - Sat: 7:00 AM - 6:00 PM EST",
+    details: ["+977 1 4542380 (Head Office)", "+977 9851087492 (Hotline)"],
+    subtitle: "Sun - Fri: 9:00 AM - 6:00 PM NPT",
     actionLabel: "Call Office",
-    actionHref: "tel:+18005552845",
+    actionHref: "tel:+97714542380",
   },
   {
     icon: Clock,
-    title: "Emergency Field Support",
-    details: ["24/7 Rapid Response Dispatch", "field-ops@mkconstruction.com"],
-    subtitle: "Active Jobsite Safety Hotline",
-    actionLabel: "Safety Hotline",
-    actionHref: "tel:+18005552845",
+    title: "Regional Field Coordination",
+    details: ["Operating across 32 Districts", "field-ops@mkconstruction.com.np"],
+    subtitle: "Province 1, Bagmati, Karnali & Beyond",
+    actionLabel: "Field Ops",
+    actionHref: "mailto:info@mkconstruction.com.np",
   },
 ];
 
@@ -48,9 +48,10 @@ const Contact = () => {
     name: "",
     email: "",
     phone: "",
-    projectType: "Commercial High-Rise",
-    budget: "$10M - $50M",
-    location: "",
+    organization: "",
+    projectType: "Roads & Highways",
+    budget: "₨ 500M - ₨ 2 Billion",
+    location: "Bagmati Province",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,7 +61,7 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const detailedMessage = `[Project Type: ${form.projectType}] [Budget: ${form.budget}] [Location: ${form.location}]\n\n${form.message}`;
+      const detailedMessage = `[Organization: ${form.organization}] [Project Type: ${form.projectType}] [Budget: ${form.budget}] [Province/District: ${form.location}]\n\n${form.message}`;
       const { error } = await supabase.from("contact_submissions").insert([
         { 
           name: form.name, 
@@ -74,19 +75,20 @@ const Contact = () => {
         console.warn("Supabase submission note:", error);
       }
       
-      toast.success("Tender inquiry submitted successfully! Our Pre-Construction Director will contact you within 24 hours.");
+      toast.success("Tender inquiry submitted successfully! Our Technical Directorate will review your RFP and reply within 24 hours.");
       setForm({
         name: "",
         email: "",
         phone: "",
-        projectType: "Commercial High-Rise",
-        budget: "$10M - $50M",
-        location: "",
+        organization: "",
+        projectType: "Roads & Highways",
+        budget: "₨ 500M - ₨ 2 Billion",
+        location: "Bagmati Province",
         message: "",
       });
     } catch (error) {
       console.error("Error submitting inquiry:", error);
-      toast.error("Failed to submit inquiry. Please email tenders@mkconstruction.com directly.");
+      toast.error("Failed to submit inquiry. Please email info@mkconstruction.com.np directly.");
     } finally {
       setIsSubmitting(false);
     }
@@ -194,7 +196,7 @@ const Contact = () => {
                   value={form.name} 
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
-                  placeholder="e.g. Marcus Sterling" 
+                  placeholder="e.g. Er. Anup Sharma" 
                 />
               </div>
 
@@ -208,15 +210,15 @@ const Contact = () => {
                   value={form.email} 
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
-                  placeholder="e.g. m.sterling@apexproperties.com" 
+                  placeholder="e.g. a.sharma@agency.gov.np" 
                 />
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
-                  Phone Number *
+                  Phone / Mobile Number *
                 </label>
                 <input 
                   type="tel" 
@@ -224,56 +226,56 @@ const Contact = () => {
                   value={form.phone} 
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
-                  placeholder="+1 (555) 019-2834" 
+                  placeholder="+977 98XXXXXXXX" 
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
-                  Project Discipline
+                  Organization / Government Agency
+                </label>
+                <input 
+                  type="text" 
+                  value={form.organization} 
+                  onChange={(e) => setForm({ ...form, organization: e.target.value })}
+                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  placeholder="e.g. Department of Roads / NEA / Municipal Office" 
+                />
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
+                  Project Type / Engineering Vertical
                 </label>
                 <select
                   value={form.projectType}
                   onChange={(e) => setForm({ ...form, projectType: e.target.value })}
                   className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 >
-                  <option value="Commercial High-Rise">Commercial High-Rise Tower</option>
-                  <option value="Heavy Civil & Highway">Heavy Civil & Bridge / Highway</option>
-                  <option value="Industrial Logistics">Industrial & Automated Warehouse</option>
-                  <option value="Deep Foundations">Deep Geotechnical & Shoring</option>
-                  <option value="BIM 5D Virtual Design">BIM 5D Pre-Construction</option>
-                  <option value="Sustainable Green Retrofit">LEED Green Retrofit</option>
+                  <option value="Roads & Highways">Roads & Highways</option>
+                  <option value="Bridges & Structures">Bridges & Structures</option>
+                  <option value="River Training">River Training & Flood Protection</option>
+                  <option value="Buildings">Buildings (NBC Standards)</option>
+                  <option value="Hydropower Civil">Hydropower Civil Works</option>
+                  <option value="Water & Sanitation">Water & Sanitation Systems</option>
+                  <option value="General RFQ">General Tender / Inquiry</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
-                  Anticipated Budget
+                  Project Location / Province & District
                 </label>
-                <select
-                  value={form.budget}
-                  onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                >
-                  <option value="Under $10M">Under $10 Million</option>
-                  <option value="$10M - $50M">$10M - $50 Million</option>
-                  <option value="$50M - $150M">$50M - $150 Million</option>
-                  <option value="$150M+">$150 Million+ (Mega-Project)</option>
-                </select>
+                <input 
+                  type="text" 
+                  value={form.location} 
+                  onChange={(e) => setForm({ ...form, location: e.target.value })}
+                  className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
+                  placeholder="e.g. Karnali Province, Dailekh District" 
+                />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-foreground mb-2">
-                Project Site Location / City
-              </label>
-              <input 
-                type="text" 
-                value={form.location} 
-                onChange={(e) => setForm({ ...form, location: e.target.value })}
-                className="w-full rounded-2xl border-2 border-orange-100 bg-orange-50/30 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" 
-                placeholder="e.g. North Interstate Corridor, Plot 4B" 
-              />
             </div>
 
             <div>

@@ -1,27 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import { Building2, ArrowRight } from "lucide-react";
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
 
 export const BentoServicesSection = () => {
-  const { data: dbServices = [] } = useQuery({
-    queryKey: ["services-home"],
-    queryFn: async () => {
-      const { data } = await supabase
-        .from("services")
-        .select("*, sub_services(*)")
-        .order("sort_order");
-      return data || [];
-    },
-  });
-
-  const validDbServices = filterOutLegacyFinancial(dbServices);
-  // Use DB services if available, otherwise fall back to the shared default data
-  const services = validDbServices.length > 0 ? validDbServices : DEFAULT_CONSTRUCTION_SERVICES;
+  const services = DEFAULT_CONSTRUCTION_SERVICES;
 
   return (
     <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white relative overflow-hidden">

@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/components/Layout";
 
-const Index = lazy(() => import("./pages/Index"));
+import Index from "./pages/Index";
 const About = lazy(() => import("./pages/About"));
 const Services = lazy(() => import("./pages/Services"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
@@ -39,14 +39,6 @@ const ScrollToTop = () => {
   return null;
 };
 
-const PageFallback = () => (
-  <div className="min-h-[50vh] flex items-center justify-center bg-transparent">
-    <div className="flex flex-col items-center gap-3">
-      <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-    </div>
-  </div>
-);
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -54,7 +46,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <Suspense fallback={<PageFallback />}>
+        <Suspense fallback={null}>
           <Routes>
             <Route element={<Layout />}>
               {/* Core 9 Pages as specified in markdown */}

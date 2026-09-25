@@ -12,7 +12,7 @@ const defaultPosts = [
     title: "Saptakoshi River Bridge: Deep-Well Pier Milestone Completed Ahead of Monsoon",
     category: "Project Milestones",
     excerpt: "Our heavy bridge engineering division completed all 18 deep-well pier caissons for the Saptakoshi River crossing, beating the critical monsoon flood window.",
-    thumbnail_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800",
+    thumbnail_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800",
     published_at: "2026-09-18",
   },
   {
@@ -21,7 +21,7 @@ const defaultPosts = [
     title: "MK Construction Awarded Mid-Hill Highway Package 7 Paving Contract (₨ 1.9B)",
     category: "Tender Wins",
     excerpt: "The Department of Roads has awarded MK Construction Company Pvt. Ltd. the turnkey 48km asphalt concrete and slope stabilization contract in Karnali.",
-    thumbnail_url: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=800",
+    thumbnail_url: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=800",
     published_at: "2026-09-08",
   },
   {
@@ -100,7 +100,7 @@ const BlogSection = () => {
             >
               <Link to={`/blog/${post.slug}`} className="block overflow-hidden h-52 relative">
                 <img 
-                  src={post.thumbnail_url || "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800"} 
+                  src={post.thumbnail_url || "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800"} 
                   alt={post.title} 
                   className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out" 
                 />

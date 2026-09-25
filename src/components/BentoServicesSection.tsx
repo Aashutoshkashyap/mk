@@ -13,7 +13,7 @@ export const DEFAULT_NEPAL_SERVICES = [
     title: 'Roads & Highways', 
     description: 'National highways, district roads, rural feeder networks, and urban arterials across complex mountain and plains topography. Full-depth asphalt, DBST, gravel, and rigid concrete pavement with integrated slope stabilization and drainage culverts.', 
     icon_name: 'Truck', 
-    image_url: 'https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200',
+    image_url: 'https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200',
     scope: ['Earthwork & Subgrade', 'Pavement Layers (DBST/Asphalt)', 'Culverts & Drainage', 'Retaining Structures'],
   },
   { 
@@ -29,7 +29,7 @@ export const DEFAULT_NEPAL_SERVICES = [
     title: 'River Training & Flood Mitigation', 
     description: 'Hydraulic protection works for riverbank stabilization and flood mitigation in dynamic river systems. Heavy gabion revetments, RCC spurs, boulder pitching, channelization, and guided flood dykes safeguarding communities.', 
     icon_name: 'Waves', 
-    image_url: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200',
+    image_url: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200',
     scope: ['Gabion & RCC Spurs', 'Embankment Construction', 'Toe Protection & Armor Rock', 'River Channelization'],
   },
   { 
@@ -114,12 +114,12 @@ const BentoServicesSection = () => {
                 {/* Visual Image Banner with Provision for Uploaded Image */}
                 <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
                   <img 
-                    src={service.image_url || 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200'} 
+                    src={service.image_url || 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200'} 
                     alt={service.title} 
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108" 
                     loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.src = 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200';
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200';
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />

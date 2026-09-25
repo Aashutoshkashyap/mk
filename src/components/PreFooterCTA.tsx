@@ -35,8 +35,7 @@ const PreFooterCTA = () => {
               <PrimaryButton
                 as={Link}
                 to={data?.cta_link || "/contact"}
-                className="bg-white text-primary hover:bg-white/95 font-bold shadow-xl hover:shadow-2xl transition-all active:scale-95"
-                borderRadius="100px"
+                className="bg-white text-primary hover:bg-white/95 font-bold shadow-xl hover:shadow-2xl transition-all active:scale-95 border-none"
                 containerClassName="h-14 min-w-[240px]"
               >
                 <span className="flex items-center gap-2 text-base">
@@ -44,8 +43,8 @@ const PreFooterCTA = () => {
                 </span>
               </PrimaryButton>
               <Link
-                to="/portfolio"
-                className="inline-flex items-center justify-center h-14 px-8 rounded-full border-2 border-white/40 text-white font-bold hover:bg-white/10 transition-all text-base"
+                to="/projects"
+                className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-black/25 hover:bg-black/40 backdrop-blur-md text-white font-bold transition-all text-base border-none shadow-md"
               >
                 Explore Completed Works
               </Link>

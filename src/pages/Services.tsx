@@ -15,7 +15,7 @@ const defaultConstructionServices = [
     disciplineNumber: "01",
     description: "National highways, district roads, rural feeder networks, and urban arterials across complex mountain and plains topography. Full-depth asphalt, DBST, gravel, and rigid concrete pavement with integrated slope stabilization and drainage culverts.",
     icon_name: "Truck",
-    image_url: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200",
     sub_services: [
       { id: "ss1", label: "Earthwork & Sub-grade Preparation", icon_name: "Hammer", sort_order: 1 },
       { id: "ss2", label: "Pavement Layers (Asphalt / DBST)", icon_name: "Truck", sort_order: 2 },
@@ -43,7 +43,7 @@ const defaultConstructionServices = [
     disciplineNumber: "03",
     description: "Hydraulic protection works for riverbank stabilization and flood mitigation in dynamic monsoon-fed river systems. Heavy gabion revetments, RCC spurs, boulder pitching, channelization, and guided flood dykes safeguarding agricultural basins and towns.",
     icon_name: "Waves",
-    image_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
     sub_services: [
       { id: "ss9", label: "Gabion & RCC Guided Spurs", icon_name: "Waves", sort_order: 1 },
       { id: "ss10", label: "Flood Embankment Dykes", icon_name: "Building2", sort_order: 2 },
@@ -165,12 +165,12 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
       >
         <div className="relative rounded-2xl overflow-hidden shadow-xl group h-80 bg-neutral-900">
           <img 
-            src={service.image_url || "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200"} 
+            src={service.image_url || "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200"} 
             alt={service.title} 
             className="w-full h-full object-cover rounded-2xl group-hover:scale-108 transition-transform duration-700 ease-out" 
             loading="lazy"
             onError={(e) => {
-              e.currentTarget.src = "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200";
+              e.currentTarget.src = "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200";
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent rounded-2xl pointer-events-none" />

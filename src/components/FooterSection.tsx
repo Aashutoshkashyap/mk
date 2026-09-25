@@ -13,7 +13,7 @@ const FooterSection = () => {
   });
 
   return (
-    <footer className="py-16 bg-neutral-950 text-white relative border-t-4 border-primary">
+    <footer className="py-16 bg-neutral-950 text-white relative border-t border-neutral-900">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-4 gap-10">
           <div>

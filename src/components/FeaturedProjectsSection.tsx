@@ -28,7 +28,7 @@ export const NEPAL_FEATURED_PROJECTS = [
     contractValue: "₨ 1.9 Billion",
     description: "42 km high-altitude highway expansion through steep mountain terrain. Executed heavy rock excavation, reinforced breast and retaining walls, bio-engineering slope stabilization, and double-coat DBST pavement.",
     highlights: ["42 km Mountain Highway Corridor", "Extensive Gabion & RCC Retaining Walls", "All-Weather Connectivity for Mountain Communities"],
-    imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: "bagmati-river-training",
@@ -41,7 +41,7 @@ export const NEPAL_FEATURED_PROJECTS = [
     contractValue: "₨ 1.2 Billion",
     description: "Critical flood mitigation infrastructure along 18 km of the Bagmati river corridor. Executed continuous RCC flood retaining walls, armored rip-rap boulder pitching, and guided flow spurs.",
     highlights: ["18 km Flood Protection Dyke & Spurs", "Mitigates Severe Monsoon Flood Surge", "Executed with In-House Heavy Fleet"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: "provincial-hq-complex",

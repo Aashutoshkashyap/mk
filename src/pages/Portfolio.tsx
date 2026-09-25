@@ -51,7 +51,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     budget: "₨ 1.9 Billion",
     description: "42 km high-altitude highway expansion through steep mountain terrain. Executed heavy rock excavation, reinforced breast and retaining walls, bio-engineering slope stabilization, and double-coat DBST pavement.",
     highlights: ["42 km Mountain Alignment with 120+ Culverts", "Extensive Gabion & RCC Retaining Walls", "Completed Ahead of DOR Monsoon Moratorium"],
-    imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200",
     featured: true,
   },
   {
@@ -66,7 +66,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     budget: "₨ 1.2 Billion",
     description: "Critical flood mitigation infrastructure along 18 km of the Bagmati river corridor. Executed continuous RCC flood retaining walls, armored rip-rap boulder pitching, and guided flow spurs.",
     highlights: ["18 km Flood Protection Dyke & RCC Spurs", "Mitigates Severe Monsoon Flood Surge for 80,000 Residents", "Armor Rock Sourced & Transported via Captive Fleet"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
     featured: true,
   },
   {
@@ -126,7 +126,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     budget: "₨ 840 Million",
     description: "Construction of rural feeder connectivity linking remote agricultural valleys to the national transport spine. Over 45 RCC slab culverts and geo-textile drainage channels.",
     highlights: ["45 RCC Box & Pipe Culverts", "Geo-Textile Reinforced Embankments", "Year-Round Freight Passage for Farmers"],
-    imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=1200",
     featured: false,
   },
   {
@@ -156,7 +156,7 @@ const PROJECTS_DATA: ProjectItem[] = [
     budget: "₨ 610 Million",
     description: "Erection of 32 heavy permeable spurs and 12 km of geo-bag reinforced flood dykes along the flood-prone Kankai river corridor.",
     highlights: ["32 Heavy Concrete & Gabion Spurs", "Geo-synthetic Filter Fabrics & Rip-Rap Armor", "Prevented Monsoon Inundation Across 4,000 Hectares"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200",
     featured: false,
   },
   {

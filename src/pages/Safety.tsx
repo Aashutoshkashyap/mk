@@ -12,7 +12,7 @@ const FLEET_CATEGORIES = [
     count: "140+ Units",
     description: "Heavy hydraulic excavators (CAT, Komatsu), long-reach slope stabilization booms, and crawler bulldozers equipped with GPS grade control for high-altitude hill cutting and Terai earthwork.",
     specs: ["Komatsu PC200–PC800 & CAT 349 Excavators", "CAT D6 & D8 Track-Type Bulldozers", "Hydraulic Rock Breakers & Long-Reach Booms"],
-    imageUrl: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=900",
+    imageUrl: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=900",
   },
   {
     title: "Motor Graders & Heavy Compaction",
@@ -33,7 +33,7 @@ const FLEET_CATEGORIES = [
     count: "45 Units",
     description: "Sensor-guided asphalt pavers, bitumen distributors, mechanical chip spreaders, and cold milling machines for national highways and regional transit corridors.",
     specs: ["Vögele Super 1800-3 Asphalt Pavers", "Hydrostatic Bitumen Pressure Distributors", "Pneumatic Tire Rollers for Surface Sealing"],
-    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=900",
+    imageUrl: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=900",
   },
   {
     title: "Heavy Tippers, Transit Mixers & Tankers",

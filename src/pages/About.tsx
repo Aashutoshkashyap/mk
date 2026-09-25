@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Eye, Target, Globe, Users, Award } from "lucide-react";
+import { Eye, Target } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
@@ -16,6 +16,7 @@ const About = () => {
   const visionInView = useInView(visionRef, { once: true, margin: "-80px" });
   const valuesInView = useInView(valuesRef, { once: true, margin: "-80px" });
   const galleryInView = useInView(galleryRef, { once: true, margin: "-80px" });
+  const { isVisible } = useSectionVisibility();
 
   const { data: about } = useQuery({
     queryKey: ["about"],
@@ -43,9 +44,9 @@ const About = () => {
   ];
 
   const defaultGallery = [
-    { id: "g1", image_url: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800", alt_text: "High-Rise Tower Crane Construction" },
+    { id: "g1", image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800", alt_text: "High-Rise Tower Crane Construction" },
     { id: "g2", image_url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800", alt_text: "Engineers Reviewing Site Blueprints" },
-    { id: "g3", image_url: "https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&q=80&w=800", alt_text: "Highway Viaduct Segmental Gantry" },
+    { id: "g3", image_url: "https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&q=80&w=800", alt_text: "Highway Viaduct Segmental Gantry" },
     { id: "g4", image_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800", alt_text: "Industrial Logistics Super-Flat Slabs" },
     { id: "g5", image_url: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", alt_text: "Cable-Stayed Transit Bridge" },
     { id: "g6", image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800", alt_text: "Institutional Complex & Administration" },
@@ -87,7 +88,7 @@ const About = () => {
               <motion.div initial={{ opacity: 0, x: -30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-orange-50 group">
                   <img 
-                    src={about?.image_url || "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200"} 
+                    src={about?.image_url || "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200"} 
                     alt="MK Construction Company Headquarters" 
                     className="w-full h-[420px] object-cover group-hover:scale-105 transition-transform duration-700" 
                   />

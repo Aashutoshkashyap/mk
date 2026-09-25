@@ -18,32 +18,7 @@ const HeroSection = () => {
 
 
   // Default construction engineering visual if no image is uploaded from CMS
-  const defaultConstructionImg = "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=1200";
-
-  if (isLoading) {
-    return (
-      <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full animate-pulse">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="max-w-2xl text-center lg:text-left space-y-6">
-              <div className="h-16 bg-secondary/80 rounded-2xl w-3/4 mx-auto lg:mx-0"></div>
-              <div className="h-16 bg-secondary/80 rounded-2xl w-2/3 mx-auto lg:mx-0"></div>
-              <div className="h-20 bg-secondary/40 rounded-2xl w-full mt-8"></div>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-10">
-                <div className="h-14 w-40 bg-secondary/80 rounded-2xl"></div>
-                <div className="h-14 w-40 bg-secondary/40 rounded-2xl"></div>
-              </div>
-            </div>
-            <div className="relative flex justify-center lg:justify-end">
-              <div className="w-full max-w-[550px] aspect-square flex items-center justify-center">
-                <div className="w-[95%] h-[95%] bg-secondary/30 rounded-[4rem] border border-border"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const defaultConstructionImg = "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=1200";
 
   return (
     <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">

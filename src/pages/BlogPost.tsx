@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, User, Eye, HardHat, Share2, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import PreFooterCTA from "@/components/PreFooterCTA";
-import { defaultConstructionArticles } from "./Blog";
+import { defaultConstructionArticles } from "@/lib/blogData";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();

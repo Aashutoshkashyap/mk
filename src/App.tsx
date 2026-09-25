@@ -23,6 +23,7 @@ const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      retry: false,
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5, // 5 minutes default for performance
       gcTime: 1000 * 60 * 30, // 30 minutes garbage collection
@@ -39,10 +40,9 @@ const ScrollToTop = () => {
 };
 
 const PageFallback = () => (
-  <div className="min-h-[60vh] flex items-center justify-center bg-white">
+  <div className="min-h-[50vh] flex items-center justify-center bg-transparent">
     <div className="flex flex-col items-center gap-3">
-      <div className="h-10 w-10 rounded-full border-4 border-primary border-t-transparent animate-spin" />
-      <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Loading Page...</span>
+      <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
     </div>
   </div>
 );

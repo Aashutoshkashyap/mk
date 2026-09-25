@@ -51,8 +51,8 @@ export const BentoServicesSection = () => {
                     {/* Background subtle mesh grid */}
                     <div className="absolute inset-0 bg-[radial-gradient(#888a8c10_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-60" />
 
-                    {/* Inner Mockup Window with FULL-SIZE Image */}
-                    <div className="relative w-full max-w-[280px] h-42 bg-white rounded-xl shadow-md group-hover:shadow-2xl border border-neutral-200/80 flex flex-col overflow-hidden group-hover:scale-[1.03] transition-all duration-500">
+                    {/* Inner Mockup Window with UNIFORM FULL-SIZE Image */}
+                    <div className="relative w-full max-w-[290px] h-40 bg-white rounded-xl shadow-md group-hover:shadow-2xl border border-neutral-200/80 flex flex-col overflow-hidden group-hover:scale-[1.03] transition-all duration-500 shrink-0">
                       {/* Window top bar */}
                       <div className="flex items-center justify-between px-3 py-1.5 bg-neutral-50/90 border-b border-neutral-200/70 shrink-0">
                         <div className="flex items-center gap-1.5">
@@ -60,24 +60,24 @@ export const BentoServicesSection = () => {
                           <span className="w-2 h-2 rounded-full bg-amber-400" />
                           <span className="w-2 h-2 rounded-full bg-emerald-400" />
                         </div>
-                        <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider">
+                        <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider truncate max-w-[170px]">
                           Sector 0{index + 1} · {service.title.split(' ')[0]}
                         </span>
                       </div>
 
-                      {/* Full-bleed Photo of respective service */}
+                      {/* Full-bleed Photo with Absolute Inset for 100% Uniformity */}
                       <div className="relative flex-1 w-full overflow-hidden bg-neutral-900">
                         <img
                           src={service.image_url}
                           alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                          className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent pointer-events-none" />
 
                         {/* Floating Technical Overlay Chips */}
-                        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
-                          <span className="text-[9px] font-black text-white bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/20 shadow-xs">
+                        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none gap-1">
+                          <span className="text-[9px] font-black text-white bg-black/65 backdrop-blur-md px-2 py-0.5 rounded border border-white/20 shadow-xs truncate max-w-[140px]">
                             {index === 0 && "Asphalt / DBST"}
                             {index === 1 && "Span: 200m+ Caisson"}
                             {index === 2 && "RCC Guided Spurs"}
@@ -86,7 +86,7 @@ export const BentoServicesSection = () => {
                             {index === 5 && "Bulk DI PN16 Mains"}
                           </span>
 
-                          <span className="text-[9px] font-bold text-white bg-[#F5333F] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+                          <span className="text-[9px] font-bold text-white bg-[#F5333F] px-2 py-0.5 rounded shadow-sm flex items-center gap-1 shrink-0">
                             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                             {index === 0 && "QA/QC Verified"}
                             {index === 1 && "FIDIC Standard"}

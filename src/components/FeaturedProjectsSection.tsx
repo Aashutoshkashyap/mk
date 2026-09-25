@@ -105,38 +105,28 @@ export const FeaturedProjectsSection = () => {
     <section className="py-20 md:py-28 bg-white relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-4 shadow-xs">
-              National Infrastructure Portfolio
-            </span>
-            <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
-              Featured Works Across Nepal
-            </h2>
-            <p className="mt-3 text-muted-foreground text-base max-w-xl">
-              Major roads, long-span river crossings, hydraulic flood defense, civic institutions, and hydropower packages delivered to Class-A standards.
-            </p>
-          </div>
-
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 text-sm font-bold text-[#888A8C] hover:text-[#24272A] transition-all group shrink-0"
-          >
-            <span>View All Projects in Full Portfolio</span>
-            <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
-          </Link>
+        {/* Section Header (Centered) */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-4 shadow-xs">
+            National Infrastructure Portfolio
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
+            Featured Works Across Nepal
+          </h2>
+          <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            Major roads, long-span river crossings, hydraulic flood defense, civic institutions, and hydropower packages delivered to Class-A standards.
+          </p>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-10 overflow-x-auto pb-2">
+        {/* Filter Pills (Centered) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">
           {CATEGORIES.map((tab) => {
             const active = selectedCategory === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setSelectedCategory(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap ${
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 whitespace-nowrap ${
                   active
                     ? "bg-[#888A8C] text-white shadow-md shadow-black/10"
                     : "bg-transparent text-foreground/80 hover:bg-[#888A8C]/10 hover:text-[#24272A] border border-[#888A8C]/30"

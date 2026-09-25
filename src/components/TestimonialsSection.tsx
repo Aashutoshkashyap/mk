@@ -148,7 +148,7 @@ const TestimonialsSection = () => {
 
               {/* Verified Project Badge */}
               <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-transparent border border-[#888A8C]/40 text-[11px] font-semibold text-foreground/80">
-                <CheckCircle2 size={13} className="text-[#888A8C] shrink-0" />
+                <CheckCircle2 size={13} className="text-primary shrink-0" />
                 <span className="truncate max-w-[200px]">{current.project || "Verified Construction Contract"}</span>
               </div>
             </div>

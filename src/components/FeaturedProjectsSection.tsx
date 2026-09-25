@@ -171,7 +171,7 @@ export const FeaturedProjectsSection = () => {
 
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <div className="flex items-center gap-2 text-xs text-neutral-300 mb-1">
-                      <MapPin size={13} /> {project.location} · {project.completionYear}
+                      <MapPin size={13} className="text-primary shrink-0" /> {project.location} · {project.completionYear}
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-white leading-snug">
                       {project.title}
@@ -188,7 +188,7 @@ export const FeaturedProjectsSection = () => {
                   <div className="space-y-2 pt-4 border-t border-[#888A8C]/20 mb-6">
                     {project.highlights.map((h, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs font-semibold text-foreground">
-                        <CheckCircle2 size={14} className="text-[#888A8C] shrink-0" />
+                        <CheckCircle2 size={14} className="text-primary shrink-0" />
                         <span>{h}</span>
                       </div>
                     ))}
@@ -200,10 +200,10 @@ export const FeaturedProjectsSection = () => {
                     </span>
                     <Link
                       to="/projects"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#888A8C] hover:text-[#24272A] group-hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:underline"
                     >
                       <span>Full Specifications</span>
-                      <ArrowRight size={13} />
+                      <ArrowRight size={13} className="text-primary" />
                     </Link>
                   </div>
                 </div>

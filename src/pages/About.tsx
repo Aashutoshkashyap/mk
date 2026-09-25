@@ -142,7 +142,7 @@ const About = () => {
             <div className="grid md:grid-cols-2 gap-8">
               <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-[#888A8C]/60 transition-all duration-300">
                 <div className="w-14 h-14 rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-6">
-                  <Eye size={28} className="text-[#888A8C]" strokeWidth={1.75} />
+                  <Eye size={28} className="text-primary" strokeWidth={1.75} />
                 </div>
                 <h3 className="font-display text-2xl font-bold text-foreground mb-4">
                   {about?.vision_title || "Our Strategic Vision"}
@@ -154,7 +154,7 @@ const About = () => {
 
               <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.15 }} className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-[#888A8C]/60 transition-all duration-300">
                 <div className="w-14 h-14 rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-6">
-                  <Target size={28} className="text-[#888A8C]" strokeWidth={1.75} />
+                  <Target size={28} className="text-primary" strokeWidth={1.75} />
                 </div>
                 <h3 className="font-display text-2xl font-bold text-foreground mb-4">
                   {about?.mission_title || "Our Operating Mission"}

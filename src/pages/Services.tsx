@@ -177,7 +177,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent rounded-2xl pointer-events-none" />
           <div className="absolute top-5 left-5 w-14 h-14 rounded-2xl bg-white/95 backdrop-blur flex items-center justify-center shadow-lg border border-white/60">
-            <Icon size={26} className="text-[#888A8C]" />
+            <Icon size={26} className="text-primary" />
           </div>
           <span className="absolute bottom-4 right-4 bg-primary text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
             Vertical 0{index + 1}
@@ -211,7 +211,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
                 const SubIcon = getIcon(sub.icon_name) || CheckCircle2;
                 return (
                   <div key={sub.id} className="flex items-center gap-2 rounded-xl bg-neutral-50 border border-[#888A8C]/30 px-3.5 py-2 text-xs text-foreground font-semibold">
-                    <SubIcon size={14} className="text-[#888A8C] shrink-0" />
+                    <SubIcon size={14} className="text-primary shrink-0" />
                     <span className="truncate">{sub.label}</span>
                   </div>
                 );

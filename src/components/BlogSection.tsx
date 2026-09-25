@@ -114,7 +114,7 @@ const BlogSection = () => {
               <div className="p-6 flex flex-col flex-1">
                 <div className="flex items-center justify-between text-[11px] font-bold text-muted-foreground uppercase mb-3">
                   <span className="flex items-center gap-1.5">
-                    <Calendar size={13} className="text-[#888A8C]" />
+                    <Calendar size={13} className="text-primary" />
                     {post.published_at ? new Date(post.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Recent"}
                   </span>
                 </div>

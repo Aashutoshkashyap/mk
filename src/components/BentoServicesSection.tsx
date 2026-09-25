@@ -133,7 +133,7 @@ export const BentoServicesSection = () => {
 
                   {/* Icon Box */}
                   <div className="absolute bottom-4 left-4 w-12 h-12 rounded-2xl bg-white/95 backdrop-blur-md shadow-lg border border-white/60 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-[#888A8C] group-hover:text-white">
-                    <Icon size={22} className="text-[#888A8C] group-hover:text-white transition-colors" />
+                    <Icon size={22} className="text-primary group-hover:text-white transition-colors" />
                   </div>
                 </div>
 

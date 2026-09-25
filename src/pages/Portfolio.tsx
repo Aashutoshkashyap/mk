@@ -331,7 +331,7 @@ const Portfolio = () => {
                       </span>
 
                       <span className="absolute bottom-4 left-4 flex items-center gap-1.5 text-xs text-white/90 font-medium">
-                        <MapPin size={13} className="text-white shrink-0" />
+                        <MapPin size={13} className="text-primary shrink-0" />
                         {project.location}
                       </span>
                     </div>

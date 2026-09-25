@@ -75,7 +75,7 @@ const Index = () => {
                     className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-[#888A8C]/30 p-6 text-center shadow-xl shadow-black/5 hover:shadow-2xl hover:border-[#888A8C]/60 transition-all duration-300"
                   >
                     <div className="w-14 h-14 mx-auto rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-[#888A8C] group-hover:text-white transition-all duration-300">
-                      <Icon size={26} className="text-[#888A8C] group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
+                      <Icon size={26} className="text-primary group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
                     </div>
                     <div className="font-display text-3xl md:text-4xl font-extrabold text-foreground tracking-tight group-hover:text-primary transition-colors">
                       {stat.value}
@@ -160,7 +160,7 @@ const Index = () => {
                     "Municipal Bulk Water & Sanitation",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2.5 text-sm font-semibold text-foreground bg-white/80 p-2.5 rounded-xl border border-[#888A8C]/30 shadow-xs">
-                      <CheckCircle2 size={18} className="text-[#888A8C] shrink-0" />
+                      <CheckCircle2 size={18} className="text-primary shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}

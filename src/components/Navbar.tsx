@@ -137,7 +137,7 @@ const Navbar = () => {
               className="lg:hidden p-2 rounded-xl bg-white/90 border border-[#888A8C]/30 backdrop-blur-md text-foreground transition-all hover:bg-[#888A8C]/10 flex items-center justify-center shrink-0 shadow-sm"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={22} className="text-[#888A8C]" /> : <Menu size={22} />}
+              {mobileOpen ? <X size={22} className="text-primary" /> : <Menu size={22} />}
             </button>
           </div>
         </div>

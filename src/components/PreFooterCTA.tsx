@@ -19,26 +19,35 @@ const PreFooterCTA = () => {
   return (
     <section className="py-20 md:py-28 bg-white relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="relative rounded-3xl bg-gradient-to-r from-primary via-red-700 to-red-800 overflow-hidden shadow-2xl shadow-primary/25 border-none">
-          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-black/10 blur-3xl pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+        {/* Stone / Charcoal Theme Card */}
+        <div 
+          className="relative rounded-3xl overflow-hidden shadow-2xl border-none text-white"
+          style={{
+            background: "linear-gradient(135deg, #24272A 0%, #42464B 45%, #888A8C 100%)",
+          }}
+        >
+          {/* Subtle Grid Pattern Overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+          
+          {/* Ambient Lighting */}
+          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#888A8C]/20 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-[#F5333F]/15 blur-3xl pointer-events-none" />
           
           <div className="relative z-10 p-10 md:p-16 text-center">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-black uppercase tracking-widest mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-xs font-black uppercase tracking-widest mb-6 border border-white/15">
               Turnkey General Contracting & Engineering
             </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight">
               {data?.heading || "Ready to Groundbreak Nepal's Next Landmark Infrastructure?"}
             </h2>
-            <p className="mt-5 text-white/90 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-normal">
+            <p className="mt-5 text-white/80 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-normal">
               {data?.description || "Partner with MK Engineering and Construction for Class-A general contracting, heavy civil engineering, and turnkey project delivery across Nepal."}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <PrimaryButton
                 as={Link}
                 to={data?.cta_link || "/contact"}
-                className="bg-white text-primary hover:bg-white/95 font-bold shadow-xl hover:shadow-2xl transition-all active:scale-95 border-none"
+                className="bg-primary text-white hover:bg-primary/90 font-bold shadow-xl shadow-primary/25 hover:shadow-2xl transition-all active:scale-95 border-none"
                 containerClassName="h-14 min-w-[240px]"
               >
                 <span className="flex items-center gap-2 text-base">
@@ -47,7 +56,7 @@ const PreFooterCTA = () => {
               </PrimaryButton>
               <Link
                 to="/projects"
-                className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-black/25 hover:bg-black/40 backdrop-blur-md text-white font-bold transition-all text-base border-none shadow-md"
+                className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-[#24272A]/60 hover:bg-[#24272A]/80 border border-white/20 backdrop-blur-md text-white font-bold transition-all text-base shadow-md"
               >
                 Explore Completed Works
               </Link>

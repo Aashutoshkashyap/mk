@@ -192,6 +192,11 @@
     color: #000000 !important;
   }
 
+  /* ── Global: all SVG icons red in dark mode ── */
+  .dark svg:not([class*="text-white"]):not([class*="text-green"]):not([class*="text-emerald"]):not([class*="text-amber"]):not([class*="text-red"]):not([class*="fill-"]) {
+    color: #F5333F !important;
+  }
+
   /* ── Cards with white bg: force dark text so it's readable ── */
   /* Targets h*, p, span (non-link) inside any element with bg-white */
   /* Hyperlink <a> tags inside cards are intentionally excluded */

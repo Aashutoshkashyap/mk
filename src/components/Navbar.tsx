@@ -95,8 +95,8 @@ const Navbar = () => {
           </div>
 
           {/* Centered Navigation Capsule (Desktop) */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 mx-4">
-            <div className="flex items-center justify-evenly w-full glass-nav rounded-full px-3 py-1.5 border border-[#888A8C]/40 shadow-lg shadow-black/5 bg-white/95 backdrop-blur-xl">
+          <nav className="hidden lg:flex items-center justify-center">
+            <div className="flex items-center gap-1 glass-nav rounded-full px-3 py-1.5 border border-[#888A8C]/40 shadow-lg shadow-black/5 bg-white/95 backdrop-blur-xl">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (

@@ -1,13 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle2, Truck, Compass, Waves, Building2, Zap, Droplets } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, CheckCircle2, Building2 } from "lucide-react";
 import { getIcon } from "@/lib/iconMap";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
 import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
 
 const Services = () => {

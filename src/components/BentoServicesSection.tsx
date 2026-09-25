@@ -1,18 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { getIcon } from "@/lib/iconMap";
-import { 
-  Building2, 
-  ArrowRight, 
-  Truck, 
-  Compass, 
-  Waves, 
-  Zap, 
-  Droplets,
-  CheckCircle2,
-  Layers,
-  Activity
-} from "lucide-react";
+import { Building2, ArrowRight } from "lucide-react";
 import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
 
 export const BentoServicesSection = () => {

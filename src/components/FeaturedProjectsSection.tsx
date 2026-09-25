@@ -102,7 +102,7 @@ export const FeaturedProjectsSection = () => {
     : NEPAL_FEATURED_PROJECTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-transparent relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header (Centered) */}

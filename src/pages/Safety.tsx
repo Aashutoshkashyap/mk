@@ -123,7 +123,7 @@ const Safety = () => {
       </section>
 
       {/* Capabilities & Quality Assurance Pillars */}
-      <section className="py-20 md:py-28 bg-white relative">
+      <section className="py-20 md:py-28 bg-transparent relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest uppercase text-primary bg-transparent px-5 py-2 rounded-full border border-[#888A8C] text-[#888A8C] inline-block mb-4 shadow-sm">
@@ -159,7 +159,7 @@ const Safety = () => {
       </section>
 
       {/* Heavy Machinery Fleet Showcase */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-red-50/20 to-white relative">
+      <section className="py-20 md:py-28 bg-transparent relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest uppercase text-primary bg-transparent px-5 py-2 rounded-full border border-[#888A8C] text-[#888A8C] inline-block mb-4 shadow-sm">

@@ -41,7 +41,7 @@ const STEPS = [
 
 export const ConstructionProcessSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-transparent relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Header */}

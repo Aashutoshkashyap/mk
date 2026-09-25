@@ -8,7 +8,7 @@ export const BentoServicesSection = () => {
   const services = DEFAULT_CONSTRUCTION_SERVICES;
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-white relative overflow-hidden">
+    <section id="services" className="py-20 md:py-28 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <motion.div

@@ -17,7 +17,7 @@ const PreFooterCTA = () => {
   const data = sanitizeDbRecord(rawData);
 
   return (
-    <section className="py-20 md:py-28 bg-white relative">
+    <section className="py-20 md:py-28 bg-transparent relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Pre-Footer CTA Card */}
         <div 

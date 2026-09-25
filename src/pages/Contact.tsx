@@ -119,7 +119,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Cards */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactCards.map((info, i) => {
@@ -157,7 +157,7 @@ const Contact = () => {
       </section>
 
       {/* Detailed RFQ / Tender Inquiry Form */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-white via-red-50/20 to-white">
+      <section className="py-16 md:py-24 bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div 
             initial={{ opacity: 0, y: 24 }} 
@@ -314,7 +314,7 @@ const Contact = () => {
       </section>
 
       {/* Map & Facility Coordinates */}
-      <section id="map" className="py-16 md:py-24 bg-white">
+      <section id="map" className="py-16 md:py-24 bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="rounded-3xl overflow-hidden border-2 border-[#888A8C]/30 shadow-xl relative">
             <iframe 

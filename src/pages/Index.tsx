@@ -91,7 +91,7 @@ const Index = () => {
 
       {/* About Preview */}
       {isVisible("about_overview") && (
-        <section ref={aboutRef} className="py-16 md:py-24 bg-gradient-to-b from-white via-neutral-50/50 to-white relative overflow-hidden">
+        <section ref={aboutRef} className="py-16 md:py-24 bg-transparent relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div 

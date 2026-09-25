@@ -58,7 +58,7 @@ const BlogSection = () => {
   const displayPosts = validPosts.length > 0 ? validPosts : defaultPosts;
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 overflow-hidden bg-white relative">
+    <section ref={sectionRef} className="py-24 md:py-32 overflow-hidden bg-transparent relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <motion.div

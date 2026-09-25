@@ -22,12 +22,11 @@ const HeroSection = () => {
   const backupConstructionImg = "/images/hero-handshake.png";
 
   return (
-    <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
+    <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-transparent">
       {/* Background Decorative Elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute top-[8%] right-[8%] w-[45%] h-[60%] bg-[#888A8C]/[0.08] rounded-full blur-[130px]" />
         <div className="absolute bottom-[5%] left-[5%] w-[35%] h-[40%] bg-primary/[0.04] rounded-full blur-[110px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#888a8c10_1px,transparent_1px),linear-gradient(to_bottom,#888a8c10_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none" />
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full">

@@ -102,7 +102,7 @@ const Team = () => {
             </div>
           </section>
 
-          <section ref={teamRef} className="py-20 md:py-28 bg-white">
+          <section ref={teamRef} className="py-20 md:py-28 bg-transparent">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {displayMembers.map((member: any, i: number) => {

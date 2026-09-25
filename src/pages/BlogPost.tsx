@@ -126,7 +126,7 @@ const BlogPost = () => {
       </section>
 
       {/* Main Article Body */}
-      <article className="py-16 md:py-24 bg-white">
+      <article className="py-16 md:py-24 bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {post.thumbnail_url && (
             <motion.div 

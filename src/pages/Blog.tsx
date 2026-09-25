@@ -77,7 +77,7 @@ const Blog = () => {
       </section>
 
       {/* Filter and Search Bar */}
-      <section className="py-10 bg-white border-b border-[#888A8C]/30">
+      <section className="py-10 bg-transparent border-b border-[#888A8C]/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Category tabs */}

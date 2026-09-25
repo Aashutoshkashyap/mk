@@ -84,10 +84,9 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-
       {/* Company Overview */}
       {isVisible("about_intro") && (
-        <section ref={heroRef} className="py-20 md:py-28 bg-white">
+        <section ref={heroRef} className="py-20 md:py-28 bg-transparent">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={heroInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6 }}>
@@ -123,7 +122,7 @@ const About = () => {
                     { label: "850+", sub: "Engineers & Crew" },
                     { label: "32", sub: "Districts" },
                   ].map((item, i) => (
-                    <div key={i} className="text-center p-3 rounded-2xl bg-neutral-50 border border-[#888A8C]/30 hover:border-[#888A8C]/60 transition-colors">
+                    <div key={i} className="text-center p-3 rounded-2xl bg-white/80 backdrop-blur-xs border border-[#888A8C]/30 hover:border-[#888A8C]/60 transition-colors">
                       <div className="font-display text-xl font-extrabold text-[#24272A]">{item.label}</div>
                       <div className="text-[11px] font-semibold text-muted-foreground mt-0.5">{item.sub}</div>
                     </div>
@@ -137,7 +136,7 @@ const About = () => {
 
       {/* Vision & Mission */}
       {isVisible("vision_mission") && (
-        <section ref={visionRef} className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white">
+        <section ref={visionRef} className="py-20 md:py-28 bg-transparent">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid md:grid-cols-2 gap-8">
               <motion.div initial={{ opacity: 0, y: 30 }} animate={visionInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-8 md:p-10 shadow-sm hover:shadow-xl hover:border-[#888A8C]/60 transition-all duration-300">
@@ -170,7 +169,7 @@ const About = () => {
 
       {/* Core Values */}
       {isVisible("core_values") && (
-        <section ref={valuesRef} className="py-20 md:py-28 bg-white">
+        <section ref={valuesRef} className="py-20 md:py-28 bg-transparent">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={valuesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-14">
               <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-3">
@@ -187,7 +186,7 @@ const About = () => {
                     key={v.id} 
                     initial={{ opacity: 0, y: 30 }} 
                     animate={valuesInView ? { opacity: 1, y: 0 } : {}} 
-                    transition={{ duration: 0.5, delay: 0.08 * i }}
+                    transition={{ duration: 0.5, delay: 0.08 * i }} 
                     className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-7 text-center hover:border-[#888A8C]/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="w-14 h-14 mx-auto rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-4 text-[#888A8C]">
@@ -205,7 +204,7 @@ const About = () => {
 
       {/* Construction Site Gallery */}
       {isVisible("gallery") && (
-        <section ref={galleryRef} className="py-20 md:py-28 bg-gradient-to-b from-white via-neutral-50/50 to-white">
+        <section ref={galleryRef} className="py-20 md:py-28 bg-transparent">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={galleryInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-14">
               <span className="text-xs font-bold tracking-widest uppercase text-[#888A8C] bg-transparent px-5 py-2 rounded-full border border-[#888A8C] inline-block mb-3">

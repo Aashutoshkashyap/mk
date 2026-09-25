@@ -278,7 +278,7 @@ const Portfolio = () => {
       </section>
 
       {/* Main Portfolio Grid */}
-      <section className="py-16 md:py-24 bg-white relative">
+      <section className="py-16 md:py-24 bg-transparent relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {/* Category Filter Tabs */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">

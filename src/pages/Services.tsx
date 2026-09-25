@@ -36,7 +36,7 @@ const Services = () => {
       </section>
 
       {/* Services List with Alternating Layout */}
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-20 md:py-28 bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-20">
           {displayServices.map((service: any, idx: number) => (
             <ServiceBlock key={service.id} service={service} index={idx} />

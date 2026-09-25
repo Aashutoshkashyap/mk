@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, HardHat, ArrowRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,7 +13,6 @@ const navLinks = [
   { label: "Safety", href: "/safety" },
   { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers" },
-  { label: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
@@ -96,8 +95,8 @@ const Navbar = () => {
           </div>
 
           {/* Centered Navigation Capsule (Desktop) */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 max-w-3xl mx-4">
-            <div className="flex items-center glass-nav rounded-full px-2 py-1.5 border border-[#888A8C]/40 shadow-lg shadow-black/5 bg-white/95 backdrop-blur-xl">
+          <nav className="hidden lg:flex items-center justify-center flex-1 mx-4">
+            <div className="flex items-center justify-evenly w-full glass-nav rounded-full px-3 py-1.5 border border-[#888A8C]/40 shadow-lg shadow-black/5 bg-white/95 backdrop-blur-xl">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -118,20 +117,8 @@ const Navbar = () => {
             </div>
           </nav>
 
-          {/* Contact Button & Mobile Toggle Container */}
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 px-4 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold bg-[#888A8C] hover:bg-[#77797B] text-white shadow-md shadow-black/10 active:scale-95 transition-all duration-300"
-              >
-                <HardHat size={16} className="text-white shrink-0" />
-                <span>Contact Us</span>
-                <ArrowRight size={13} />
-              </Link>
-            </div>
-
-            {/* Mobile Toggle */}
+          {/* Mobile Toggle */}
+          <div className="flex items-center">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="lg:hidden p-2 rounded-xl bg-white/90 border border-[#888A8C]/30 backdrop-blur-md text-foreground transition-all hover:bg-[#888A8C]/10 flex items-center justify-center shrink-0 shadow-sm"

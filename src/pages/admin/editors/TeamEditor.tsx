@@ -1,198 +1,115 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
-import { Save, Plus, Trash2, ChevronDown, ChevronUp, GripVertical } from "lucide-react";
+import { Save, Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
-import iconMap from "@/lib/iconMap";
-import { ImageUpload } from "@/components/admin/ImageUpload";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+
+// Team data uses localStorage directly (no supabase)
+const STORAGE_KEY = "mk_cms_team_members";
+
+const defaultMembers = [
+  { id: "tm1", name: "Mohan Kumar Shrestha", role: "Managing Director & CEO", bio: "Founder and Managing Director with 25+ years leading complex highway, bridge, and infrastructure projects across Nepal. Holds a Masters in Civil Engineering from IOE, Pulchowk.", image_url: "", sort_order: 0 },
+  { id: "tm2", name: "Er. Prabhat Khatri", role: "Chief Technical Officer", bio: "Oversees all engineering design, QC, and technical compliance. Specialises in pre-stressed concrete bridge design and highway geometric engineering.", image_url: "", sort_order: 1 },
+  { id: "tm3", name: "Sunita Thapa", role: "Chief Financial Officer", bio: "Manages the company's financial operations, project cost control, and procurement. 15+ years in infrastructure project finance.", image_url: "", sort_order: 2 },
+  { id: "tm4", name: "Er. Ramesh Karki", role: "Head of Site Operations", bio: "Leads on-site construction teams across all active projects. Expert in earthworks, retaining structures, and heavy equipment deployment in remote terrain.", image_url: "", sort_order: 3 },
+];
+
+function getMembers() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : defaultMembers;
+  } catch { return defaultMembers; }
+}
+
+function saveMembers(members: any[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(members));
+  window.dispatchEvent(new CustomEvent("mk_cms_update", { detail: { key: "team_members" } }));
+}
+
+type Member = { id: string; name: string; role: string; bio: string; image_url: string; sort_order: number };
 
 const TeamEditor = () => {
-  const qc = useQueryClient();
-  const { data: members = [], isLoading } = useQuery({
-    queryKey: ["admin-team"],
-    queryFn: async () => {
-      const { data } = await supabase.from("team_members").select("*, team_sectors(*)").order("sort_order");
-      return data || [];
-    },
-  });
+  const [members, setMembers] = useState<Member[]>(getMembers());
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  const addMutation = useMutation({
-    mutationFn: async ({ len }: any) => {
-      const { error } = await supabase.from("team_members").insert({ name: "New Member", role: "Role", sort_order: len });
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); toast.success("Member added!"); },
-  });
+  const handleSave = () => { saveMembers(members); toast.success("Team updated! Changes are live."); };
 
-  const updateOrderMutation = useMutation({
-    mutationFn: async (items: any[]) => {
-      const promises = items.map((item, index) => 
-        supabase.from("team_members").update({ sort_order: index }).eq("id", item.id)
-      );
-      await Promise.all(promises);
-    },
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["admin-team"] });
-    }
-  });
-
-  const onDragEnd = (result: any) => {
-    if (!result.destination) return;
-    const items = Array.from(members);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    
-    qc.setQueryData(["admin-team"], items);
-    updateOrderMutation.mutate(items);
+  const add = () => {
+    const newMember: Member = { id: crypto.randomUUID(), name: "New Team Member", role: "Title", bio: "", image_url: "", sort_order: members.length };
+    setMembers([...members, newMember]);
+    setExpandedId(newMember.id);
   };
 
-  if (isLoading) return <div className="animate-pulse h-40 bg-secondary rounded-xl" />;
+  const remove = (id: string) => setMembers(members.filter((m) => m.id !== id));
+  const update = (id: string, field: keyof Member, val: string) =>
+    setMembers(members.map((m) => m.id === id ? { ...m, [field]: val } : m));
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl font-extrabold text-primary">Team Members</h2>
-        <button onClick={() => addMutation.mutate({ len: members.length })} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">
-          <Plus size={16} /> Add Member
+        <button onClick={add} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"><Plus size={16} /> Add Member</button>
+      </div>
+      <div className="space-y-3">
+        {members.map((m) => (
+          <div key={m.id} className="rounded-2xl bg-card border border-border overflow-hidden">
+            <div className="flex items-center gap-4 p-4 cursor-pointer hover:bg-secondary/10 transition-colors"
+              onClick={() => setExpandedId(expandedId === m.id ? null : m.id)}>
+              {m.image_url ? (
+                <img src={m.image_url} alt={m.name} className="w-10 h-10 rounded-full object-cover border border-border" />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+                  {m.name.charAt(0)}
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-foreground">{m.name}</div>
+                <div className="text-xs text-muted-foreground">{m.role}</div>
+              </div>
+              {expandedId === m.id ? <ChevronUp size={16} className="text-muted-foreground shrink-0" /> : <ChevronDown size={16} className="text-muted-foreground shrink-0" />}
+            </div>
+            {expandedId === m.id && (
+              <div className="border-t border-border p-4 space-y-3">
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Name</label>
+                    <input value={m.name} onChange={(e) => update(m.id, "name", e.target.value)}
+                      className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Role / Title</label>
+                    <input value={m.role} onChange={(e) => update(m.id, "role", e.target.value)}
+                      className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1">Bio</label>
+                  <textarea value={m.bio} onChange={(e) => update(m.id, "bio", e.target.value)} rows={3}
+                    className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1">Photo URL</label>
+                  <input value={m.image_url} onChange={(e) => update(m.id, "image_url", e.target.value)} placeholder="https://..."
+                    className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
+                </div>
+                <div className="flex justify-end">
+                  <button onClick={() => remove(m.id)}
+                    className="inline-flex items-center gap-1 rounded-lg bg-destructive/10 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/20">
+                    <Trash2 size={13} /> Remove Member
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 flex gap-3">
+        <button onClick={handleSave} className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors">
+          <Save size={16} /> Save Team
+        </button>
+        <button onClick={() => { setMembers(defaultMembers); saveMembers(defaultMembers); toast.success("Reset!"); }}
+          className="inline-flex items-center gap-2 rounded-xl bg-secondary px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary/80 transition-colors">
+          Reset to Defaults
         </button>
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="team-list">
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-              {members.map((m: any, index: number) => (
-                <Draggable key={m.id} draggableId={m.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      className={snapshot.isDragging ? "z-50 relative shadow-2xl ring-1 ring-primary/20 rounded-2xl" : ""}
-                    >
-                      <MemberCard member={m} dragHandleProps={provided.dragHandleProps} />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
-  );
-};
-
-const MemberCard = ({ member, dragHandleProps }: { member: any, dragHandleProps?: any }) => {
-  const qc = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: member.name, role: member.role, image_url: member.image_url || "", experience: member.experience || "", bio: member.bio || "" });
-
-  const updateMutation = useMutation({
-    mutationFn: async ({ form, id }: any) => {
-      const { error } = await supabase.from("team_members").update(form).eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); toast.success("Member updated!"); },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: async ({ id }: any) => {
-      const { error } = await supabase.from("team_members").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); toast.success("Member deleted!"); },
-  });
-
-  const addSectorMutation = useMutation({
-    mutationFn: async ({ id, len }: any) => {
-      const { error } = await supabase.from("team_sectors").insert({ team_member_id: id, icon_name: "Briefcase", label: "New Sector", sort_order: len });
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); },
-  });
-
-  return (
-    <div className="rounded-2xl bg-card border border-border overflow-hidden">
-      <div className="p-5 flex items-center justify-between cursor-pointer" onClick={() => setOpen(!open)}>
-        <div className="flex items-center gap-3">
-          <div {...dragHandleProps} onClick={(e) => e.stopPropagation()} className="cursor-grab text-muted-foreground/30 hover:text-primary transition-colors p-1 -ml-2 rounded-lg hover:bg-secondary">
-            <GripVertical size={20} />
-          </div>
-          {member.image_url && <img src={member.image_url} alt={member.name} className="w-10 h-10 rounded-full object-cover" />}
-          <div>
-            <h3 className="font-bold text-primary text-sm">{member.name}</h3>
-            <p className="text-xs text-muted-foreground">{member.role}</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <button onClick={(e) => { e.stopPropagation(); deleteMutation.mutate({ id: member.id }); }} className="rounded-lg bg-destructive/10 px-2 py-1 text-xs text-destructive"><Trash2 size={14} /></button>
-          {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </div>
-      </div>
-      {open && (
-        <div className="p-5 border-t border-border space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div><label className="block text-xs font-semibold mb-1">Name</label><input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
-            <div><label className="block text-xs font-semibold mb-1">Role</label><input value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <ImageUpload 
-              label="Member Photo" 
-              value={form.image_url} 
-              onChange={(url) => setForm({ ...form, image_url: url })} 
-              folder="team"
-            />
-            <div><label className="block text-xs font-semibold mb-1">Experience</label><input value={form.experience} onChange={(e) => setForm({ ...form, experience: e.target.value })} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
-          </div>
-          <div><label className="block text-xs font-semibold mb-1">Bio</label><textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} rows={2} className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" /></div>
-          <button onClick={() => updateMutation.mutate({ form, id: member.id })} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold text-primary-foreground"><Save size={14} /> Save</button>
-
-          <div className="mt-4">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-bold text-foreground">Sectors</h4>
-              <button onClick={() => addSectorMutation.mutate({ id: member.id, len: member.team_sectors?.length || 0 })} className="text-xs font-bold text-brand-blue flex items-center gap-1"><Plus size={12} /> Add</button>
-            </div>
-            <div className="space-y-2">
-              {(member.team_sectors || []).sort((a: any, b: any) => a.sort_order - b.sort_order).map((sector: any) => (
-                <SectorRow key={sector.id} sector={sector} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const SectorRow = ({ sector }: { sector: any }) => {
-  const qc = useQueryClient();
-  const [form, setForm] = useState({ icon_name: sector.icon_name, label: sector.label });
-
-  const update = useMutation({
-    mutationFn: async ({ form, id }: any) => {
-      const { error } = await supabase.from("team_sectors").update(form).eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); },
-  });
-
-  const del = useMutation({
-    mutationFn: async ({ id }: any) => {
-      const { error } = await supabase.from("team_sectors").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-team"] }); },
-  });
-
-  return (
-    <div className="flex items-center gap-2">
-      <select value={form.icon_name} onChange={(e) => setForm({ ...form, icon_name: e.target.value })} className="rounded-lg border border-border bg-secondary/50 px-2 py-1.5 text-xs w-32">
-        {Object.keys(iconMap).map((k) => <option key={k} value={k}>{k}</option>)}
-      </select>
-      <input value={form.label} onChange={(e) => setForm({ ...form, label: e.target.value })} className="flex-1 rounded-lg border border-border bg-secondary/50 px-3 py-1.5 text-xs" />
-      <button onClick={() => update.mutate({ form, id: sector.id })} className="rounded-lg bg-primary/10 px-2 py-1.5 text-xs text-primary"><Save size={12} /></button>
-      <button onClick={() => del.mutate({ id: sector.id })} className="rounded-lg bg-destructive/10 px-2 py-1.5 text-xs text-destructive"><Trash2 size={12} /></button>
     </div>
   );
 };

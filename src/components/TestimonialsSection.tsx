@@ -1,9 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Star, ArrowRight, Quote } from "lucide-react";
-import { useState, useMemo, useRef, useEffect } from "react";
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+import { useState, useEffect } from "react";
+import { useTestimonialsContent } from "@/hooks/useCMS";
 
 const defaultTestimonials = [
   {
@@ -60,17 +58,7 @@ const defaultTestimonials = [
 
 const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const { data: dbTestimonials = [] } = useQuery({
-    queryKey: ["testimonials-home"],
-    queryFn: async () => {
-      const { data } = await supabase.from("testimonials").select("*").order("sort_order");
-      return data || [];
-    },
-  });
-
-  const validTestimonials = filterOutLegacyFinancial(dbTestimonials);
-  const displayTestimonials = validTestimonials.length > 0 ? validTestimonials : defaultTestimonials;
+  const displayTestimonials = useTestimonialsContent();
 
   // Auto rotate testimonials every 6 seconds
   useEffect(() => {

@@ -1,24 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import { useState } from "react";
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+import { useFaqsContent } from "@/hooks/useCMS";
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const faqs = useFaqsContent();
 
-  const { data: faqs = [] } = useQuery({
-    queryKey: ["faqs-home"],
-    queryFn: async () => {
-      const { data } = await supabase.from("faqs").select("*").order("sort_order");
-      return data || [];
-    },
-  });
-
-  const displayFaqs = filterOutLegacyFinancial(faqs);
-
-  if (displayFaqs.length === 0) return null;
+  if (faqs.length === 0) return null;
 
   return (
     <section className="py-20 bg-transparent">
@@ -34,7 +23,7 @@ const FAQSection = () => {
         </motion.div>
 
         <div className="space-y-4">
-          {displayFaqs.map((faq: any, index: number) => (
+          {faqs.map((faq: any, index: number) => (
             <motion.div
               key={faq.id}
               initial={{ opacity: 0, y: 10 }}

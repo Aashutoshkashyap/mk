@@ -6,16 +6,13 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/iconMap";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
-
-import { sanitizeDbRecord, filterOutLegacyFinancial } from "@/lib/contentFilter";
+import { useStatsContent, useAboutContent } from "@/hooks/useCMS";
 
 const Index = () => {
   const aboutRef = useRef(null);
@@ -23,36 +20,9 @@ const Index = () => {
   const aboutInView = useInView(aboutRef, { once: true, margin: "-60px" });
   const statsInView = useInView(statsRef, { once: true, margin: "-60px" });
 
-  const { data: rawStats = [] } = useQuery({
-    queryKey: ["stats"],
-    queryFn: async () => {
-      const { data } = await supabase.from("stats").select("*").order("sort_order");
-      return data || [];
-    },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const { data: rawAbout } = useQuery({
-    queryKey: ["about-home"],
-    queryFn: async () => {
-      const { data } = await supabase.from("about_section").select("*").maybeSingle();
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const about = sanitizeDbRecord(rawAbout);
+  const displayStats = useStatsContent();
+  const about = useAboutContent();
   const { isVisible } = useSectionVisibility();
-
-  const defaultStats = [
-    { id: '1', icon_name: 'Building2', value: '120+', label: 'Projects Delivered' },
-    { id: '2', icon_name: 'Award', value: '₨ 18B', label: 'Works Executed' },
-    { id: '3', icon_name: 'Users', value: '850+', label: 'Engineers & Crew' },
-    { id: '4', icon_name: 'MapPin', value: '32', label: 'Districts Reached' },
-  ];
-
-  const validStats = filterOutLegacyFinancial(rawStats);
-  const displayStats = validStats.length > 0 ? validStats : defaultStats;
 
   return (
     <>

@@ -1,20 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { PrimaryButton } from "./ui/PrimaryButton";
-import { sanitizeDbRecord } from "@/lib/contentFilter";
+import { usePreFooterCTAContent } from "@/hooks/useCMS";
 
 const PreFooterCTA = () => {
-  const { data: rawData } = useQuery({
-    queryKey: ["prefooter-cta"],
-    queryFn: async () => {
-      const { data } = await supabase.from("prefooter_cta").select("*").single();
-      return data;
-    },
-  });
-
-  const data = sanitizeDbRecord(rawData);
+  const data = usePreFooterCTAContent();
 
   return (
     <section className="py-20 md:py-28 bg-transparent relative">

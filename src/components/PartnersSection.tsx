@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { usePartnersContent } from "@/hooks/useCMS";
 
 const MarqueeRow = ({
   items,
@@ -78,35 +77,14 @@ const PartnersSection = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const { data: partners = [], isLoading, error } = useQuery({
-    queryKey: ["partners"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("partners").select("*").order("sort_order");
-      if (error) throw error;
-      return data || [];
-    },
-  });
 
-  const { data: settings } = useQuery({
-    queryKey: ["site_settings"],
-    queryFn: async () => {
-      const { data } = await supabase.from("site_settings").select("*").eq("id", "00000000-0000-0000-0000-000000000000").maybeSingle();
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
-  });
+  const dbPartners = usePartnersContent();
+  const partnersConfig = {};
+  const displayHeading = "Trusted by Public Authorities & Regional Developers";
+  const displaySubheading = "Collaborating with the Department of Roads (DoR), Nepal Electricity Authority (NEA), DWIDP, and multilateral partners to deliver resilient civil engineering assets across Nepal.";
+  const displayPadding = "py-24 md:py-32";
 
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
-
-  const partnersConfig = (settings as any)?.section_visibility?.partners_config || {};
-  const displayHeading = partnersConfig.heading || "Trusted by Public Authorities & Regional Developers";
-  const displaySubheading = partnersConfig.subheading || "Collaborating with the Department of Roads (DoR), Nepal Electricity Authority (NEA), DWIDP, and multilateral partners to deliver resilient civil engineering assets across Nepal.";
-  const displayPadding = partnersConfig.padding || "py-24 md:py-32";
-
-  if (isLoading) return <div className="h-60 bg-secondary/20 animate-pulse rounded-3xl mx-4 my-20" />;
-
-  const validPartners = filterOutLegacyFinancial(partners);
-  const partnersToDisplay = validPartners.length > 0 ? validPartners : defaultPartners;
+  const partnersToDisplay = dbPartners.length > 0 ? dbPartners : defaultPartners;
 
   // Distribute partners into 3 rows
   const row1 = partnersToDisplay.filter((_, i) => i % 3 === 0);

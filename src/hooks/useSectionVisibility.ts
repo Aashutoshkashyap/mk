@@ -1,76 +1,55 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
 
-const CACHE_KEY = "mk_section_visibility_cache";
+const STORAGE_KEY = "mk_cms_section_visibility";
 
-// Sections that default to TRUE (visible) when no DB record exists
-const DEFAULT_VISIBLE_SECTIONS = new Set([
-  "hero", "about_overview", "services", "testimonials",
-  "cta", "about_intro", "vision_mission", "core_values",
-  "gallery", "team", "services_hero", "services_list",
-  "faqs", "blog", "contact",
-]);
-
-// Sections that default to FALSE (hidden) when no DB record exists
-const DEFAULT_HIDDEN_SECTIONS = new Set(["stats", "partners"]);
-
-const getDefaultVisibility = (): Record<string, boolean> => {
-  const result: Record<string, boolean> = {};
-  DEFAULT_VISIBLE_SECTIONS.forEach((k) => (result[k] = true));
-  DEFAULT_HIDDEN_SECTIONS.forEach((k) => (result[k] = false));
-  return result;
+// Sections visible by default
+const DEFAULT_VISIBILITY: Record<string, boolean> = {
+  hero: true,
+  stats: true,
+  about_overview: true,
+  services: true,
+  testimonials: true,
+  partners: true,
+  blog: true,
+  faqs: true,
+  cta: true,
+  about_intro: true,
+  vision_mission: true,
+  core_values: true,
+  gallery: true,
+  team: true,
+  services_hero: true,
+  services_list: true,
+  contact: true,
 };
 
+function readVisibility(): Record<string, boolean> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...DEFAULT_VISIBILITY, ...JSON.parse(raw) };
+  } catch {}
+  return { ...DEFAULT_VISIBILITY };
+}
+
 export const useSectionVisibility = () => {
-  const { data: settings, isLoading } = useQuery({
-    queryKey: ["site_visibility"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("site_settings")
-        .select("*")
-        .eq("id", "00000000-0000-0000-0000-000000000000")
-        .maybeSingle();
+  const [visibility, setVisibility] = useState<Record<string, boolean>>(readVisibility);
 
-      if (error || !data) {
-        return getDefaultVisibility();
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const key = (e as CustomEvent).detail?.key;
+      if (!key || key === "visibility") {
+        setVisibility(readVisibility());
       }
-
-      const settingsData = data as any;
-      const userVisibility: Record<string, boolean> = settingsData?.section_visibility || {};
-
-      // Merge: start from defaults, then apply only explicit false/true from DB
-      const finalVisibility: Record<string, boolean> = { ...getDefaultVisibility() };
-      for (const [key, val] of Object.entries(userVisibility)) {
-        if (typeof val === "boolean") {
-          finalVisibility[key] = val;
-        }
-      }
-      // stats and partners are opt-in: only show if explicitly true
-      finalVisibility.stats = userVisibility.stats === true;
-      finalVisibility.partners = userVisibility.partners === true;
-
-      try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify(finalVisibility));
-      } catch (e) {
-        // Ignore storage error
-      }
-
-      return finalVisibility;
-    },
-    // Default to everything visible so sections never flash-hide on first load
-    initialData: getDefaultVisibility,
-  });
+    };
+    window.addEventListener("mk_cms_update", handler);
+    return () => window.removeEventListener("mk_cms_update", handler);
+  }, []);
 
   const isVisible = (sectionId: string): boolean => {
-    if (!settings || typeof settings !== "object") {
-      // When no data yet: visible unless it's an opt-in section
-      return !DEFAULT_HIDDEN_SECTIONS.has(sectionId);
-    }
-    const val = (settings as Record<string, boolean>)[sectionId];
-    // If key is absent from DB map, default to visible (unless opt-in)
-    if (val === undefined) return !DEFAULT_HIDDEN_SECTIONS.has(sectionId);
+    const val = visibility[sectionId];
+    if (val === undefined) return DEFAULT_VISIBILITY[sectionId] !== false;
     return val === true;
   };
 
-  return { isVisible, settings, isLoading };
+  return { isVisible, settings: visibility, isLoading: false };
 };

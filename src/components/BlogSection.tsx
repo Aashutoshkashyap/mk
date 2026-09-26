@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar } from "lucide-react";
-import { filterOutLegacyFinancial } from "@/lib/contentFilter";
+import { useBlogPostsContent } from "@/hooks/useCMS";
 
 const defaultPosts = [
   {
@@ -40,22 +38,8 @@ const BlogSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const { data: posts = [], isLoading } = useQuery({
-    queryKey: ["home-blogs"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("*")
-        .eq("is_published", true)
-        .order("published_at", { ascending: false })
-        .limit(3);
-      if (error) throw error;
-      return data || [];
-    },
-  });
-
-  const validPosts = filterOutLegacyFinancial(posts);
-  const displayPosts = validPosts.length > 0 ? validPosts : defaultPosts;
+  const allPosts = useBlogPostsContent();
+  const displayPosts = allPosts.filter((p: any) => p.is_published !== false).slice(0, 3);
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 overflow-hidden bg-transparent relative">

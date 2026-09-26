@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send, MapPin, Phone, Mail, Clock, HardHat, FileText, CheckCircle2, Building2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
+import { contentStore } from "@/lib/contentStore";
 
 const contactCards = [
   {
@@ -62,19 +61,12 @@ const Contact = () => {
     setIsSubmitting(true);
     try {
       const detailedMessage = `[Organization: ${form.organization}] [Project Type: ${form.projectType}] [Budget: ${form.budget}] [Province/District: ${form.location}]\n\n${form.message}`;
-      const { error } = await supabase.from("contact_submissions").insert([
-        { 
-          name: form.name, 
-          email: form.email, 
-          phone: form.phone, 
-          message: detailedMessage 
-        },
-      ]);
-      
-      if (error) {
-        console.warn("Supabase submission note:", error);
-      }
-      
+      contentStore.addMessage({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: detailedMessage,
+      });
       toast.success("Tender inquiry submitted successfully! Our Technical Directorate will review your RFP and reply within 24 hours.");
       setForm({
         name: "",

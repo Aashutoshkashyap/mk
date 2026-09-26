@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Star, ArrowRight, Quote } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTestimonialsContent } from "@/hooks/useCMS";
 
 const defaultTestimonials = [

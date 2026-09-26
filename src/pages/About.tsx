@@ -1,12 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Eye, Target } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { getIcon } from "@/lib/iconMap";
+import DynamicIcon from "@/components/DynamicIcon";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
-import { sanitizeDbRecord, filterOutLegacyFinancial } from "@/lib/contentFilter";
+import { useAboutContent, useCoreValuesContent, useGalleryContent } from "@/hooks/useCMS";
 
 const About = () => {
   const heroRef = useRef(null);
@@ -19,32 +17,9 @@ const About = () => {
   const galleryInView = useInView(galleryRef, { once: true, margin: "-80px" });
   const { isVisible } = useSectionVisibility();
 
-  const { data: rawAbout } = useQuery({
-    queryKey: ["about"],
-    queryFn: async () => { const { data } = await supabase.from("about_section").select("*").single(); return data; },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const { data: rawValues = [] } = useQuery({
-    queryKey: ["core-values"],
-    queryFn: async () => { const { data } = await supabase.from("core_values").select("*").order("sort_order"); return data || []; },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const { data: rawGallery = [] } = useQuery({
-    queryKey: ["gallery"],
-    queryFn: async () => { const { data } = await supabase.from("gallery_images").select("*").order("sort_order"); return data || []; },
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const about = sanitizeDbRecord(rawAbout);
-
-  const defaultValues = [
-    { id: "v1", title: "Zero-Harm Safety First", description: "Uncompromising adherence to occupational safety standards and strict HSE protocols across all Himalayan and Terai jobsites.", icon_name: "ShieldCheck" },
-    { id: "v2", title: "Engineering Discipline", description: "Exacting adherence to Nepal Building Code (NBC), DoR standard specifications, and international FIDIC contractual guidelines.", icon_name: "Building2" },
-    { id: "v3", title: "Timely Delivery", description: "Strategic pre-monsoon milestones, automated scheduling, and captive heavy fleet mobilization to deliver projects within schedule.", icon_name: "Compass" },
-    { id: "v4", title: "Ethical Contracting", description: "Pioneering transparent procurement, corporate governance, community stewardship, and sustainable river basin protection.", icon_name: "Shield" },
-  ];
+  const about = useAboutContent();
+  const displayValues = useCoreValuesContent();
+  const cmsGallery = useGalleryContent();
 
   const defaultGallery = [
     { id: "g1", image_url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800", alt_text: "High-Rise Tower Crane Construction" },
@@ -57,10 +32,7 @@ const About = () => {
     { id: "g8", image_url: "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=80&w=800", alt_text: "Reinforced Concrete Foundation Pour" },
   ];
 
-  const validValues = filterOutLegacyFinancial(rawValues);
-  const validGallery = filterOutLegacyFinancial(rawGallery);
-  const displayValues = validValues.length > 0 ? validValues : defaultValues;
-  const displayGallery = validGallery.length > 0 ? validGallery : defaultGallery;
+  const displayGallery = cmsGallery && cmsGallery.length > 0 ? cmsGallery : defaultGallery;
 
   return (
     <>
@@ -180,7 +152,6 @@ const About = () => {
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {displayValues.map((v: any, i: number) => {
-                const Icon = getIcon(v.icon_name);
                 return (
                   <motion.div 
                     key={v.id} 
@@ -190,7 +161,7 @@ const About = () => {
                     className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-7 text-center hover:border-[#888A8C]/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="w-14 h-14 mx-auto rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-4 text-[#888A8C]">
-                      <Icon size={26} strokeWidth={1.75} />
+                      <DynamicIcon name={v.icon_name} size={26} className="text-[#888A8C]" />
                     </div>
                     <h3 className="font-display text-lg font-bold text-foreground mb-2">{v.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{v.description}</p>

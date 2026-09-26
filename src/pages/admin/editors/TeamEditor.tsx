@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Save, Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 
-// Team data uses localStorage directly (no supabase)
+// Team data uses localStorage directly
 const STORAGE_KEY = "mk_cms_team_members";
 
 const defaultMembers = [
@@ -67,33 +68,37 @@ const TeamEditor = () => {
               {expandedId === m.id ? <ChevronUp size={16} className="text-muted-foreground shrink-0" /> : <ChevronDown size={16} className="text-muted-foreground shrink-0" />}
             </div>
             {expandedId === m.id && (
-              <div className="border-t border-border p-4 space-y-3">
+              <div className="border-t border-border p-4 space-y-4">
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Name</label>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Full Name</label>
                     <input value={m.name} onChange={(e) => update(m.id, "name", e.target.value)}
                       className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Role / Title</label>
+                    <label className="block text-xs font-semibold text-foreground mb-1">Role / Designation</label>
                     <input value={m.role} onChange={(e) => update(m.id, "role", e.target.value)}
                       className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
                   </div>
                 </div>
+
+                <ImageUploadInput
+                  label="Member Photo"
+                  value={m.image_url}
+                  onChange={(url) => update(m.id, "image_url", url)}
+                  placeholder="https://... or upload photo"
+                  previewHeight="h-32"
+                />
+
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Bio</label>
+                  <label className="block text-xs font-semibold text-foreground mb-1">Bio / Credentials</label>
                   <textarea value={m.bio} onChange={(e) => update(m.id, "bio", e.target.value)} rows={3}
-                    className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Photo URL</label>
-                  <input value={m.image_url} onChange={(e) => update(m.id, "image_url", e.target.value)} placeholder="https://..."
                     className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
                 </div>
                 <div className="flex justify-end">
                   <button onClick={() => remove(m.id)}
                     className="inline-flex items-center gap-1 rounded-lg bg-destructive/10 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/20">
-                    <Trash2 size={13} /> Remove Member
+                    <Trash2 size={13} /> Delete Member
                   </button>
                 </div>
               </div>
@@ -104,10 +109,6 @@ const TeamEditor = () => {
       <div className="mt-6 flex gap-3">
         <button onClick={handleSave} className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors">
           <Save size={16} /> Save Team
-        </button>
-        <button onClick={() => { setMembers(defaultMembers); saveMembers(defaultMembers); toast.success("Reset!"); }}
-          className="inline-flex items-center gap-2 rounded-xl bg-secondary px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary/80 transition-colors">
-          Reset to Defaults
         </button>
       </div>
     </div>

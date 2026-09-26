@@ -3,6 +3,7 @@ import { Save } from "lucide-react";
 import { toast } from "sonner";
 import { contentStore, DEFAULTS } from "@/lib/contentStore";
 import { useAboutContent } from "@/hooks/useCMS";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 
 const AboutEditor = () => {
   const data = useAboutContent();
@@ -14,7 +15,7 @@ const AboutEditor = () => {
   };
 
   const f = (key: keyof typeof form) => ({
-    value: form[key] as string,
+    value: (form[key] as string) || "",
     onChange: (v: string) => setForm({ ...form, [key]: v }),
   });
 
@@ -27,7 +28,17 @@ const AboutEditor = () => {
           <Field label="Subheading" {...f("subheading")} />
         </div>
         <Field label="Description" {...f("description")} textarea />
-        <Field label="About Image URL" {...f("image_url")} placeholder="https://... or leave blank for default" />
+        
+        {/* Enhanced Image Upload / URL input */}
+        <ImageUploadInput
+          label="About Section Image"
+          value={form.image_url || ""}
+          onChange={(v) => setForm({ ...form, image_url: v })}
+          placeholder="https://... or upload image"
+          helpText="This image appears in the Company Overview section of the About page."
+          previewHeight="h-44"
+        />
+
         <div className="grid sm:grid-cols-2 gap-5">
           <Field label="Vision Title" {...f("vision_title")} />
           <Field label="Mission Title" {...f("mission_title")} />
@@ -36,7 +47,7 @@ const AboutEditor = () => {
           <Field label="Vision Text" {...f("vision_text")} textarea />
           <Field label="Mission Text" {...f("mission_text")} textarea />
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 pt-2">
           <button onClick={handleSave}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors">
             <Save size={16} /> Save Changes
@@ -53,7 +64,7 @@ const AboutEditor = () => {
 
 const Field = ({ label, value, onChange, textarea, placeholder }: { label: string; value: string; onChange: (v: string) => void; textarea?: boolean; placeholder?: string }) => (
   <div>
-    <label className="block text-sm font-semibold text-foreground mb-1.5">{label}</label>
+    <label className="block text-xs font-semibold text-foreground mb-1.5">{label}</label>
     {textarea ? (
       <textarea value={value || ""} onChange={(e) => onChange(e.target.value)} rows={3} placeholder={placeholder}
         className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { getIcon } from "@/lib/iconMap";
-import { Building2, ArrowRight } from "lucide-react";
+import DynamicIcon from "@/components/DynamicIcon";
+import { ArrowRight } from "lucide-react";
 import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
 
 export const BentoServicesSection = () => {
@@ -31,8 +31,6 @@ export const BentoServicesSection = () => {
         {/* 3x2 Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => {
-            const Icon = getIcon(service.icon_name) || Building2;
-
             return (
               <motion.div
                 key={service.id}
@@ -105,7 +103,7 @@ export const BentoServicesSection = () => {
                     {/* Icon + Title on same row */}
                     <div className="flex items-center gap-3 mb-2.5">
                       <div className="w-8 h-8 rounded-lg bg-neutral-100 flex items-center justify-center text-foreground dark:text-[#F5333F] group-hover:bg-[#F5333F]/10 group-hover:text-[#F5333F] group-hover:scale-110 transition-all duration-300 shrink-0">
-                        <Icon size={18} />
+                        <DynamicIcon name={service.icon_name} size={18} className="text-primary group-hover:text-[#F5333F]" />
                       </div>
                       <h3 className="font-display text-lg md:text-xl font-bold text-foreground tracking-tight group-hover:text-[#F5333F] transition-colors">
                         {service.title}

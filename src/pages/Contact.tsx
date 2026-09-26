@@ -6,41 +6,8 @@ import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 import { contentStore } from "@/lib/contentStore";
-
-const contactCards = [
-  {
-    icon: HardHat,
-    title: "Tender & Bidding Department",
-    details: ["tenders@mkconstruction.com.np", "info@mkconstruction.com.np"],
-    subtitle: "Public Tenders, RFPs & Bids",
-    actionLabel: "Email Tenders",
-    actionHref: "mailto:tenders@mkconstruction.com.np",
-  },
-  {
-    icon: Building2,
-    title: "Central Head Office",
-    details: ["Kathmandu, Nepal", "Class-A Licensed Contractor · GoN"],
-    subtitle: "Executive Secretariat & Technical Bureau",
-    actionLabel: "View Location",
-    actionHref: "#map",
-  },
-  {
-    icon: Phone,
-    title: "Direct Phone Lines",
-    details: ["+977 1 4542380 (Head Office)", "+977 9851087492 (Hotline)"],
-    subtitle: "Sun - Fri: 9:00 AM - 6:00 PM NPT",
-    actionLabel: "Call Office",
-    actionHref: "tel:+97714542380",
-  },
-  {
-    icon: Clock,
-    title: "Regional Field Coordination",
-    details: ["Operating across 32 Districts", "field-ops@mkconstruction.com.np"],
-    subtitle: "Province 1, Bagmati, Karnali & Beyond",
-    actionLabel: "Field Ops",
-    actionHref: "mailto:info@mkconstruction.com.np",
-  },
-];
+import { useContactInfoContent } from "@/hooks/useCMS";
+import DynamicIcon from "@/components/DynamicIcon";
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -55,6 +22,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isVisible } = useSectionVisibility();
+  const contactCards = useContactInfoContent();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,11 +82,10 @@ const Contact = () => {
       <section className="py-16 md:py-24 bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactCards.map((info, i) => {
-              const Icon = info.icon;
+            {contactCards.map((info: any, i: number) => {
               return (
                 <motion.div 
-                  key={info.title} 
+                  key={info.id || info.title} 
                   initial={{ opacity: 0, y: 30 }} 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -126,21 +93,22 @@ const Contact = () => {
                   className="rounded-3xl bg-white border-2 border-[#888A8C]/30 p-7 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 text-primary">
-                    <Icon size={26} strokeWidth={1.75} />
+                    <DynamicIcon name={info.icon_name || "Phone"} size={26} className="text-primary" />
                   </div>
                   <h3 className="font-display text-lg font-bold text-foreground mb-1">{info.title}</h3>
-                  <div className="text-xs text-primary font-bold uppercase tracking-wider mb-4">{info.subtitle}</div>
                   <div className="space-y-1 mb-6 flex-1">
-                    {info.details.map((d) => (
+                    {(info.details || []).map((d: string) => (
                       <p key={d} className="text-sm text-muted-foreground">{d}</p>
                     ))}
                   </div>
-                  <a 
-                    href={info.actionHref}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline transition-all mt-auto pt-4 border-t border-[#888A8C]/30"
-                  >
-                    {info.actionLabel} →
-                  </a>
+                  {info.action_label && (
+                    <a 
+                      href={info.action_href || "#"}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline transition-all mt-auto pt-4 border-t border-[#888A8C]/30"
+                    >
+                      {info.action_label} →
+                    </a>
+                  )}
                 </motion.div>
               );
             })}

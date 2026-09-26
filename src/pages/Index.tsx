@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { getIcon } from "@/lib/iconMap";
+import DynamicIcon from "@/components/DynamicIcon";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
@@ -34,7 +34,6 @@ const Index = () => {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {displayStats.map((stat: any, i: number) => {
-                const Icon = getIcon(stat.icon_name);
                 return (
                   <motion.div 
                     key={stat.id} 
@@ -45,7 +44,7 @@ const Index = () => {
                     className="group rounded-2xl bg-white/95 backdrop-blur-xl border-2 border-[#888A8C]/30 p-6 text-center shadow-xl shadow-black/5 hover:shadow-2xl hover:border-[#888A8C]/60 transition-all duration-300"
                   >
                     <div className="w-14 h-14 mx-auto rounded-2xl bg-[#888A8C]/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-[#888A8C] group-hover:text-white transition-all duration-300">
-                      <Icon size={26} className="text-primary group-hover:text-white transition-colors duration-300" strokeWidth={1.75} />
+                      <DynamicIcon name={stat.icon_name} size={26} className="text-primary group-hover:text-white transition-colors duration-300" />
                     </div>
                     <div className="font-display text-3xl md:text-4xl font-extrabold text-foreground tracking-tight group-hover:text-primary transition-colors">
                       {stat.value}

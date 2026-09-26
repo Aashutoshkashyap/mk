@@ -1,8 +1,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle2, Building2 } from "lucide-react";
-import { getIcon } from "@/lib/iconMap";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import DynamicIcon from "@/components/DynamicIcon";
 import PreFooterCTA from "@/components/PreFooterCTA";
 import { useSectionVisibility } from "@/hooks/useSectionVisibility";
 import { DEFAULT_CONSTRUCTION_SERVICES } from "@/lib/servicesData";
@@ -53,7 +53,6 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const isEven = index % 2 === 0;
-  const Icon = getIcon(service.icon_name) || Building2;
   const subs = (service.sub_services || []).sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0));
 
   return (
@@ -80,7 +79,7 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent rounded-2xl pointer-events-none" />
           <div className="absolute top-5 left-5 w-14 h-14 rounded-2xl bg-white/95 backdrop-blur flex items-center justify-center shadow-lg border border-white/60">
-            <Icon size={26} className="text-[#F5333F]" />
+            <DynamicIcon name={service.icon_name} size={26} className="text-[#F5333F]" />
           </div>
           <span className="absolute bottom-4 right-4 bg-[#F5333F] text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
             Vertical 0{index + 1}
@@ -111,10 +110,9 @@ const ServiceBlock = ({ service, index }: { service: any; index: number }) => {
             </div>
             <div className="grid sm:grid-cols-2 gap-2.5">
               {subs.map((sub: any) => {
-                const SubIcon = getIcon(sub.icon_name) || CheckCircle2;
                 return (
                   <div key={sub.id} className="flex items-center gap-2 rounded-xl bg-neutral-50 border border-[#888A8C]/30 px-3.5 py-2 text-xs text-foreground font-semibold">
-                    <SubIcon size={14} className="text-[#F5333F] shrink-0" />
+                    <DynamicIcon name={sub.icon_name} size={14} className="text-[#F5333F] shrink-0" />
                     <span className="truncate">{sub.label}</span>
                   </div>
                 );

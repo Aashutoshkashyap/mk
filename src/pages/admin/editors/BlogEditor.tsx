@@ -3,6 +3,7 @@ import { Save, Plus, Trash2, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { contentStore, DEFAULTS } from "@/lib/contentStore";
 import { useBlogPostsContent } from "@/hooks/useCMS";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 
 type BlogPost = { id: string; title: string; slug: string; excerpt: string; content: string; category: string; author: string; is_published: boolean; is_featured: boolean; thumbnail_url?: string; published_at?: string };
 
@@ -42,6 +43,13 @@ const BlogEditor = () => {
             {/* List view header */}
             <div className="flex items-center gap-4 p-5 cursor-pointer hover:bg-secondary/20 transition-colors"
               onClick={() => setEditingId(editingId === post.id ? null : post.id)}>
+              {post.thumbnail_url ? (
+                <img src={post.thumbnail_url} alt="" className="w-12 h-12 rounded-lg object-cover border border-border shrink-0" />
+              ) : (
+                <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground text-xs font-bold shrink-0">
+                  No Img
+                </div>
+              )}
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-foreground truncate">{post.title}</div>
                 <div className="text-xs text-muted-foreground mt-0.5">{post.category} · {post.author}</div>
@@ -86,11 +94,16 @@ const BlogEditor = () => {
                       className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1">Thumbnail Image URL</label>
-                  <input value={post.thumbnail_url || ""} onChange={(e) => update(post.id, "thumbnail_url", e.target.value)} placeholder="https://..."
-                    className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
-                </div>
+                
+                {/* Image Upload Input */}
+                <ImageUploadInput
+                  label="Thumbnail Image"
+                  value={post.thumbnail_url || ""}
+                  onChange={(url) => update(post.id, "thumbnail_url", url)}
+                  placeholder="https://... or upload thumbnail"
+                  previewHeight="h-36"
+                />
+
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">Excerpt (short summary)</label>
                   <textarea value={post.excerpt} onChange={(e) => update(post.id, "excerpt", e.target.value)} rows={2}
@@ -101,7 +114,7 @@ const BlogEditor = () => {
                   <textarea value={post.content} onChange={(e) => update(post.id, "content", e.target.value)} rows={8}
                     className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm font-mono" />
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 pt-2">
                   <button onClick={() => toggle(post.id, "is_published")}
                     className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-bold transition-colors ${post.is_published ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-amber-100 text-amber-700 hover:bg-amber-200"}`}>
                     {post.is_published ? <><Eye size={13} /> Published</> : <><EyeOff size={13} /> Draft</>}

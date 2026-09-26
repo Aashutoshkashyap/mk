@@ -3,6 +3,7 @@ import { Save, Plus, Trash2, Image } from "lucide-react";
 import { toast } from "sonner";
 import { contentStore } from "@/lib/contentStore";
 import { useGalleryContent } from "@/hooks/useCMS";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 
 type GalleryImage = { id: string; image_url: string; alt_text?: string; sort_order: number };
 
@@ -31,17 +32,15 @@ const GalleryEditor = () => {
       <div className="grid sm:grid-cols-2 gap-4">
         {images.map((img) => (
           <div key={img.id} className="rounded-2xl bg-card border border-border p-4 space-y-3">
-            {img.image_url && (
-              <img src={img.image_url} alt={img.alt_text || ""} className="w-full h-36 object-cover rounded-xl"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-            )}
+            <ImageUploadInput
+              label="Gallery Image"
+              value={img.image_url}
+              onChange={(url) => update(img.id, "image_url", url)}
+              placeholder="https://... or upload photo"
+              previewHeight="h-36"
+            />
             <div>
-              <label className="block text-xs font-semibold text-foreground mb-1">Image URL</label>
-              <input value={img.image_url} onChange={(e) => update(img.id, "image_url", e.target.value)} placeholder="https://..."
-                className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-foreground mb-1">Alt Text</label>
+              <label className="block text-xs font-semibold text-foreground mb-1">Alt Text / Caption</label>
               <input value={img.alt_text || ""} onChange={(e) => update(img.id, "alt_text", e.target.value)} placeholder="Describe the image..."
                 className="w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-sm" />
             </div>

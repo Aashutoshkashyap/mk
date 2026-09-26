@@ -20,29 +20,30 @@ export const iconMap: Record<string, LucideIcon> = {
   Boxes, Compass, Star, Leaf, Workflow, Waves, Layers, Cpu, Radio, ShieldAlert,
 };
 
-export const getIcon = (name: string): LucideIcon => {
-  if (!name) return HardHat;
+export const getIcon = (name: any): LucideIcon => {
+  if (!name || typeof name !== "string") return HardHat;
   return iconMap[name] || HardHat;
 };
 
 export const iconNames = Object.keys(iconMap);
 
 /**
- * Checks if an icon string is an image URL or data URI rather than a Lucide icon name.
+ * Checks safely if an icon string is an image URL or data URI rather than a Lucide icon name.
  */
-export function isImageIcon(name: string): boolean {
-  if (!name) return false;
+export function isImageIcon(name: any): boolean {
+  if (!name || typeof name !== "string") return false;
+  const str = name.trim();
   return (
-    name.startsWith("http://") ||
-    name.startsWith("https://") ||
-    name.startsWith("data:") ||
-    name.startsWith("/") ||
-    name.startsWith("blob:") ||
-    name.includes(".svg") ||
-    name.includes(".png") ||
-    name.includes(".webp") ||
-    name.includes(".jpg") ||
-    name.includes(".jpeg")
+    str.startsWith("http://") ||
+    str.startsWith("https://") ||
+    str.startsWith("data:") ||
+    str.startsWith("/") ||
+    str.startsWith("blob:") ||
+    str.includes(".svg") ||
+    str.includes(".png") ||
+    str.includes(".webp") ||
+    str.includes(".jpg") ||
+    str.includes(".jpeg")
   );
 }
 

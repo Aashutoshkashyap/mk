@@ -14,6 +14,7 @@ export const DEFAULTS = {
     secondary_cta_text: "Engineering Verticals",
     secondary_cta_link: "/services",
     badge: "Class-A Licensed Contractor · Heavy Civil Engineering",
+    image_url: "/images/hero.jpg",
   },
   about: {
     heading: "Engineering Nepal's Infrastructure With Technical Excellence & Reliability",

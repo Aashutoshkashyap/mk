@@ -3,6 +3,7 @@ import { Save } from "lucide-react";
 import { toast } from "sonner";
 import { contentStore, DEFAULTS } from "@/lib/contentStore";
 import { useHeroContent } from "@/hooks/useCMS";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 
 const HeroEditor = () => {
   const data = useHeroContent();
@@ -10,7 +11,7 @@ const HeroEditor = () => {
 
   const handleSave = () => {
     contentStore.setHero(form);
-    toast.success("Hero section updated! Changes are live on the website.");
+    toast.success("Hero section updated! Changes are live on the homepage.");
   };
 
   return (
@@ -30,8 +31,18 @@ const HeroEditor = () => {
           <Field label="Secondary CTA Text" value={form.secondary_cta_text} onChange={(v) => setForm({ ...form, secondary_cta_text: v })} />
           <Field label="Secondary CTA Link" value={form.secondary_cta_link} onChange={(v) => setForm({ ...form, secondary_cta_link: v })} />
         </div>
-        <Field label="Hero Image URL" value={form.image_url || ""} onChange={(v) => setForm({ ...form, image_url: v })} placeholder="https://... or leave blank for default" />
-        <div className="flex gap-3">
+
+        {/* Hero Section Featured Image with Upload & URL */}
+        <ImageUploadInput
+          label="Hero Section Featured Image"
+          value={form.image_url || "/images/hero.jpg"}
+          onChange={(url) => setForm({ ...form, image_url: url })}
+          placeholder="/images/hero.jpg or https://... or upload image"
+          helpText="This image appears prominently in the circular/badge frame on the main homepage hero section."
+          previewHeight="h-56"
+        />
+
+        <div className="flex gap-3 pt-2">
           <button onClick={handleSave}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-brand-navy-dark transition-colors">
             <Save size={16} /> Save Changes

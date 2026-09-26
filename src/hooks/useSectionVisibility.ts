@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "mk_cms_section_visibility";
 
-// Sections visible by default
 const DEFAULT_VISIBILITY: Record<string, boolean> = {
   hero: true,
   stats: true,
@@ -25,31 +24,95 @@ const DEFAULT_VISIBILITY: Record<string, boolean> = {
 
 function readVisibility(): Record<string, boolean> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return { ...DEFAULT_VISIBILITY, ...JSON.parse(raw) };
-  } catch {}
-  return { ...DEFAULT_VISIBILITY };
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+
+    if (!raw) {
+      return { ...DEFAULT_VISIBILITY };
+    }
+
+    const parsed: unknown = JSON.parse(raw);
+
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      Array.isArray(parsed)
+    ) {
+      return { ...DEFAULT_VISIBILITY };
+    }
+
+    const safeValues = Object.entries(
+      parsed as Record<string, unknown>,
+    ).reduce<Record<string, boolean>>(
+      (result, [key, value]) => {
+        if (typeof value === "boolean") {
+          result[key] = value;
+        }
+
+        return result;
+      },
+      {},
+    );
+
+    return {
+      ...DEFAULT_VISIBILITY,
+      ...safeValues,
+    };
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error(
+        "Failed to read section visibility",
+        error,
+      );
+    }
+
+    return { ...DEFAULT_VISIBILITY };
+  }
 }
 
 export const useSectionVisibility = () => {
-  const [visibility, setVisibility] = useState<Record<string, boolean>>(readVisibility);
+  const [visibility, setVisibility] = useState<
+    Record<string, boolean>
+  >(() => readVisibility());
 
   useEffect(() => {
-    const handler = (e: Event) => {
-      const key = (e as CustomEvent).detail?.key;
+    const handler = (event: Event) => {
+      const key = (event as CustomEvent).detail?.key;
+
       if (!key || key === "visibility") {
         setVisibility(readVisibility());
       }
     };
-    window.addEventListener("mk_cms_update", handler);
-    return () => window.removeEventListener("mk_cms_update", handler);
+
+    window.addEventListener(
+      "mk_cms_update",
+      handler,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "mk_cms_update",
+        handler,
+      );
+    };
   }, []);
 
   const isVisible = (sectionId: string): boolean => {
-    const val = visibility[sectionId];
-    if (val === undefined) return DEFAULT_VISIBILITY[sectionId] !== false;
-    return val === true;
+    if (!sectionId) {
+      return true;
+    }
+
+    const value = visibility[sectionId];
+
+    if (value === undefined) {
+      return DEFAULT_VISIBILITY[sectionId] !== false;
+    }
+
+    return value === true;
   };
 
-  return { isVisible, settings: visibility, isLoading: false };
+  return {
+    isVisible,
+    settings: visibility,
+    isLoading: false,
+  };
 };

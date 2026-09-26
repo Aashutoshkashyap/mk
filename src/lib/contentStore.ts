@@ -92,75 +92,400 @@ export const DEFAULTS = {
 
 const PREFIX = "mk_cms_";
 
-// ─── Generic helpers ─────────────────────────────────────────────────────────
-function readKey<T>(key: string, fallback: T): T {
+type PlainObject = Record<string, unknown>;
+
+function isPlainObject(value: unknown): value is PlainObject {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    !Array.isArray(value)
+  );
+}
+
+function isValidString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function safeParse<T>(raw: string | null, fallback: T): T {
+  if (!raw) {
+    return fallback;
+  }
+
   try {
-    const raw = localStorage.getItem(PREFIX + key);
-    if (!raw) return fallback;
     return JSON.parse(raw) as T;
   } catch {
     return fallback;
   }
 }
 
-function writeKey<T>(key: string, value: T): void {
-  localStorage.setItem(PREFIX + key, JSON.stringify(value));
-  // Dispatch a custom event so other tabs/components can react
-  window.dispatchEvent(new CustomEvent("mk_cms_update", { detail: { key } }));
+function normalizeObject<T extends PlainObject>(
+  value: unknown,
+  defaults: T,
+): T {
+  if (!isPlainObject(value)) {
+    return { ...defaults };
+  }
+
+  return {
+    ...defaults,
+    ...value,
+  } as T;
 }
 
-// ─── Public API ──────────────────────────────────────────────────────────────
+function normalizeArray<T>(
+  value: unknown,
+  defaults: readonly T[],
+): T[] {
+  if (!Array.isArray(value)) {
+    return [...defaults];
+  }
+
+  return value.filter((item) => item !== null && item !== undefined) as T[];
+}
+
+function normalizeHero(value: unknown) {
+  const hero = normalizeObject(value, DEFAULTS.hero);
+
+  return {
+    ...hero,
+    title: isValidString(hero.title)
+      ? hero.title
+      : DEFAULTS.hero.title,
+
+    description: isValidString(hero.description)
+      ? hero.description
+      : DEFAULTS.hero.description,
+
+    cta_text: isValidString(hero.cta_text)
+      ? hero.cta_text
+      : DEFAULTS.hero.cta_text,
+
+    cta_link: isValidString(hero.cta_link)
+      ? hero.cta_link
+      : DEFAULTS.hero.cta_link,
+
+    secondary_cta_text: isValidString(hero.secondary_cta_text)
+      ? hero.secondary_cta_text
+      : DEFAULTS.hero.secondary_cta_text,
+
+    secondary_cta_link: isValidString(hero.secondary_cta_link)
+      ? hero.secondary_cta_link
+      : DEFAULTS.hero.secondary_cta_link,
+
+    badge: isValidString(hero.badge)
+      ? hero.badge
+      : DEFAULTS.hero.badge,
+
+    image_url: isValidString(hero.image_url)
+      ? hero.image_url
+      : DEFAULTS.hero.image_url,
+  };
+}
+
+function normalizeAbout(value: unknown) {
+  const about = normalizeObject(value, DEFAULTS.about);
+
+  return {
+    ...DEFAULTS.about,
+    ...about,
+  };
+}
+
+function normalizePreFooter(value: unknown) {
+  const cta = normalizeObject(
+    value,
+    DEFAULTS.prefooter_cta,
+  );
+
+  return {
+    ...DEFAULTS.prefooter_cta,
+    ...cta,
+  };
+}
+
+function normalizeSiteSettings(value: unknown) {
+  const settings = normalizeObject(
+    value,
+    DEFAULTS.site_settings,
+  );
+
+  return {
+    ...DEFAULTS.site_settings,
+    ...settings,
+    company_name: isValidString(settings.company_name)
+      ? settings.company_name
+      : DEFAULTS.site_settings.company_name,
+
+    logo_url: isValidString(settings.logo_url)
+      ? settings.logo_url
+      : DEFAULTS.site_settings.logo_url,
+  };
+}
+
+function normalizeStats(value: unknown) {
+  return normalizeArray(value, DEFAULTS.stats);
+}
+
+function normalizeServices(value: unknown) {
+  return normalizeArray(value, DEFAULTS.services);
+}
+
+function normalizeCoreValues(value: unknown) {
+  return normalizeArray(value, DEFAULTS.core_values);
+}
+
+function normalizeFaqs(value: unknown) {
+  return normalizeArray(value, DEFAULTS.faqs);
+}
+
+function normalizeTestimonials(value: unknown) {
+  return normalizeArray(value, DEFAULTS.testimonials);
+}
+
+function normalizeBlogPosts(value: unknown) {
+  return normalizeArray(value, DEFAULTS.blog_posts);
+}
+
+function normalizeContactInfo(value: unknown) {
+  return normalizeArray(value, DEFAULTS.contact_info);
+}
+
+function normalizeGallery(value: unknown) {
+  return normalizeArray(value, DEFAULTS.gallery_images);
+}
+
+function normalizePartners(value: unknown) {
+  return normalizeArray(value, DEFAULTS.partners);
+}
+
+/**
+ * Reads a CMS value safely from localStorage.
+ *
+ * Important:
+ * - malformed JSON falls back to defaults
+ * - malformed structures are normalized
+ * - existing localStorage data is NOT deleted
+ */
+function readKey<T>(
+  key: string,
+  fallback: T,
+  normalizer?: (value: unknown) => T,
+): T {
+  try {
+    const raw = window.localStorage.getItem(PREFIX + key);
+
+    if (!raw) {
+      return fallback;
+    }
+
+    const parsed = safeParse<unknown>(raw, fallback);
+
+    if (normalizer) {
+      return normalizer(parsed);
+    }
+
+    return parsed as T;
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error(`Failed to read CMS key "${key}"`, error);
+    }
+
+    return fallback;
+  }
+}
+
+function writeKey<T>(key: string, value: T): void {
+  try {
+    window.localStorage.setItem(
+      PREFIX + key,
+      JSON.stringify(value),
+    );
+
+    window.dispatchEvent(
+      new CustomEvent("mk_cms_update", {
+        detail: { key },
+      }),
+    );
+  } catch (error) {
+    console.error(`Failed to write CMS key "${key}"`, error);
+  }
+}
+
 export const contentStore = {
-  // Single-record sections
-  getHero: () => readKey("hero", DEFAULTS.hero),
-  setHero: (v: typeof DEFAULTS.hero) => writeKey("hero", v),
+  getHero: () =>
+    readKey(
+      "hero",
+      DEFAULTS.hero,
+      normalizeHero,
+    ),
 
-  getAbout: () => readKey("about", DEFAULTS.about),
-  setAbout: (v: typeof DEFAULTS.about) => writeKey("about", v),
+  setHero: (value: typeof DEFAULTS.hero) =>
+    writeKey("hero", value),
 
-  getPreFooterCta: () => readKey("prefooter_cta", DEFAULTS.prefooter_cta),
-  setPreFooterCta: (v: typeof DEFAULTS.prefooter_cta) => writeKey("prefooter_cta", v),
+  getAbout: () =>
+    readKey(
+      "about",
+      DEFAULTS.about,
+      normalizeAbout,
+    ),
 
-  getSiteSettings: () => readKey("site_settings", DEFAULTS.site_settings),
-  setSiteSettings: (v: typeof DEFAULTS.site_settings) => writeKey("site_settings", v),
+  setAbout: (value: typeof DEFAULTS.about) =>
+    writeKey("about", value),
 
-  // List sections
-  getStats: () => readKey("stats", DEFAULTS.stats),
-  setStats: (v: typeof DEFAULTS.stats) => writeKey("stats", v),
+  getPreFooterCta: () =>
+    readKey(
+      "prefooter_cta",
+      DEFAULTS.prefooter_cta,
+      normalizePreFooter,
+    ),
 
-  getServices: () => readKey("services", DEFAULTS.services),
-  setServices: (v: typeof DEFAULTS.services) => writeKey("services", v),
+  setPreFooterCta: (
+    value: typeof DEFAULTS.prefooter_cta,
+  ) => writeKey("prefooter_cta", value),
 
-  getCoreValues: () => readKey("core_values", DEFAULTS.core_values),
-  setCoreValues: (v: typeof DEFAULTS.core_values) => writeKey("core_values", v),
+  getSiteSettings: () =>
+    readKey(
+      "site_settings",
+      DEFAULTS.site_settings,
+      normalizeSiteSettings,
+    ),
 
-  getFaqs: () => readKey("faqs", DEFAULTS.faqs),
-  setFaqs: (v: typeof DEFAULTS.faqs) => writeKey("faqs", v),
+  setSiteSettings: (
+    value: typeof DEFAULTS.site_settings,
+  ) => writeKey("site_settings", value),
 
-  getTestimonials: () => readKey("testimonials", DEFAULTS.testimonials),
-  setTestimonials: (v: typeof DEFAULTS.testimonials) => writeKey("testimonials", v),
+  getStats: () =>
+    readKey(
+      "stats",
+      DEFAULTS.stats,
+      normalizeStats,
+    ),
 
-  getBlogPosts: () => readKey("blog_posts", DEFAULTS.blog_posts),
-  setBlogPosts: (v: typeof DEFAULTS.blog_posts) => writeKey("blog_posts", v),
+  setStats: (value: typeof DEFAULTS.stats) =>
+    writeKey("stats", value),
 
-  getContactInfo: () => readKey("contact_info", DEFAULTS.contact_info),
-  setContactInfo: (v: typeof DEFAULTS.contact_info) => writeKey("contact_info", v),
+  getServices: () =>
+    readKey(
+      "services",
+      DEFAULTS.services,
+      normalizeServices,
+    ),
 
-  getGalleryImages: () => readKey("gallery_images", DEFAULTS.gallery_images),
-  setGalleryImages: (v: any[]) => writeKey("gallery_images", v),
+  setServices: (value: typeof DEFAULTS.services) =>
+    writeKey("services", value),
 
-  getPartners: () => readKey("partners", DEFAULTS.partners),
-  setPartners: (v: any[]) => writeKey("partners", v),
+  getCoreValues: () =>
+    readKey(
+      "core_values",
+      DEFAULTS.core_values,
+      normalizeCoreValues,
+    ),
 
-  // Messages (contact submissions) — read-only from public side, admin can view
-  getMessages: (): any[] => readKey("messages", []),
-  addMessage: (msg: { name: string; email: string; phone?: string; message: string }) => {
+  setCoreValues: (
+    value: typeof DEFAULTS.core_values,
+  ) => writeKey("core_values", value),
+
+  getFaqs: () =>
+    readKey(
+      "faqs",
+      DEFAULTS.faqs,
+      normalizeFaqs,
+    ),
+
+  setFaqs: (value: typeof DEFAULTS.faqs) =>
+    writeKey("faqs", value),
+
+  getTestimonials: () =>
+    readKey(
+      "testimonials",
+      DEFAULTS.testimonials,
+      normalizeTestimonials,
+    ),
+
+  setTestimonials: (
+    value: typeof DEFAULTS.testimonials,
+  ) => writeKey("testimonials", value),
+
+  getBlogPosts: () =>
+    readKey(
+      "blog_posts",
+      DEFAULTS.blog_posts,
+      normalizeBlogPosts,
+    ),
+
+  setBlogPosts: (
+    value: typeof DEFAULTS.blog_posts,
+  ) => writeKey("blog_posts", value),
+
+  getContactInfo: () =>
+    readKey(
+      "contact_info",
+      DEFAULTS.contact_info,
+      normalizeContactInfo,
+    ),
+
+  setContactInfo: (
+    value: typeof DEFAULTS.contact_info,
+  ) => writeKey("contact_info", value),
+
+  getGalleryImages: () =>
+    readKey(
+      "gallery_images",
+      DEFAULTS.gallery_images,
+      normalizeGallery,
+    ),
+
+  setGalleryImages: (value: any[]) =>
+    writeKey("gallery_images", value),
+
+  getPartners: () =>
+    readKey(
+      "partners",
+      DEFAULTS.partners,
+      normalizePartners,
+    ),
+
+  setPartners: (value: any[]) =>
+    writeKey("partners", value),
+
+  getMessages: (): any[] =>
+    readKey("messages", [], (value) =>
+      Array.isArray(value) ? value : [],
+    ),
+
+  addMessage: (msg: {
+    name: string;
+    email: string;
+    phone?: string;
+    message: string;
+  }) => {
     const msgs = contentStore.getMessages();
-    msgs.unshift({ ...msg, id: crypto.randomUUID(), status: "unread", created_at: new Date().toISOString() });
+
+    msgs.unshift({
+      ...msg,
+      id: crypto.randomUUID(),
+      status: "unread",
+      created_at: new Date().toISOString(),
+    });
+
     writeKey("messages", msgs);
   },
-  updateMessageStatus: (id: string, status: string) => {
-    const msgs = contentStore.getMessages().map((m: any) => (m.id === id ? { ...m, status } : m));
+
+  updateMessageStatus: (
+    id: string,
+    status: string,
+  ) => {
+    const msgs = contentStore
+      .getMessages()
+      .map((message: any) =>
+        message.id === id
+          ? {
+              ...message,
+              status,
+            }
+          : message,
+      );
+
     writeKey("messages", msgs);
   },
 };

@@ -1,45 +1,38 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import type { User } from "@supabase/supabase-js";
+
+// Hardcoded admin credentials — no Supabase auth required
+const ADMIN_EMAIL = "admin@mk.com";
+const ADMIN_PASSWORD = "Nepal@123#";
+const SESSION_KEY = "mk_admin_session";
 
 export const useAdminAuth = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<{ email: string } | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      const u = session?.user ?? null;
-      setUser(u);
-      if (u) {
-        const { data } = await supabase.from("user_roles").select("role").eq("user_id", u.id).eq("role", "admin").maybeSingle();
-        setIsAdmin(!!data);
-      } else {
-        setIsAdmin(false);
-      }
-      setLoading(false);
-    });
-
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const u = session?.user ?? null;
-      setUser(u);
-      if (u) {
-        const { data } = await supabase.from("user_roles").select("role").eq("user_id", u.id).eq("role", "admin").maybeSingle();
-        setIsAdmin(!!data);
-      }
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    const session = localStorage.getItem(SESSION_KEY);
+    if (session === ADMIN_EMAIL) {
+      setUser({ email: ADMIN_EMAIL });
+      setIsAdmin(true);
+    }
+    setLoading(false);
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error };
+    if (email.trim() === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      localStorage.setItem(SESSION_KEY, email.trim());
+      setUser({ email: email.trim() });
+      setIsAdmin(true);
+      return { error: null };
+    }
+    return { error: { message: "Invalid email or password." } };
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    localStorage.removeItem(SESSION_KEY);
+    setUser(null);
+    setIsAdmin(false);
   };
 
   return { user, isAdmin, loading, signIn, signOut };

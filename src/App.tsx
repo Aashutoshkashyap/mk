@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/components/Layout";
+import PublicErrorBoundary from "@/components/PublicErrorBoundary";
 
 import Index from "./pages/Index";
 const About = lazy(() => import("./pages/About"));
@@ -48,28 +49,99 @@ const App = () => (
         <ScrollToTop />
         <Suspense fallback={null}>
           <Routes>
-            <Route element={<Layout />}>
-              {/* Core 9 Pages as specified in markdown */}
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/projects" element={<Portfolio />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/capabilities" element={<Safety />} />
-              <Route path="/safety" element={<Safety />} />
-              <Route path="/leadership" element={<Team />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/news" element={<Blog />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/news/:slug" element={<BlogPost />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/contact" element={<Contact />} />
-            </Route>
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+  <Route
+    element={
+      <PublicErrorBoundary>
+        <Layout />
+      </PublicErrorBoundary>
+    }
+  >
+    <Route path="/" element={<Index />} />
+
+    <Route path="/about" element={<About />} />
+
+    <Route
+      path="/services"
+      element={<Services />}
+    />
+
+    <Route
+      path="/projects"
+      element={<Portfolio />}
+    />
+
+    <Route
+      path="/portfolio"
+      element={<Portfolio />}
+    />
+
+    <Route
+      path="/capabilities"
+      element={<Safety />}
+    />
+
+    <Route
+      path="/safety"
+      element={<Safety />}
+    />
+
+    <Route
+      path="/leadership"
+      element={<Team />}
+    />
+
+    <Route
+      path="/team"
+      element={<Team />}
+    />
+
+    <Route
+      path="/news"
+      element={<Blog />}
+    />
+
+    <Route
+      path="/blog"
+      element={<Blog />}
+    />
+
+    <Route
+      path="/news/:slug"
+      element={<BlogPost />}
+    />
+
+    <Route
+      path="/blog/:slug"
+      element={<BlogPost />}
+    />
+
+    <Route
+      path="/careers"
+      element={<Careers />}
+    />
+
+    <Route
+      path="/contact"
+      element={<Contact />}
+    />
+  </Route>
+
+  {/* Admin remains outside the public error boundary */}
+  <Route
+    path="/admin/login"
+    element={<AdminLogin />}
+  />
+
+  <Route
+    path="/admin"
+    element={<AdminDashboard />}
+  />
+
+  <Route
+    path="*"
+    element={<NotFound />}
+  />
+</Routes>
         </Suspense>
       </BrowserRouter>
     </TooltipProvider>
